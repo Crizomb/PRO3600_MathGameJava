@@ -1,10 +1,10 @@
 package base;
-// Represente les objets qu'on mets dans la pile de calcul
-// Nécessaire pour faire des retour en arrière du type 5+2 -> 7, le joueur veut retourner en arrière : 7 -> 5, 2
+// Represente les objets qu'on met dans la pile de calcul
+// Nécessaire pour faire des retours en arrière du type 5+2 -> 7, le joueur veut retourner en arrière : 7 -> 5, 2
 // Le tas contient des int et des operateurs, chiant à manipuler mais nécessaire
 
 public class Items {
-    // Immutable
+    // Immuable
     private OperatorOrInt value;
     private final boolean have_parent;
     private Items parent1;
