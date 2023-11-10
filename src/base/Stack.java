@@ -37,6 +37,11 @@ public class Stack{
         return old.item;
     }
 
+    public Items Pop(Items elem) {
+        return elem; //à remplir
+    }
+
+
     public boolean onlyOneElem(){
         return ((this.currentNode != null) && (this.currentNode.parent == null));
     }

@@ -30,14 +30,6 @@ public class Items {
 
     }
 
-    public Items(Operator value, Items parent1, Items parent2){
-        this.value = new OperatorOrInt(value);
-        this.have_parent = true;
-        this.parent1 = parent1;
-        this.parent2 = parent2;
-
-    }
-
     public boolean getHaveParent() {
         return this.have_parent;
     }

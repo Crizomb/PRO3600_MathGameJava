@@ -1,13 +1,10 @@
 package base;
-import java.util.Arrays;
 import java.util.List;
-
-
 
 public class Player {
     private static final int INVENTORY_SIZE = 9;
     public Stack stack;
-    private int[] inventory; // 9 number by player, those number will be used to attack or defend
+    private List inventory; // 9 number by player, those number will be used to attack or defend
     private boolean[] can_be_used;
     // say if the number at the index i can be used.
     // (If a number in inventory at index j is used, it is not removed from inventory but can_be_used[j] is set to False)
@@ -16,7 +13,7 @@ public class Player {
     // If false it's the AttackPhase
     private boolean DefensePhase;
 
-    public Player(int[] number_inventory){
+    public Player(List number_inventory){
         this.stack = new Stack();
         this.inventory = number_inventory;
     }
@@ -40,7 +37,7 @@ public class Player {
         int num2 = element2.getValue().getIntValue();
         this.attack = op.Evaluate(num1, num2);
         // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
-        this.stack.Push(new Items(this.defence, element1, element2));
+        this.stack.Push(new Items(this.attack, element1, element2));
     }
 
     public boolean Attack(Player other_player) throws Exception {
@@ -52,6 +49,19 @@ public class Player {
 
     }
 
+    void number_in_stack(Items n) {
+
+    }
+
+    void separate_numbers(Items n) throws NoSuchFieldException {
+        if (n.getHaveParent()) {
+            Items p1 = n.getParent1();
+            Items p2 = n.getParent2();
+            Items elem_deleted = this.stack.Pop(n);
+            inventory.add(p1);
+            inventory.add(p2);
+        }
+    }
 
 
 
