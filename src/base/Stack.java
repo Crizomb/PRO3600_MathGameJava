@@ -50,6 +50,11 @@ public class Stack{
         return (this.currentNode == null);
     }
 
+    public boolean twoFirstNumbers() {
+        //Vérifie si les deux objets en haut de la pile sont des nombres
+        return ( (currentNode.item.getValue().isInt())&&(currentNode.parent.item.getValue().isInt()) );
+    }
+
 
 }
 
