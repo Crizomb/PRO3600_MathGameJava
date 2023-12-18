@@ -33,4 +33,11 @@ public class OperatorOrInt {
         }
         return intValue;
     }
+
+    public String toString(){
+        if (isInt()){
+            return String.format("%s", intValue);
+        }
+        return String.format("%s", operator);
+    }
 }

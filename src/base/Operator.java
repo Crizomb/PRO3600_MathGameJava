@@ -1,9 +1,9 @@
 package base;
 
-public enum Operator {
+public enum Operator  {
     ADD, SUB, MUL, DIV;
 
-    public String getString(){
+    public String toString(){
         return switch (this) {
             case ADD -> "Add";
             case SUB -> "Sub";

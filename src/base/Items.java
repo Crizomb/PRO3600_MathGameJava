@@ -30,6 +30,7 @@ public class Items {
 
     }
 
+
     public boolean getHaveParent() {
         return this.have_parent;
     }
@@ -58,6 +59,15 @@ public class Items {
             throw new NoSuchFieldException("This Item doesn't have parents");
         }
 
+    }
+
+    public String toString(){
+        if (this.have_parent) {
+            return String.format("Items(value: %s, parent1: %s, parent2: %s)", value, parent1, parent2);
+        }
+        else {
+            return String.format("Items(value: %s)", value);
+        }
     }
 
 }
