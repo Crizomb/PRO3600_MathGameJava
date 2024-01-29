@@ -24,39 +24,69 @@ public class Player {
     private int pv = pv_max;
     public ItemsStack stack;
     public ArrayList<Items> inventory; // 9 number by player, those number will be used to attack or defend
-    private boolean[] can_be_used;
-    // say if the number at the index i can be used.
-    // (If a number in inventory at index j is used, it is not removed from inventory but can_be_used[j] is set to False)
     private int defence;
     private int attack;
-    // If false it's the AttackPhase
-    private boolean DefensePhase;
 
     public Player(){
         this.stack = new ItemsStack();
         this.inventory = Tools.getRandomInventory(1, 10, INVENTORY_MAX_SIZE);
+        this.attack = 0;
+        this.defence = 0;
     }
 
-    public void updateDefense(){
-        Operator op = this.stack.pop().getValue().getOperator();
-        Items element1 = this.stack.pop();
-        Items element2 = this.stack.pop();
-        int num1 = element1.getValue().getIntValue();
-        int num2 = element2.getValue().getIntValue();
-        this.defence = op.Evaluate(num1, num2);
-        // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
-        this.stack.push(new Items(this.defence, element1, element2));
+    public void init() {
+        this.inventory = Tools.getRandomInventory(1, 10, INVENTORY_MAX_SIZE);
+        this.stack.clear();
+        this.attack = 0;
+        this.defence = 0;
     }
 
-    public void updateAttack(){
-        Operator op = this.stack.pop().getValue().getOperator();
-        Items element1 = this.stack.pop();
-        Items element2 = this.stack.pop();
-        int num1 = element1.getValue().getIntValue();
-        int num2 = element2.getValue().getIntValue();
-        this.attack = op.Evaluate(num1, num2);
-        // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
-        this.stack.push(new Items(this.attack, element1, element2));
+    public void create_new_number_stack() {
+        if ((!stack.isEmpty())&&(stack.firstElem().getValue().isOperator())) {
+            Operator op = this.stack.pop().getValue().getOperator();
+            Items element1 = this.stack.pop();
+            Items element2 = this.stack.pop();
+            int num1 = element1.getValue().getIntValue();
+            int num2 = element2.getValue().getIntValue();
+            int new_val = op.Evaluate(num1, num2);
+            // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
+            this.stack.push(new Items(new_val, element1, element2));
+        }
+    }
+
+    public void setDefence() {
+        if (stack.size()==1) {
+            Items elem = stack.pop();
+            if (elem.getValue().isInt()) {
+                this.defence = elem.getValue().getIntValue();
+            } else {
+                System.out.print("L'élément est un opérateur et ne peut pas être défini comme la défense.\n");
+                stack.push(elem);
+            }
+        } else {
+            System.out.print("La pile est vide\n");
+        }
+    }
+
+    public void setDefenceHard(int def) {
+        this.defence = def;
+    }
+
+    public void setAttackHard(int att) {
+        this.attack = att;
+    }
+    public void setAttack() {
+        if (stack.size()==1) {
+            Items elem = stack.pop();
+            if (elem.getValue().isInt()) {
+                this.attack = elem.getValue().getIntValue();
+            } else {
+                System.out.print("L'élément est un opérateur et ne peut pas être défini comme la défense.\n");
+                stack.push(elem);
+            }
+        } else {
+            System.out.print("La pile est vide\n");
+        }
     }
 
     public int getDefence() {
@@ -83,12 +113,51 @@ public class Player {
 
     }
 
+    public Items nbDansInventaire(int n) {
+        //Pour un nombre donné, on renvoie l'Item correspondant se trouvant dans l'inventaire
+        for(Items i: inventory) {
+            if (i.getValue().getIntValue()==n) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public boolean estDansInventaire(int n) {
+        for(Items i: inventory) {
+            if (i.getValue().getIntValue()==n) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Items elemDansPile(String s) {
+        //Pour un nombre donné, on renvoie l'Item correspondant se trouvant dans la pile
+        for(Items i: stack) {
+            if (i.getValue().toString().equals(s)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public boolean estDansPile(String s) {
+        for(Items i: stack) {
+            if (i.getValue().toString().equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void push_number_in_stack(Items n) {
         //Mets un nombre de l'inventaire dans la pile
         if (inventory.contains(n)) {
             inventory.remove(n);
             stack.push(n);
+        } else {
+            System.out.print("Le nombre n'est pas dans l'inventaire.\n");
         }
     }
 
@@ -121,11 +190,13 @@ public class Player {
             this.stack.popOnValue(n);
             inventory.add(p1);
             inventory.add(p2);
+        } else {
+            System.out.print("L'élément choisi n'est pas issu de la combinaison de deux nombres\n");
         }
     }
 
     public String toString(){
-        return String.format("Player \n attack : %s \n defence : %s \n inventory %s", attack, defence, inventory);
+        return String.format("Player \n inventory %s \n Stack %s \n PV %s", inventory, stack, pv);
     }
 
 

@@ -5,10 +5,10 @@ public enum Operator  {
 
     public String toString(){
         return switch (this) {
-            case ADD -> "Add";
-            case SUB -> "Sub";
-            case MUL -> "Mul";
-            case DIV -> "Div";
+            case ADD -> "+";
+            case SUB -> "-";
+            case MUL -> "*";
+            case DIV -> "/";
         };
     }
 

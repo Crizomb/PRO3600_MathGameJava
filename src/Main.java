@@ -1,7 +1,4 @@
-import base.Items;
-import base.ItemsStack;
-import base.Operator;
-import base.Player;
+import base.*;
 
 import java.util.Stack;
 
@@ -52,11 +49,13 @@ class Test {
         player.push_operator_in_stack(new Items(Operator.ADD));
 
         // attack += inventory[0] + inventory[1]
-        player.updateAttack();
+        player.create_new_number_stack();
 
         player.push_number_in_stack(third_elem);
         player.push_operator_in_stack(new Items(Operator.ADD));
-        player.updateAttack();
+        player.create_new_number_stack();
+
+
 
         // player has changed
         System.out.println(player);
@@ -67,6 +66,11 @@ class Test {
 
 
     }
+
+    public static void testGameplay() throws Exception {
+        Gameplay game = new Gameplay();
+        game.jeu_terminal_de_commande();
+    }
 }
 
 public class Main {
@@ -76,5 +80,7 @@ public class Main {
         Test.testStack();
         System.out.println("----------");
         Test.testPlayerLogic();
+        System.out.println("----------");
+        Test.testGameplay();
     }
 }

@@ -6,6 +6,16 @@ public class ItemsStack extends java.util.Stack<Items> {
         super();
     }
 
+    public Items firstElem() {
+        if (!this.isEmpty()) {
+            Items first_elem = this.pop();
+            this.push(first_elem);
+            return first_elem;
+        } else {
+            System.out.print("La pile est vide.\n");
+            return null;
+        }
+    }
     public boolean twoFirstElementAreNumber(){
         if (this.size() >= 2){
             Items top = this.get(this.size() - 1);
@@ -17,7 +27,6 @@ public class ItemsStack extends java.util.Stack<Items> {
 
     public void popOnValue(Items value) {
         ItemsStack tempStack = new ItemsStack();
-        ItemsStack newStack = new ItemsStack();
 
         // Transfer elements to tempStack, skipping the target value
         while (!this.isEmpty()) {
@@ -31,13 +40,7 @@ public class ItemsStack extends java.util.Stack<Items> {
 
         // Transfer back to newStack to preserve order
         while (!tempStack.isEmpty()) {
-            newStack.push(tempStack.pop());
-        }
-
-        // Clear the current stack and add all elements from newStack
-        this.clear();
-        while (!newStack.isEmpty()) {
-            this.push(newStack.pop());
+            this.push(tempStack.pop());
         }
     }
 }
