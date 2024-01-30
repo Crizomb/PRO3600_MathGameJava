@@ -6,4 +6,8 @@ public class Image extends Graphic_Element{
         super(x,y);
     }
 
+    @Override
+    public String toString() {
+        return "Image:"+position.toString();
+    }
 }

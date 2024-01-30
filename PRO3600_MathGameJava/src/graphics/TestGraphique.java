@@ -1,12 +1,15 @@
 package graphics;
-package base;
 import base.Operator;
 
 import javax.swing.*;
 
-
+//juste une classe de test du fonctionnement de Swing
 public class TestGraphique {
     public static void main(String[] args) {
+        Interface inter = new Interface();
+    }
+
+    public void ancient_main{
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
@@ -21,7 +24,7 @@ public class TestGraphique {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add the ubiquitous "Hello World" label.
-        JLabel label = new JLabel("Hello World");
+        JLabel label = new JLabel("Hello Wworld");
         frame.getContentPane().add(label);
 
         //Display the window.

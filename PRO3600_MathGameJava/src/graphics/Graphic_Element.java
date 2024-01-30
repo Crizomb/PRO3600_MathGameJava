@@ -1,11 +1,10 @@
 package graphics;
 
 public class Graphic_Element {
-    Vector position = new Vector(0,0);
+    public Vector position;
 
     public Graphic_Element(double x, double y){
-        position.x=x;
-        position.y=y;
+        position = new Vector(x,y);
         setPosition(position);
     }
 
@@ -15,10 +14,10 @@ public class Graphic_Element {
 
     @Override
     public String toString() {
-        return "graph_element";
+        return "graph_element:"+position.toString();
     }
 
-    void setPosition(Vector position){
+    public void setPosition(Vector position){
         return;
     }
 }
