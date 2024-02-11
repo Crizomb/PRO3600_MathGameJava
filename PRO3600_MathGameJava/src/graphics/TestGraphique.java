@@ -6,10 +6,10 @@ import javax.swing.*;
 //juste une classe de test du fonctionnement de Swing
 public class TestGraphique {
     public static void main(String[] args) {
-        Interface inter = new Interface();
+        Interface inter = new Interface(500,250);
     }
 
-    public void ancient_main{
+    public void ancient_main(){
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
@@ -33,14 +33,5 @@ public class TestGraphique {
     }
 
 
-    public class ezd{
-        public static void main(String[] args) {
-            System.out.println();
-        }
 
-        @Override
-        public String toString() {
-            return super.toString();
-        }
-    }
 }

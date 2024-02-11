@@ -2,8 +2,8 @@ package graphics;
 
 public class Image extends Graphic_Element{
 
-    public Image(double x, double y){
-        super(x,y);
+    public Image(double x, double y, Graphic_type type){
+        super(x,y, type);
     }
 
     @Override

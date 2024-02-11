@@ -1,8 +1,9 @@
 package graphics;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Panel {
+public class Groupe_Panel {
     private List<Graphic_Element> element_panel;
     private Panel_State state;
     private int panel_id;
@@ -11,16 +12,31 @@ public class Panel {
         return state;
     }
 
+    public void addElementToPanel(Graphic_Element e){
+        element_panel.add(e);
+    }
+
+    public void addElementToPanel(Graphic_Element[] liste_e){
+        for (Graphic_Element e:
+             liste_e) {
+                addElementToPanel(e);
+        }
+    }
+
 
     //si aucun panel_state est associé, le panel est toujours visible
-    public Panel(int panel_id){
-        this.panel_id=panel_id;
+    public Groupe_Panel(Panel_State p_state){
+        this.state = p_state;
+        element_panel = new ArrayList<>();
     }
 
-    public Panel(int panel_id, Panel_State p_state){
+    public Groupe_Panel( Panel_State p_state, int panel_id){
         this.panel_id=panel_id;
         this.state = p_state;
+        element_panel = new ArrayList<>();
+
     }
+
 
     public String toString(){
         String t = "";

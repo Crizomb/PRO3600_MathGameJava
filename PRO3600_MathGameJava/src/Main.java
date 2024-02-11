@@ -28,7 +28,7 @@ class Test {
         Items test3 = stack.Pop();
         Items test4 = stack.Pop();
 
-        System.out.println(test.getValue().getOperator().getString());
+        System.out.println(test.getValue().getOperator().toString());
         System.out.println(String.valueOf(test2.getValue().getIntValue()));
         System.out.println(String.valueOf(test3.getValue().getIntValue()));
         System.out.println(String.valueOf(test4.getValue().getIntValue()));
