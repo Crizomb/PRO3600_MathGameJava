@@ -1,5 +1,6 @@
 package graphics;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +9,15 @@ public class Groupe_Panel {
     private Panel_State state;
     private int panel_id;
 
+    public JPanel linked_panel;
+
     public Panel_State getState(){
         return state;
     }
 
     public void addElementToPanel(Graphic_Element e){
         element_panel.add(e);
+        linked_panel.add(e);
     }
 
     public void addElementToPanel(Graphic_Element[] liste_e){
@@ -26,14 +30,15 @@ public class Groupe_Panel {
 
     //si aucun panel_state est associé, le panel est toujours visible
     public Groupe_Panel(Panel_State p_state){
-        this.state = p_state;
-        element_panel = new ArrayList<>();
+        new Groupe_Panel(p_state, 0);
     }
 
     public Groupe_Panel( Panel_State p_state, int panel_id){
         this.panel_id=panel_id;
         this.state = p_state;
         element_panel = new ArrayList<>();
+        linked_panel = new JPanel();
+        Interface.fenetre.add(linked_panel);
 
     }
 
@@ -47,11 +52,12 @@ public class Groupe_Panel {
         return t;
     }
 
-    public void setVisible() {
-        setVisible(true);
+    public void _setVisible() {
+        _setVisible(true);
     }
 
-    public void setVisible(boolean visible){
-        //parcourt les elements pour les rendre visible ou non
+    public void _setVisible(boolean visible){
+        linked_panel.setVisible(visible);
+    //parcourt les elements pour les rendre visible ou non
     }
 }

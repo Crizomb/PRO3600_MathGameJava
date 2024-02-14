@@ -1,8 +1,11 @@
 package graphics;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.Panel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static java.awt.BorderLayout.*;
 
@@ -11,11 +14,12 @@ public class Interface {
     //class qui pilote toute la partie graphique du jeu
     private String NOM_JEU = "Jeu";
     private  int HEIGHT = 993;
-    JFrame fenetre;
+    static JFrame fenetre;
     Panel_Manager panel_manager;
 
+    private Groupe_Panel menu_group_panel;
+
     public Interface(int width, int height)  {
-        panel_manager = new Panel_Manager();
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -57,23 +61,70 @@ public class Interface {
         fenetre = new JFrame(NOM_JEU);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.getContentPane().setBackground(Color.cyan);
+        panel_manager = new Panel_Manager();
+
         setSize(w, h);
         createStartMenu();
+        createBallPanel();
         fenetre.pack();
         fenetre.setVisible(true);
 
     }
 
     private void createStartMenu()  {
-        Groupe_Panel menu_panel = panel_manager.addPanel(Panel_State.MENU_1);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        menu_group_panel = panel_manager.addPanel(Panel_State.MENU_1);
+        JPanel panel = menu_group_panel.linked_panel;
+        //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        BorderLayout b_layout = new BorderLayout();
+        b_layout.setHgap(400);
+        b_layout.setVgap(40);
+        fenetre.setLayout(null);
+        panel.setBounds(450,220, 1000,500);
+        panel.setBackground(Color.blue);
         Button start_button = create_button(10,50,Panel_State.MENU_1,"Start Game", Graphic_type.MENU_Button);
         Button quit_button = create_button(5,100,Panel_State.MENU_1,"QUIT", Graphic_type.MENU_Button);
-        panel.add(start_button.getGraph_button(), CENTER);
-        panel.add(quit_button.getGraph_button(), PAGE_END);
+        panel.add(start_button.getGraph_button());
+        panel.add(quit_button.getGraph_button());
+
+        //start_button.setAlignmentY(JLabel.CENTER);
+        fenetre.add(panel);
+
+        start_button.graph_button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                panel_manager.changePanel(Panel_State.game_attack_1);
+               // menu_group_panel._setVisible(false);
+            }
+        });
+        fenetre.setVisible(true);
+        System.out.println(menu_group_panel.toString());
+    }
+
+    private void createBallPanel(){
+        Groupe_Panel ball_group_panel = panel_manager.addPanel(Panel_State.game_attack_1);
+        JPanel panel = ball_group_panel.linked_panel;
+        JPanel panel_ball = new JPanel();
+       panel_ball.setLayout(new GridLayout(4,3));
+        for (int i = 0; i < 10; i++) {
+            Button b = create_button(5,5,Panel_State.game_attack_1,""+((i+1)*10),Graphic_type.Ball_Number);
+            panel_ball.add(b.graph_button);
+        }
+        Button return_button = create_button(10,50,Panel_State.game_attack_1,"Start Game", Graphic_type.MENU_Button);
+        panel.add(return_button.graph_button);
+        panel.setBounds(450,220, 1000,500);
+
+        panel.setBackground(Color.green);
+
+        panel.add(panel_ball);
         fenetre.add(panel);
         fenetre.setVisible(true);
+
+        return_button.graph_button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                panel_manager.changePanel(Panel_State.MENU_1);
+                // menu_group_panel._setVisible(false);
+            }
+        });
+
     }
 
     public void setSize(int w, int h){
@@ -90,8 +141,9 @@ public class Interface {
 
     public Button create_button(int x, int y, Panel_State pstate, String text, Graphic_type type)  {
         Button b = new Button(x, y, text, type);
-        panel_manager.getPanelFromState(pstate).addElementToPanel(b);
-
+        Groupe_Panel panel_related = panel_manager.getPanelFromState(pstate);
+        panel_related.addElementToPanel(b);
+        panel_related.linked_panel.add(b.graph_button);
         return b;
     }
 
@@ -100,5 +152,12 @@ public class Interface {
         panel_manager.getPanelFromState(pstate).addElementToPanel(b);
         return b;
     }
+
+    /* ces méthodes sont les actions des boutons du jeu */
+
+    public void start_button_pressed(ActiveEvent e){
+        panel_manager.changePanel(Panel_State.game_attack_1);
+    }
+
 
 }

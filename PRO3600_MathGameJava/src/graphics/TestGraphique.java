@@ -6,7 +6,7 @@ import javax.swing.*;
 //juste une classe de test du fonctionnement de Swing
 public class TestGraphique {
     public static void main(String[] args) {
-        Interface inter = new Interface(500,250);
+        Interface inter = new Interface(2000,1000);
     }
 
     public void ancient_main(){
