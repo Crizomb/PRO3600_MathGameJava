@@ -1,5 +1,8 @@
 package base;
 
+/**
+ * Represents an Operator that can be used on the game Stack
+ */
 public enum Operator  {
     ADD, SUB, MUL, DIV;
 

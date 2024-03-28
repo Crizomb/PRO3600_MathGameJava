@@ -1,7 +1,5 @@
 import base.*;
 
-import java.util.Stack;
-
 
 class Test {
     public static void testItems(){
@@ -44,15 +42,15 @@ class Test {
         Items first_elem = player.inventory.get(0);
         Items second_elem = player.inventory.get(1);
         Items third_elem = player.inventory.get(2);
-        player.push_number_in_stack(first_elem);
-        player.push_number_in_stack(second_elem);
-        player.push_operator_in_stack(new Items(Operator.ADD));
+        player.pushNumberInStack(first_elem);
+        player.pushNumberInStack(second_elem);
+        player.pushOperatorInStack(new Items(Operator.ADD));
 
         // attack += inventory[0] + inventory[1]
         player.create_new_number_stack();
 
-        player.push_number_in_stack(third_elem);
-        player.push_operator_in_stack(new Items(Operator.ADD));
+        player.pushNumberInStack(third_elem);
+        player.pushOperatorInStack(new Items(Operator.ADD));
         player.create_new_number_stack();
 
 
@@ -82,5 +80,9 @@ public class Main {
         Test.testPlayerLogic();
         System.out.println("----------");
         Test.testGameplay();
+        System.out.println("-----------");
+        Gameplay game = new Gameplay();
+        game.jeu_terminal_de_commande();
     }
+
 }

@@ -1,12 +1,21 @@
 package base;
 
+/**
+ * Class representing the Stack where operators and numbers are put in the game
+ */
 public class ItemsStack extends java.util.Stack<Items> {
+
 
     public ItemsStack(){
         super();
     }
 
+    /**
+     * Get the first element of the stack and put it back on the stack.
+     * @return the first element of the stack or null if the stack is null
+     */
     public Items firstElem() {
+
         if (!this.isEmpty()) {
             Items first_elem = this.pop();
             this.push(first_elem);
@@ -16,6 +25,12 @@ public class ItemsStack extends java.util.Stack<Items> {
             return null;
         }
     }
+
+    /**
+     * Check if the two first element of stack are number (useful before doing operations on the stack)
+     * @return true if the two first element of stack are representing number, else false
+     */
+
     public boolean twoFirstElementAreNumber(){
         if (this.size() >= 2){
             Items top = this.get(this.size() - 1);
@@ -25,7 +40,13 @@ public class ItemsStack extends java.util.Stack<Items> {
         return false;
     }
 
+    /**
+     * Remove the first element of the stack equals to value
+     * @param value, the value to remove
+     */
+
     public void popOnValue(Items value) {
+
         ItemsStack tempStack = new ItemsStack();
 
         // Transfer elements to tempStack, skipping the target value
