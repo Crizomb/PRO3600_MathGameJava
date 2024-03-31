@@ -8,7 +8,7 @@ public enum Graphic_type {
 
 
     MENU_Button(new Dimension(500,250), Color.yellow,""),
-    Ball_Number(new Dimension(50,50),Color.red, "ball_template.png");
+    Ball_Number(new Dimension(50,50),Color.getHSBColor(0,0,0), "ball_template.png");
 
 
     public static Dimension DEFAULT_SIZE = new Dimension(5,5);

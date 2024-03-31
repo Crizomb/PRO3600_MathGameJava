@@ -6,6 +6,7 @@ import java.awt.Panel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import static java.awt.BorderLayout.*;
 
@@ -71,6 +72,10 @@ public class Interface {
 
     }
 
+    private void closeWindow(){
+        fenetre.dispatchEvent(new WindowEvent(fenetre, WindowEvent.WINDOW_CLOSING));
+    }
+
     private void createStartMenu()  {
         menu_group_panel = panel_manager.addPanel(Panel_State.MENU_1);
         JPanel panel = menu_group_panel.linked_panel;
@@ -83,16 +88,22 @@ public class Interface {
         panel.setBackground(Color.blue);
         Button start_button = create_button(10,50,Panel_State.MENU_1,"Start Game", Graphic_type.MENU_Button);
         Button quit_button = create_button(5,100,Panel_State.MENU_1,"QUIT", Graphic_type.MENU_Button);
-        panel.add(start_button.getGraph_button());
-        panel.add(quit_button.getGraph_button());
+        panel.add(start_button);
+        panel.add(quit_button);
 
         //start_button.setAlignmentY(JLabel.CENTER);
         fenetre.add(panel);
 
-        start_button.graph_button.addActionListener(new ActionListener() {
+        start_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 panel_manager.changePanel(Panel_State.game_attack_1);
                // menu_group_panel._setVisible(false);
+            }
+        });
+
+        quit_button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                closeWindow();
             }
         });
         fenetre.setVisible(true);
@@ -103,13 +114,15 @@ public class Interface {
         Groupe_Panel ball_group_panel = panel_manager.addPanel(Panel_State.game_attack_1);
         JPanel panel = ball_group_panel.linked_panel;
         JPanel panel_ball = new JPanel();
+        panel_ball.setOpaque(false);
        panel_ball.setLayout(new GridLayout(4,3));
         for (int i = 0; i < 10; i++) {
             Button b = create_button(5,5,Panel_State.game_attack_1,""+((i+1)*10),Graphic_type.Ball_Number);
-            panel_ball.add(b.graph_button);
+            panel_ball.add(b);
+            b.setBorderPainted(false);
         }
-        Button return_button = create_button(10,50,Panel_State.game_attack_1,"Start Game", Graphic_type.MENU_Button);
-        panel.add(return_button.graph_button);
+        Button return_button = create_button(10,50,Panel_State.game_attack_1,"Return to Menu", Graphic_type.MENU_Button);
+        panel.add(return_button);
         panel.setBounds(450,220, 1000,500);
 
         panel.setBackground(Color.green);
@@ -118,7 +131,7 @@ public class Interface {
         fenetre.add(panel);
         fenetre.setVisible(true);
 
-        return_button.graph_button.addActionListener(new ActionListener() {
+        return_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 panel_manager.changePanel(Panel_State.MENU_1);
                 // menu_group_panel._setVisible(false);
@@ -143,7 +156,7 @@ public class Interface {
         Button b = new Button(x, y, text, type);
         Groupe_Panel panel_related = panel_manager.getPanelFromState(pstate);
         panel_related.addElementToPanel(b);
-        panel_related.linked_panel.add(b.graph_button);
+        panel_related.linked_panel.add(b);
         return b;
     }
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Groupe_Panel {
-    private List<Graphic_Element> element_panel;
+    private List<JComponent> element_panel;
     private Panel_State state;
     private int panel_id;
 
@@ -15,7 +15,7 @@ public class Groupe_Panel {
         return state;
     }
 
-    public void addElementToPanel(Graphic_Element e){
+    public void addElementToPanel(JComponent e){
         element_panel.add(e);
         linked_panel.add(e);
     }
@@ -45,7 +45,7 @@ public class Groupe_Panel {
 
     public String toString(){
         String t = "";
-        for (Graphic_Element g :
+        for (JComponent g :
                 element_panel) {
             t+= g.toString()+"; ";
         }
