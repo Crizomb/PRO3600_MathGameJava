@@ -47,11 +47,11 @@ class Test {
         player.pushOperatorInStack(new Items(Operator.ADD));
 
         // attack += inventory[0] + inventory[1]
-        player.create_new_number_stack();
+        player.createNewNumberStack();
 
         player.pushNumberInStack(third_elem);
         player.pushOperatorInStack(new Items(Operator.ADD));
-        player.create_new_number_stack();
+        player.createNewNumberStack();
 
 
 

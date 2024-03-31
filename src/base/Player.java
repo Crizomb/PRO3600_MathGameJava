@@ -33,8 +33,8 @@ public class Player {
     private int pv = pv_max;
     public ItemsStack stack;
     public ArrayList<Items> inventory; // 9 number by player, those number will be used to attack or defend
-    private int defence;
-    private int attack;
+    private int defence_value;
+    private int attack_value;
 
     /**
      * Create a new Player
@@ -42,8 +42,8 @@ public class Player {
     public Player(){
         this.stack = new ItemsStack();
         this.inventory = Tools.getRandomInventory(1, 10, INVENTORY_MAX_SIZE);
-        this.attack = 0;
-        this.defence = 0;
+        this.attack_value = 0;
+        this.defence_value = 0;
     }
 
     /**
@@ -52,8 +52,8 @@ public class Player {
     public void init() {
         this.inventory = Tools.getRandomInventory(1, 10, INVENTORY_MAX_SIZE);
         this.stack.clear();
-        this.attack = 0;
-        this.defence = 0;
+        this.attack_value = 0;
+        this.defence_value = 0;
     }
 
     /**
@@ -76,7 +76,7 @@ public class Player {
      *
      * @throws IllegalStateException if the stack is empty or the top element is not an operator.
      */
-    public void create_new_number_stack() {
+    public void createNewNumberStack() throws IllegalStateException{
         if ((!stack.isEmpty())&&(stack.firstElem().getValue().isOperator())) {
             Operator op = this.stack.pop().getValue().getOperator();
             Items element1 = this.stack.pop();
@@ -86,6 +86,9 @@ public class Player {
             int new_val = op.Evaluate(num1, num2);
             // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
             this.stack.push(new Items(new_val, element1, element2));
+        }
+        else {
+            throw new IllegalStateException("the stack is empty or the top element is not an operator");
         }
     }
     /**
@@ -107,26 +110,26 @@ public class Player {
      * @throws IllegalStateException if the stack is empty or the top element is not a numerical value.
      */
 
-    public void setDefence() {
+    public void setDefence() throws IllegalStateException{
         if (stack.size()==1) {
             Items elem = stack.pop();
             if (elem.getValue().isInt()) {
-                this.defence = elem.getValue().getIntValue();
+                this.defence_value = elem.getValue().getIntValue();
             } else {
                 System.out.print("L'élément est un opérateur et ne peut pas être défini comme la défense.\n");
                 stack.push(elem);
             }
         } else {
-            System.out.print("La pile est vide\n");
+            throw new IllegalStateException("the stack is empty or the top element is not an operator");
         }
     }
 
     public void setDefenceHard(int def) {
-        this.defence = def;
+        this.defence_value = def;
     }
 
     public void setAttackHard(int att) {
-        this.attack = att;
+        this.attack_value = att;
     }
 
     /**
@@ -148,26 +151,26 @@ public class Player {
      * @throws IllegalStateException if the stack is empty or the top element is not a numerical value.
      */
 
-    public void setAttack() {
+    public void setAttack() throws IllegalStateException{
         if (stack.size()==1) {
             Items elem = stack.pop();
             if (elem.getValue().isInt()) {
-                this.attack = elem.getValue().getIntValue();
+                this.attack_value = elem.getValue().getIntValue();
             } else {
                 System.out.print("L'élément est un opérateur et ne peut pas être défini comme la défense.\n");
                 stack.push(elem);
             }
         } else {
-            System.out.print("La pile est vide\n");
+            throw new IllegalStateException("the stack is empty or the top element is not an operator");
         }
     }
 
-    public int getDefence() {
-        return this.defence;
+    public int getDefence_value() {
+        return this.defence_value;
     }
 
-    public int getAttack() {
-        return this.attack;
+    public int getAttack_value() {
+        return this.attack_value;
     }
 
     public int getPv() {
@@ -189,12 +192,12 @@ public class Player {
      * @throws Exception if the attacker's attack or defense value is zero or not initialized.
      */
 
-    public boolean Attack(Player other_player) throws Exception {
+    public boolean attack(Player other_player) throws Exception {
         //
-        if (this.attack == 0 || this.defence == 0){
+        if (this.attack_value == 0 || other_player.defence_value == 0){
             throw new Exception("Attack or defence is equal to 0 or is not initialized (call getAttack and getDefense)");
         }
-        return this.attack >= other_player.defence;
+        return this.attack_value >= other_player.defence_value;
     }
     /**
      * Finds an item with the specified numerical value in the inventory.
@@ -204,7 +207,7 @@ public class Player {
      * @param n The numerical value to search for.
      * @return The {@code Items} object with the matching value, or {@code null} if no such item is found.
      */
-    public Items NumberInInventory(int n) {
+    public Items numberInInventory(int n) {
         for(Items i: inventory) {
             if (i.getValue().getIntValue()==n) {
                 return i;
@@ -238,7 +241,7 @@ public class Player {
      * @return The {@code Items} object with the matching string representation, or {@code null} if no such item is found.
      */
 
-    public Items ItemInStack(String s) {
+    public Items itemInStack(String s) {
         for(Items i: stack) {
             if (i.getValue().toString().equals(s)) {
                 return i;
@@ -305,8 +308,7 @@ public class Player {
         }
         else
         {
-            System.out.println("La pile doit contenir au moins deux éléments, et les deux éléments en haut de la pile doivent être des nombres \n" +
-                    "fais attention aux references aussi mon reuf. Si t'ajoute deux fois la ref ça marche pas");
+            // La pile doit contenir au moins deux éléments, et les deux éléments en haut de la pile doivent être des nombres \n" + fais attention aux references aussi. Si t'ajoute deux fois la ref ça marche pas");
             throw new Exception("Can't push operator in this stack");
         }
     }
@@ -323,7 +325,7 @@ public class Player {
      * @param elem The {@code Items} object to be removed from the stack.
      */
 
-    void putObjectOutOfStack(Items elem) {
+    public void putObjectOutOfStack(Items elem) {
         stack.popOnValue(elem);
         if (elem.getValue().isInt()) {
             inventory.add(elem);
@@ -349,7 +351,7 @@ public class Player {
      * @throws NoSuchFieldException if the {@code Items} class does not have the expected getter methods for parent elements.
      */
 
-    void separateNumbers(Items n) throws NoSuchFieldException {
+    public void separateNumbers(Items n) throws NoSuchFieldException {
         if (n.getHaveParent()) {
             Items p1 = n.getParent1();
             Items p2 = n.getParent2();
@@ -364,7 +366,6 @@ public class Player {
     public String toString(){
         return String.format("Player \n inventory %s \n Stack %s \n PV %s", inventory, stack, pv);
     }
-
 
 
 }

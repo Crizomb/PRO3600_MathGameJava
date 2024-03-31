@@ -1,5 +1,7 @@
 package base;
 
+import java.util.Objects;
+
 /**
  * Union class representing an Operator or an Int
  */
@@ -64,5 +66,18 @@ public class OperatorOrInt {
             return String.format("%s", intValue);
         }
         return String.format("%s", operator);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OperatorOrInt that = (OperatorOrInt) o;
+        return intValue == that.intValue && operator == that.operator;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(operator, intValue);
     }
 }

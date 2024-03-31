@@ -1,5 +1,7 @@
 package base;
 
+import java.util.Objects;
+
 /**
  * Represents an item on the stack with optional parent tracking.
  *
@@ -101,4 +103,16 @@ public class Items {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Items items = (Items) o;
+        return have_parent == items.have_parent && Objects.equals(value, items.value) && Objects.equals(parent1, items.parent1) && Objects.equals(parent2, items.parent2);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, have_parent, parent1, parent2);
+    }
 }

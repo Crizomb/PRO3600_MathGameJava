@@ -6,7 +6,7 @@ public class Gameplay {
     public int degats(Player attaquant, Player defenseur) {
         int old_pv = defenseur.getPv();
         int degat_max = 200;
-        int new_pv = (int) Math.max(0, defenseur.getPv() - (degat_max*Math.exp(-Math.abs(attaquant.getAttack()-defenseur.getDefence()))) );
+        int new_pv = (int) Math.max(0, defenseur.getPv() - (degat_max*Math.exp(-Math.abs(attaquant.getAttack_value()-defenseur.getDefence_value()))) );
         defenseur.setPv(new_pv);
         return (old_pv-new_pv);
     }
@@ -25,7 +25,7 @@ public class Gameplay {
             System.out.print("Commandes:\n\nstop: arrêter le jeu\netat: afficher l'inventaire, la pile et les pv\najout_nb: ajoute un nombre de l'inventaire à la pile\najout_op: ajouter un opérateur à la pile\nenlever: enlever un élément de la pile\npile: utiliser les 3 premiers éléments de la piles pour faire un nouveau nombre\nseparer: sépare un élément de la pile pour retrouver les nombres qui ont permis de le créer\ndefense: prendre le dernier élément de la pile pour en faire sa défense");
             System.out.print("\n\n");
 
-            while (j1.getDefence() == 0) {
+            while (j1.getDefence_value() == 0) {
                 String reponse = sc.nextLine();
                 if (reponse.equals("stop")) {
                     return 0;
@@ -35,7 +35,7 @@ public class Gameplay {
                     System.out.print("Quel nombre ?\nVoici votre inventaire: " + j1.inventory.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInInventory(Integer.valueOf(reponse))) {
-                        j1.pushNumberInStack(j1.NumberInInventory(Integer.valueOf(reponse)));
+                        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(reponse)));
                     } else {
                         System.out.print("le nombre n'est pas dans l'inventaire\n");
                     }
@@ -55,17 +55,17 @@ public class Gameplay {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInStack(reponse)) {
-                        j1.putObjectOutOfStack(j1.ItemInStack(reponse));
+                        j1.putObjectOutOfStack(j1.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
                 } else if (reponse.equals("pile")) {
-                    j1.create_new_number_stack();
+                    j1.createNewNumberStack();
                 } else if (reponse.equals(("separer"))) {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInStack(reponse)) {
-                        j1.separateNumbers(j1.ItemInStack(reponse));
+                        j1.separateNumbers(j1.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
@@ -77,11 +77,11 @@ public class Gameplay {
             }
 
             System.out.print("***Le j2 doit maintenant régler son attaque***\n");
-            System.out.print("***Il doit atteindre la défense du j1: "+ j1.getDefence() + " ***\n\n");
+            System.out.print("***Il doit atteindre la défense du j1: "+ j1.getDefence_value() + " ***\n\n");
             System.out.print("Commandes:\n\nstop: arrêter le jeu\netat: afficher l'inventaire, la pile et les pv\najout_nb: ajoute un nombre de l'inventaire à la pile\najout_op: ajouter un opérateur à la pile\nenlever: enlever un élément de la pile\npile: utiliser les 3 premiers éléments de la piles pour faire un nouveau nombre\nseparer: sépare un élément de la pile pour retrouver les nombres qui ont permis de le créer\nattaque: prendre le dernier élément de la pile pour en faire sa défense");
             System.out.print("\n\n");
 
-            while (j2.getAttack()==0) {
+            while (j2.getAttack_value()==0) {
                 String reponse = sc.nextLine();
                 if (reponse.equals("stop")) {
                     return 0;
@@ -91,7 +91,7 @@ public class Gameplay {
                     System.out.print("Quel nombre ?\nVoici votre inventaire: " + j2.inventory.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j2.isInInventory(Integer.valueOf(reponse))) {
-                        j2.pushNumberInStack(j2.NumberInInventory(Integer.valueOf(reponse)));
+                        j2.pushNumberInStack(j2.numberInInventory(Integer.valueOf(reponse)));
                     } else {
                         System.out.print("le nombre n'est pas dans l'inventaire\n");
                     }
@@ -111,17 +111,17 @@ public class Gameplay {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j2.isInStack(reponse)) {
-                        j2.putObjectOutOfStack(j2.ItemInStack(reponse));
+                        j2.putObjectOutOfStack(j2.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
                 } else if (reponse.equals("pile")) {
-                    j2.create_new_number_stack();
+                    j2.createNewNumberStack();
                 } else if (reponse.equals(("separer"))) {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j2.isInStack(reponse)) {
-                        j2.separateNumbers(j2.ItemInStack(reponse));
+                        j2.separateNumbers(j2.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
@@ -144,7 +144,7 @@ public class Gameplay {
             System.out.print("Commandes:\n\nstop: arrêter le jeu\netat: afficher l'inventaire, la pile et les pv\najout_nb: ajoute un nombre de l'inventaire à la pile\najout_op: ajouter un opérateur à la pile\nenlever: enlever un élément de la pile\npile: utiliser les 3 premiers éléments de la piles pour faire un nouveau nombre\nseparer: sépare un élément de la pile pour retrouver les nombres qui ont permis de le créer\ndefense: prendre le dernier élément de la pile pour en faire sa défense");
             System.out.print("\n\n");
 
-            while (j2.getDefence()==0) {
+            while (j2.getDefence_value()==0) {
                 String reponse = sc.nextLine();
                 if (reponse.equals("stop")) {
                     return 0;
@@ -154,7 +154,7 @@ public class Gameplay {
                     System.out.print("Quel nombre ?\nVoici votre inventaire: " + j2.inventory.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j2.isInInventory(Integer.valueOf(reponse))) {
-                        j2.pushNumberInStack(j2.NumberInInventory(Integer.valueOf(reponse)));
+                        j2.pushNumberInStack(j2.numberInInventory(Integer.valueOf(reponse)));
                     } else {
                         System.out.print("le nombre n'est pas dans l'inventaire\n");
                     }
@@ -174,17 +174,17 @@ public class Gameplay {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j2.isInStack(reponse)) {
-                        j2.putObjectOutOfStack(j2.ItemInStack(reponse));
+                        j2.putObjectOutOfStack(j2.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
                 } else if (reponse.equals("pile")) {
-                    j2.create_new_number_stack();
+                    j2.createNewNumberStack();
                 } else if (reponse.equals(("separer"))) {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j2.isInStack(reponse)) {
-                        j2.separateNumbers(j2.ItemInStack(reponse));
+                        j2.separateNumbers(j2.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
@@ -196,11 +196,11 @@ public class Gameplay {
             }
 
             System.out.print("***Le j1 doit maintenant régler son attaque***\n");
-            System.out.print("***Il doit atteindre la défense du j2: "+ j2.getDefence() + " ***\n\n");
+            System.out.print("***Il doit atteindre la défense du j2: "+ j2.getDefence_value() + " ***\n\n");
             System.out.print("Commandes:\n\nstop: arrêter le jeu\netat: afficher l'inventaire, la pile et les pv\najout_nb: ajoute un nombre de l'inventaire à la pile\najout_op: ajouter un opérateur à la pile\nenlever: enlever un élément de la pile\npile: utiliser les 3 premiers éléments de la piles pour faire un nouveau nombre\nseparer: sépare un élément de la pile pour retrouver les nombres qui ont permis de le créer\nattaque: prendre le dernier élément de la pile pour en faire sa défense");
             System.out.print("\n\n");
 
-            while (j1.getAttack() == 0) {
+            while (j1.getAttack_value() == 0) {
                 String reponse = sc.nextLine();
                 if (reponse.equals("stop")) {
                     return 0;
@@ -210,7 +210,7 @@ public class Gameplay {
                     System.out.print("Quel nombre ?\nVoici votre inventaire: " + j1.inventory.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInInventory(Integer.valueOf(reponse))) {
-                        j1.pushNumberInStack(j1.NumberInInventory(Integer.valueOf(reponse)));
+                        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(reponse)));
                     } else {
                         System.out.print("le nombre n'est pas dans l'inventaire\n");
                     }
@@ -230,17 +230,17 @@ public class Gameplay {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInStack(reponse)) {
-                        j1.putObjectOutOfStack(j1.ItemInStack(reponse));
+                        j1.putObjectOutOfStack(j1.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
                 } else if (reponse.equals("pile")) {
-                    j1.create_new_number_stack();
+                    j1.createNewNumberStack();
                 } else if (reponse.equals(("separer"))) {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInStack(reponse)) {
-                        j1.separateNumbers(j1.ItemInStack(reponse));
+                        j1.separateNumbers(j1.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }

@@ -41,21 +41,23 @@ public class ItemsStack extends java.util.Stack<Items> {
     }
 
     /**
-     * Remove the first element of the stack equals to value
+     * Remove the first element of the stack equals to value, without returning it
      * @param value, the value to remove
      */
 
     public void popOnValue(Items value) {
 
         ItemsStack tempStack = new ItemsStack();
+        boolean found = false;
 
         // Transfer elements to tempStack, skipping the target value
         while (!this.isEmpty()) {
             Items currentItem = this.pop();
-            if (!currentItem.equals(value)) {
+            if (!currentItem.equals(value) || found) {
                 tempStack.push(currentItem);
-            } else {
-                break; // Stop once the target value is found and popped
+            }
+            else{
+                found = true;
             }
         }
 
