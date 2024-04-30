@@ -1,7 +1,7 @@
 package graphics;
 
-public class Image extends Graphic_Element{
-    public Image(double x, double y, Graphic_type type){
+public class GImage extends Graphic_Element{
+    public GImage(double x, double y, Graphic_type type){
         super(x,y, type);
     }
 

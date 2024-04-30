@@ -2,10 +2,11 @@ package graphics;
 import base.Operator;
 
 import javax.swing.*;
+import java.awt.*;
 
 //juste une classe de test du fonctionnement de Swing
 public class TestGraphique {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AWTException {
         Interface inter = new Interface(2000,1000);
     }
 

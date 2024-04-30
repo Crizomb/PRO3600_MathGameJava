@@ -6,29 +6,28 @@ import java.util.List;
 public class Panel_Manager {
 
 
-    private List<Groupe_Panel> panel_list;
-    private Groupe_Panel actual_Groupe_panel;
+    private List<Frame_Panel> panel_list;
+    private Frame_Panel actual_Groupe_panel;
 
-    public Panel_Manager(Groupe_Panel... p){
+    public Panel_Manager(Frame_Panel... p){
         panel_list = new ArrayList<>();
         addPanel(Panel_State.DEFAULT);
         actual_Groupe_panel = null;
     }
 
-    public Groupe_Panel addPanel(Panel_State pstate){
+    public Frame_Panel addPanel(Panel_State pstate){
         int id = panel_list.size();
-        Groupe_Panel p = new Groupe_Panel(pstate, id);
+        Frame_Panel p = new Frame_Panel(pstate, id);
         panel_list.add(p);
         if (actual_Groupe_panel==null){
             actual_Groupe_panel = p;
         }
-
         return p;
     }
 
     public String toString(){
         String t = "";
-        for (Groupe_Panel p :
+        for (Frame_Panel p :
                 panel_list) {
             t+= p.getState()+"; ";
         }
@@ -36,17 +35,15 @@ public class Panel_Manager {
     }
 
     public void initialize(){
-        for (Groupe_Panel p:panel_list) {
+        for (Frame_Panel p:panel_list) {
             p._setVisible(false);
         }
     }
 
-    public Groupe_Panel getPanelFromState(Panel_State state_searched)  {
-        for (Groupe_Panel panel :
+    public Frame_Panel getPanelFromState(Panel_State state_searched)  {
+        for (Frame_Panel panel :
              panel_list) {
-            System.out.println(panel.getState()+state_searched.toString());
             if (panel.getState() == state_searched){
-                System.out.println("done");
                 return panel;
             }
         }
@@ -58,8 +55,22 @@ public class Panel_Manager {
     }
 
     public void changePanel(Panel_State p_state) {
-        System.out.println("Présent dans l'ancien panel "+actual_Groupe_panel.toString());
+        for (Frame_Panel gp :
+                panel_list) {
+            gp._setVisible(false);
+        }
+        try {
+            actual_Groupe_panel = getPanelFromState(p_state);
+            actual_Groupe_panel._setVisible();
+        }
+        catch(NullPointerException e){
+            System.out.println("pas de nouveau panneaux activée");
+        }
+    }
 
+    /*public void changePanel(Panel_State p_state) {
+        System.out.println("Présent dans l'ancien panel "+actual_Groupe_panel.toString());
+        System.out.println(p_state);
         actual_Groupe_panel._setVisible(false);
         try {
             actual_Groupe_panel = getPanelFromState(p_state);
@@ -68,7 +79,7 @@ public class Panel_Manager {
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
-        }
-    }
+        }*/
+
 
 }
