@@ -1,7 +1,7 @@
 /*
  * Created by JFormDesigner on Mon Apr 15 23:17:33 CEST 2024
  */
-
+/*
 package graphics;
 
 import javax.swing.*;
@@ -9,7 +9,7 @@ import net.miginfocom.swing.*;
 
 /**
  * @author tim
- */
+ *//*
 public class test extends JPanel {
     public test() {
         initComponents();
@@ -42,3 +42,4 @@ public class test extends JPanel {
     // Generated using JFormDesigner Evaluation license - unknown
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
+*/
