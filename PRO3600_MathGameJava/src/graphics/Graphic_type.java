@@ -99,7 +99,7 @@ public enum Graphic_type {
         if(URL == ""){
             return null;
         }
-        System.out.println(getURL());
+ //       System.out.println(getURL());
         try {
             //TODO : resoudre le probleme d'acces pour les images situes dans le dossier texture, et y mettre les images
             ImageIcon i = new ImageIcon(Button.class.getResource(URL));

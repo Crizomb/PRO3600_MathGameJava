@@ -21,7 +21,6 @@ public class Button extends JButton {
         setBackground(type.getFont_color());
 
         if(type.getURL() != ""){
-            System.out.println(text + " image set");
             setImage(type.getImage_icon());
         }
         if(type.getFont() != null){

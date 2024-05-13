@@ -15,7 +15,9 @@ public class Interface  {
     Panel_Manager panel_manager;
     InterfaceDebugger debug;
 
-    private Frame_Panel menu_group_panel;
+    private Dimension SCREEN_SIZE;
+
+    private Frame_Panel menu_frame;
 
     public Interface(int width, int height) throws AWTException {
          debug = new InterfaceDebugger();
@@ -62,10 +64,11 @@ public class Interface  {
     private void initializeGameInterface(int w, int h)   throws AWTException{
         fenetre = new JFrame(NOM_JEU);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.getContentPane().setBackground(Color.cyan);
+        fenetre.getContentPane().setBackground(Color.white);
         panel_manager = new Panel_Manager();
 
         setSize(w, h);
+        SCREEN_SIZE = getSCREEN_SIZE();
         createStartMenu();
         createBallPanel();
         changePanel(Panel_State.MENU_1);
@@ -88,14 +91,16 @@ public class Interface  {
     }
 
     private void createStartMenu()  {
-        menu_group_panel = panel_manager.addPanel(Panel_State.MENU_1);
+        menu_frame = panel_manager.addPanel(Panel_State.MENU_1);
+        JPanel groupe_main_buttons = create_panel(0.25f,0.25f,0.5f,0.5f, Panel_State.MENU_1, Color.green);
         //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        BorderLayout b_layout = new BorderLayout();
+
+        /*BorderLayout b_layout = new BorderLayout();
         b_layout.setHgap(400);
-        b_layout.setVgap(40);
+        b_layout.setVgap(40);*/
         fenetre.setLayout(null);
-        menu_group_panel.setBounds(450,420, 1000,500);
-        menu_group_panel.setBackground(Color.blue);
+       // menu_group_panel.setBounds(450,420, 1000,500);   //TODO : retranscrir taille sur autres panels
+      //  menu_group_panel.setBackground(Color.black);
         Button start_button = create_button(10,50,Panel_State.MENU_1,"Start Game", Graphic_type.MENU_Button, 0, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 panel_manager.changePanel(Panel_State.game_settings);
@@ -108,16 +113,19 @@ public class Interface  {
             }
         });
 
+        //Labels
+        groupe_main_buttons.add(start_button);
+        groupe_main_buttons.add(quit_button);
 
-        //start_button.setAlignmentY(JLabel.CENTER)
-
+        //fenetre
+        fenetre.add(groupe_main_buttons);
     }
 
     private void createBallPanel(){
         Frame_Panel ball_group_panel = panel_manager.addPanel(Panel_State.game_settings);
-        JPanel panel_ball = new JPanel();
+        JPanel panel_ball = create_panel(0.25f,0.25f,0.3f,0.3f, Panel_State.game_settings);
 
-        panel_ball.setOpaque(false);
+        //panel_ball.setOpaque(false);
        panel_ball.setLayout(new GridLayout(4,3));
         for (int i = 0; i < 10; i++) {
             Button b = create_button(5,5,Panel_State.game_settings ,""+((i+1)*10),Graphic_type.Ball_Number);
@@ -125,11 +133,10 @@ public class Interface  {
             b.setBorderPainted(false);
         }
        // ball_group_panel.add(return_button);
-        ball_group_panel.setBounds(450,220, 1000,500);
+      //  ball_group_panel.setBounds(450,220, 1000,500);
 
-        ball_group_panel.setBackground(Color.green);
+     //   ball_group_panel.setBackground(Color.green);
 
-        ball_group_panel.add(panel_ball);
 
         Button home_button = create_button(0,0,Panel_State.game_settings, "", Graphic_type.Settings_icon, -5, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -146,13 +153,14 @@ public class Interface  {
                 // menu_group_panel._setVisible(false);
             }
         });
-        JPanel settingsPanel = new JPanel();
-        settingsPanel.setOpaque(false);
+        JPanel settingsPanel = create_panel(0.05f, 0.05f, 0.1f,0.3f, Panel_State.game_settings, Color.black);
+        /*settingsPanel.setOpaque(false);
         settingsPanel.setLayout(new GridLayout(3,1));
+        settingsPanel.setBounds(0,100, 50, 100);*/
         settingsPanel.add(home_button);
-        settingsPanel.setBounds(0,100, 50, 100);
+        settingsPanel.add(return_button);
 
-        ball_group_panel.addElementToPanel(settingsPanel);
+        //ball_group_panel.addElementToPanel(settingsPanel);
 
 
         fenetre.add(ball_group_panel);
@@ -163,39 +171,74 @@ public class Interface  {
         fenetre.setPreferredSize(new Dimension(w, h));
     }
 
+    public Dimension getSCREEN_SIZE(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int)screenSize.getWidth();
+        int height = (int)screenSize.getHeight();
+        System.out.println("Screen size, width : "+ width+ ", height : "+height);
+        return new Dimension(width, height);
+    }
+
+    public int ratiow(float f){
+       return (int) (f*SCREEN_SIZE.width );
+    }
+
+    public int ratioh(float f){
+        return (int) (f*SCREEN_SIZE.height);
+    }
+
+    public void WarnFitScreen (float x, float y, float sizex, float sizey){
+        if (x+sizex>1 || y+sizey>1){
+            System.out.println("Warning : object may not be displayed properly on screen");
+        }
+    }
     public void changePanel(Panel_State p_state) {
         panel_manager.changePanel(p_state);
     }
 
-    public Button create_button(int x, int y, Panel_State pstate, Graphic_type type)  {
+    public Button create_button(float x, float y, Panel_State pstate, Graphic_type type)  {
         return create_button(x,y,pstate,"", type);
     }
 
-    public Button create_button(int x, int y, Panel_State pstate, String text, Graphic_type type)  {
+    public Button create_button(float x, float y, Panel_State pstate, String text, Graphic_type type)  {
         return create_button(x,y,pstate,text, type, 0);
     }
 
-    public Button create_button(int x, int y, Panel_State pstate, String text, Graphic_type type, int sizeModifier)  {
+    public Button create_button(float x, float y, Panel_State pstate, String text, Graphic_type type, int sizeModifier)  {
         Button b = new Button(x, y, text, type, sizeModifier);
         Frame_Panel panel_related = panel_manager.getPanelFromState(pstate);
-        System.out.println(text + " c "+panel_related.toString());
         panel_related.addElementToPanel(b);
         panel_related.add(b);
         return b;
     }
 
-    public Button create_button(int x, int y, Panel_State pstate, String text, Graphic_type type, int sizeModifier, ActionListener action_pressed)  {
+    public Button create_button(float x, float y, Panel_State pstate, String text, Graphic_type type, int sizeModifier, ActionListener action_pressed)  {
         Button b = create_button(x, y, pstate, text, type, sizeModifier);
         b.changeAction(action_pressed);
         return b;
     }
 
-    public GImage create_image(int x, int y, Panel_State pstate, Graphic_type type, JPanel panel)  {
+    public GImage create_image(float x, float y, Panel_State pstate, Graphic_type type, JPanel panel)  {
         GImage b = new GImage(x, y, type);
         panel_manager.getPanelFromState(pstate).addElementToPanel(b);
         return b;
     }
 
+    public JPanel create_panel(float posx, float posy, float sizex, float sizey,Panel_State pstate, Color c){
+        JPanel p = new JPanel();
+        p.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
+        System.out.println("panel created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+ratiow(sizex) +" "+ ratioh(sizey));
+        WarnFitScreen(posx,posy,sizex,sizey);
+        panel_manager.getPanelFromState(pstate).addElementToPanel(p);
+        p.setBackground(c);
+        return p;
+    }
+
+    public JPanel create_panel(float posx, float posy, float sizex, float sizey, Panel_State pstate){
+        JPanel p = create_panel(posx, posy, sizex, sizey, pstate, Color.white);
+        p.setOpaque(false);
+        return p;
+    }
     /* ces méthodes sont les actions des boutons du jeu */
 
     /*public void start_button_pressed(ActiveEvent e){
