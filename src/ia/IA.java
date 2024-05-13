@@ -49,10 +49,45 @@ public class IA extends Player{
         // trois opérations si proche de 5%.
     }
 
+    static boolean isPrime(int n)
+    {
+        // Corner case
+        if (n <= 1)
+            return false;
+ 
+        // Check from 2 to sqrt(n)
+        for (int i = 2; i <= Math.sqrt(n); i++)
+            if (n % i == 0)
+                return false;
+ 
+        return true;
+    }
+    
     public int findDefence(){
-        ArrayList<Items> data = this.getInventory(); // À vérifier si le transtype fonctionne
-        ArrayList<Items> sortedData = data.reverseOrder();
-        // Produit de "grands" nombres premiers (sauf 2) ?
+    	int nb_produits = 3;
+        ArrayList<Items> data = this.inventory;
+        int n = data.size();
+        ArrayList<Integer> data_copy = new ArrayList<Integer>();
+        for (int i = 0; i < n; i++) {
+        	data_copy.add(data.get(i).getValue().getIntValue());
+        }
+        int i = 0, res = 0;
+        Random rand = new Random();
+        while (i < n && i < nb_produits) {
+        	int randInt = rand.nextInt(n);
+            int res = data_copy.get(randInt);
+            data_copy.remove(randInt);
+            i++;
+        }
+        return res;
+        // data_copy.sort(null);
+        // int n1 = 0;
+        // int n2 = 0;
+        // while (n1 = 0 || n2 = 0) {
+        	
+        }
+        // Idée 1 : Produit de trois nombres au hasard.
+        // Idée 2 : Produit de "grands" nombres premiers (sauf 2)
         // TODO : Multiplier les deux plus grands nombres premiers.
     }
 
