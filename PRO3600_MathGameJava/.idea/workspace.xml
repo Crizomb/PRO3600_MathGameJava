@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2bed6dd3-8798-4262-8846-753d7466feb4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/graphics/DisplayableElement.java" afterDir="false" />
+    <list default="true" id="2bed6dd3-8798-4262-8846-753d7466feb4" name="Changes" comment="add Ancho">
+      <change afterPath="$PROJECT_DIR$/src/graphics/AnchorManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/graphics/AnchorPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/graphics/anchoredElement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Bullet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Button.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/Frame_Panel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Frame_Panel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Interface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/Panel_Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Panel_Manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/test.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/InterfaceDebugger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/InterfaceDebugger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +23,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>

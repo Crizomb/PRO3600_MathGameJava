@@ -10,6 +10,7 @@ public class Button extends JButton  {
     //JButton graph_button;
     String text;
     int width, heigth;
+    int posx,  posy;
     Graphic_type type;
     private Frame_Panel panelParent;
     public Button(String text, Graphic_type type, int sizeModifier, Frame_Panel panelParent){
@@ -81,6 +82,12 @@ public class Button extends JButton  {
         imgic = new ImageIcon(newimg);  // transform it back
         setImage(imgic);
 
+    }
+
+    public void setPos(int x, int y){
+        posx = x-getBounds().width/2;
+        posy = y-getBounds().height;
+        setBounds(x-getBounds().width/2, y-getBounds().height, getBounds().width, getBounds().height);
     }
 
     public static int getTextWidth(Font font, String text) {

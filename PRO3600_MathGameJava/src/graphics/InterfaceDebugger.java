@@ -3,8 +3,13 @@ package graphics;
 import java.awt.*;
 
 public class InterfaceDebugger {
-    public void getMousePos(int number_pos) throws AWTException {
+    Robot r ;
+
+    public InterfaceDebugger() throws AWTException {
         Robot r = new Robot();
+    }
+    public void getMousePosAtStart(int number_pos) throws AWTException {
+
 
 
         for (int i = 0; i < number_pos; i++) {
@@ -30,8 +35,9 @@ public class InterfaceDebugger {
     }
 
 
-    public void getMousePos() throws AWTException{
-        getMousePos(1);
+
+    public void getMousePosAtStart() throws AWTException{
+        getMousePosAtStart(1);
     }
 
 }

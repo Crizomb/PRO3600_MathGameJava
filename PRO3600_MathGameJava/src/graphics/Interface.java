@@ -13,6 +13,7 @@ public class Interface  {
     private  int HEIGHT = 993;
     static JFrame fenetre;
     Panel_Manager panel_manager;
+    AnchorManager anchorManager;
     InterfaceDebugger debug;
 
     private static Dimension SCREEN_SIZE;
@@ -70,15 +71,17 @@ public class Interface  {
         setSize(w, h);
         SCREEN_SIZE = getSCREEN_SIZE();
         panel_manager = new Panel_Manager();
+        anchorManager = new AnchorManager();
         createStartMenu();
         createBallPanel();
+        createGamePanel();
         changePanel(Panel_State.MENU_1);
         fenetre.pack();
         fenetre.setVisible(true);
         new Thread(new Runnable() {
         public void run() {
             try {
-                debug.getMousePos(4);
+                debug.getMousePosAtStart(4);
             } catch (AWTException e) {
                 throw new RuntimeException(e);
             }
@@ -124,15 +127,7 @@ public class Interface  {
 
     private void createBallPanel(){
         Frame_Panel ball_group_panel = panel_manager.addPanel(Panel_State.game_settings);
-        JPanel panel_ball = create_panel(0.25f,0.25f,0.3f,0.3f, Panel_State.game_settings);
 
-        //panel_ball.setOpaque(false);
-       panel_ball.setLayout(null);
-        for (int i = 0; i < 10; i++) {
-            Button b = create_button(0.5f + 0.05f * i,0.5f , 0.05f, 0.05f,Panel_State.game_settings ,""+((i+1)*10),Graphic_type.Ball_Number);
-            //panel_ball.add(b);
-            b.setBorderPainted(false);
-        }
        // ball_group_panel.add(return_button);
       //  ball_group_panel.setBounds(450,220, 1000,500);
 
@@ -154,6 +149,12 @@ public class Interface  {
                 // menu_group_panel._setVisible(false);
             }
         });
+        Button launch = create_button(0.3f,0.8f,0.3f,0.3f, Panel_State.game_settings, "launch", Graphic_type.MENU_Button, -20, new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                changePanel(Panel_State.game_attack_1);
+                // menu_group_panel._setVisible(false);
+            }
+        });
         JPanel settingsPanel = create_panel(0.05f, 0.05f, 0.1f,0.3f, Panel_State.game_settings, Color.black);
         /*settingsPanel.setOpaque(false);
         settingsPanel.setLayout(new GridLayout(3,1));
@@ -165,6 +166,29 @@ public class Interface  {
 
 
         fenetre.add(ball_group_panel);
+
+    }
+
+    public void createGamePanel(){
+        JPanel panel_ball = create_panel(0.25f,0.25f,0.3f,0.3f, Panel_State.game_attack_1);
+
+        //panel_ball.setOpaque(false);
+        panel_ball.setLayout(null);
+        Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
+
+        for (int i = 0; i < 10; i++) {
+            // Button b = create_button(0.5f + 0.05f * i,0.5f , 0.05f, 0.05f,Panel_State.game_settings ,""+((i+1)*10),Graphic_type.Ball_Number);
+            //panel_ball.add(b);
+
+            Bullet b = new Bullet(0,0,i,panel_related, anchorManager);
+            resizeElement(b, 0.5f + 0.05f * i,0.5f , 0.05f, 0.05f);
+            panel_related.addElementToPanel(b);
+            panel_related.add(b);
+            b.setBorderPainted(false);
+        }
+        AnchorPoint a = new AnchorPoint(0.1f,0.4f , "point", anchorManager);
+        AnchorPoint c = new AnchorPoint(0.5f,0.4f , "point", anchorManager);
+
 
     }
 
@@ -212,6 +236,8 @@ public class Interface  {
 
     public void resizeElement(Button element, float posx, float posy, float sizex, float sizey){
         resizeElement(element, element.getPanelParent().getState(), posx, posy, sizex, sizey);
+        element.posx = ratiow(posx);
+        element.posy = ratioh(posy);
         element.refreshImage();
     }
 
