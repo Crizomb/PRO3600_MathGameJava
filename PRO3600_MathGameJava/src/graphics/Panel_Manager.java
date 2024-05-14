@@ -54,6 +54,7 @@ public class Panel_Manager {
         return null;
     }
 
+
     public void changePanel(Panel_State p_state) {
         for (Frame_Panel gp :
                 panel_list) {

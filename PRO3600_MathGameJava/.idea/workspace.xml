@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bed6dd3-8798-4262-8846-753d7466feb4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/graphics/DisplayableElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Bullet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/Frame_Panel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Frame_Panel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/Panel_Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Panel_Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/test.form" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,9 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -57,12 +61,34 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.build&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Graphics2 Main">
+    <configuration name="Graphics2 Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="graphics.TestGraphique" />
+      <module name="PRO3600_MathGameJava" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestGraphique" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="graphics.TestGraphique" />
       <module name="PRO3600_MathGameJava" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.TestGraphique" />
+      <item itemvalue="Application.Graphics2 Main" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

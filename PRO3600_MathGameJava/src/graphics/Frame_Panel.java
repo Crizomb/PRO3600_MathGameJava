@@ -1,6 +1,7 @@
 package graphics;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,12 @@ public class Frame_Panel extends JPanel{
         this.panel_id=panel_id;
         this.state = p_state;
         element_panel = new ArrayList<>();
+        this.setLayout(null);
         Interface.fenetre.add(this);
+        this.setOpaque(true);
+        System.out.println(Interface.getScreenSize());
+        this.setBounds(0,0,Interface.getScreenSize().width, Interface.getScreenSize().height);
+        this.setBackground(Color.green);
     }
 
     public Frame_Panel(Frame_Panel panel_parent, int panel_id){

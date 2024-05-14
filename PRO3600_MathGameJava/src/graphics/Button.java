@@ -4,25 +4,32 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
-public class Button extends JButton {
+public class Button extends JButton  {
     //JButton graph_button;
     String text;
-    public Button(double x, double y, String text, Graphic_type type, int sizeModifier){
+    int width, heigth;
+    Graphic_type type;
+    private Frame_Panel panelParent;
+    public Button(String text, Graphic_type type, int sizeModifier, Frame_Panel panelParent){
         super();
+        width=getBounds().width;
+        heigth=getBounds().height;
+        this.panelParent = panelParent;
+        this.type = type;
+        System.out.println(width * heigth);
         //graph_button = new JButton();
         this.text=text;
         setText(text);
         setVerticalTextPosition(SwingConstants.CENTER);
         setHorizontalTextPosition(SwingConstants.CENTER);
         //graph_button.setBounds((int)x,(int)y,type.getSize().width, type.getSize().height);
-        setSize(type.getSize());
-        setPreferredSize(type.getSize());
+        //setSize(type.getSize());
+      //  setPreferredSize(type.getSize());
         setBackground(type.getFont_color());
 
-        if(type.getURL() != ""){
-            setImage(type.getImage_icon());
-        }
+
         if(type.getFont() != null){
             Font f = type.getFont();
 
@@ -49,10 +56,31 @@ public class Button extends JButton {
 
     }
 
+    public void refreshImage(){
+        if(type.getURL() != ""){
+            setImageAndRescale(type.getImage_icon());
+        }
+    }
+
     public void  setImage(ImageIcon imgic){
         setIcon(imgic);
         setOpaque(false);
-        setLayout(new BorderLayout());
+        setLayout(null);
+        //setBounds();
+    }
+
+    public void setImageAndRescale(ImageIcon imgic){
+
+        Image image = imgic.getImage(); // transform it
+        float ratioImage = image.getWidth(null) / image.getHeight(null);
+        System.out.println("ratio : "+ ratioImage+ "w : "+image.getWidth(null)+" h : "+ image.getHeight(null));
+        System.out.println("bounds w : "+getBounds().width+" h : "+ getBounds().height);
+        System.out.println("Scale image "+getBounds().width + " and "+Math.round(getBounds().width*ratioImage));
+        Image newimg = image.getScaledInstance(getBounds().width,  Math.round(getBounds().width*ratioImage),  Image.SCALE_REPLICATE); // scale it the smooth way
+        setBounds(getBounds().x, getBounds().y, getBounds().width,  Math.round(getBounds().width*ratioImage));
+        imgic = new ImageIcon(newimg);  // transform it back
+        setImage(imgic);
+
     }
 
     public static int getTextWidth(Font font, String text) {
@@ -92,7 +120,11 @@ public class Button extends JButton {
         return null;
     }
 
-  /*  @Override
+    public Frame_Panel getPanelParent() {
+        return panelParent;
+    }
+
+    /*  @Override
     public String toString() {
         return "Button "+text+" "+ position.toString();
     }*/
