@@ -51,7 +51,7 @@ public class Bullet extends Button {
                      }*/
                      refreshThread();
                     if (isOperator){
-                        createNewOperator();
+                        // createNewOperator();
                         // anchorManager.spawnNewOperator();
                     }
                     moveButtonAction.start();

@@ -132,8 +132,9 @@ class PlayerTest {
         Player player = new Player();
         int initialInventorySize = player.inventory.size();
 
-        Items itemToPush = player.inventory.getFirst();
-
+        //TODO corriger pb
+         //Items itemToPush = player.inventory.getFirst();
+        Items itemToPush = player.inventory.get(0);
         player.pushNumberInStack(itemToPush);
 
         assertTrue(player.stack.contains(itemToPush));

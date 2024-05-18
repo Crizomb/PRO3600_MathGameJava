@@ -55,13 +55,16 @@ public class AnchorManager {
     }
 
     public void removeOperator(){
+        List<Bullet> L = new ArrayList<>();
         for (Bullet b:
              allBullets) {
             if(b.isOperator){
                 b.getPanelParent().remove(b);
-                allBullets.remove(b);
+            }else{
+                L.add(b);
             }
         }
+        allBullets = L;
     }
 
 
