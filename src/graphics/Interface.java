@@ -211,9 +211,9 @@ public class Interface  {
         anchorManager.removeOperator();
         Bullet b = new Bullet(0,0,"+", panel_related,anchorManager,true);
         resizeElement(b, 0.5f,0.1f , 0.05f, 0.05f);
+        b.relocateToNextAnchorPoint(AnchorPurpose.Operator_jar);
         panel_related.addElementToPanel(b);
         panel_related.add(b);
-        b.relocateToNextAnchorPoint(AnchorPurpose.Operator_jar);
     }
 
     public void setSize(int w, int h){
