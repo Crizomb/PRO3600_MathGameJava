@@ -18,6 +18,7 @@ public class Frame_Panel extends JPanel{
 
     public void addElementToPanel(JComponent e){
         element_panel.add(e);
+        add(e);
         this.add(e);
     }
 
@@ -68,6 +69,7 @@ public class Frame_Panel extends JPanel{
     }
 
     public void _setVisible(boolean visible){
+
         setVisible(visible);
 
         for (JComponent jc:
@@ -78,4 +80,6 @@ public class Frame_Panel extends JPanel{
 
         //parcourt les elements pour les rendre visible ou non
     }
+
+
 }

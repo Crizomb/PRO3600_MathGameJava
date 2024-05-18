@@ -76,6 +76,8 @@ public class Interface  {
         createBallPanel();
         createGamePanel();
         changePanel(Panel_State.MENU_1);
+        anchorManager.setSorted_anchorPoint();
+        anchorManager.relocateallBullets();
         fenetre.pack();
         fenetre.setVisible(true);
         new Thread(new Runnable() {
@@ -102,9 +104,9 @@ public class Interface  {
         /*BorderLayout b_layout = new BorderLayout();
         b_layout.setHgap(400);
         b_layout.setVgap(40);*/
-        fenetre.setLayout(null);
-       // menu_group_panel.setBounds(450,420, 1000,500);   //TODO : retranscrir taille sur autres panels
-      //  menu_group_panel.setBackground(Color.black);
+        //fenetre.setLayout(null);
+       // menu_group_panel.setBounds(450,420, 1000,500);
+        //  menu_group_panel.setBackground(Color.black);
         Button start_button = create_button(0.3f,0.3f, 0.4f, 0.2f,Panel_State.MENU_1,"Start Game", Graphic_type.MENU_Button, 0, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 panel_manager.changePanel(Panel_State.game_settings);
@@ -122,7 +124,7 @@ public class Interface  {
         groupe_main_buttons.add(quit_button);*/
 
         //fenetre
-        fenetre.add(groupe_main_buttons);
+        //fenetre.add(groupe_main_buttons);
     }
 
     private void createBallPanel(){
@@ -170,26 +172,48 @@ public class Interface  {
     }
 
     public void createGamePanel(){
-        JPanel panel_ball = create_panel(0.25f,0.25f,0.3f,0.3f, Panel_State.game_attack_1);
 
-        //panel_ball.setOpaque(false);
-        panel_ball.setLayout(null);
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
 
         for (int i = 0; i < 10; i++) {
             // Button b = create_button(0.5f + 0.05f * i,0.5f , 0.05f, 0.05f,Panel_State.game_settings ,""+((i+1)*10),Graphic_type.Ball_Number);
             //panel_ball.add(b);
 
-            Bullet b = new Bullet(0,0,i,panel_related, anchorManager);
+            AnchorPoint anch_i = new AnchorPoint(0.16f+0.05f*i,0.86f , AnchorPurpose.Number_Reserve, anchorManager);
+            Bullet b = new Bullet(0,0,String.valueOf(i),panel_related, anchorManager);
             resizeElement(b, 0.5f + 0.05f * i,0.5f , 0.05f, 0.05f);
             panel_related.addElementToPanel(b);
-            panel_related.add(b);
+           // panel_related.add(b);
             b.setBorderPainted(false);
         }
-        AnchorPoint a = new AnchorPoint(0.1f,0.4f , "point", anchorManager);
-        AnchorPoint c = new AnchorPoint(0.5f,0.4f , "point", anchorManager);
+       // AnchorPoint a = new AnchorPoint(0.1f,0.4f , "point", anchorManager);
+        AnchorPoint c = new AnchorPoint(0.5f,0.5f , AnchorPurpose.Number_jar, anchorManager);
+        AnchorPoint d = new AnchorPoint(0.55f,0.5f , AnchorPurpose.Operator_jar, anchorManager);
+        AnchorPoint c2 = new AnchorPoint(0.6f,0.5f , AnchorPurpose.Number_jar, anchorManager);
 
 
+
+        Button op1 = create_button(0.1f, 0.86f, 0.05f,0.05f,Panel_State.game_attack_1, "+",Graphic_type.Ball_Number, 0,new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+               replaceOperator();
+            }
+        });
+
+        JPanel bullet_number_panel = create_panel(0.155f,0.85f,0.85f,0.15f, Panel_State.game_attack_1, Color.gray);
+        JPanel bullet_operator_panel = create_panel(0f,0.85f,0.15f,0.15f, Panel_State.game_attack_1, Color.red);
+        JPanel jar_panel = create_panel(0.001f,0.01f,0.3f,0.83f, Panel_State.game_attack_1, Color.blue);
+        JPanel operation_panel = create_panel(0.81f,0.01f,0.19f,0.83f, Panel_State.game_attack_1, Color.blue);
+        JPanel test_panel = create_panel(0.5f, 0.5f, .1f,0.1f, Panel_State.game_attack_1, Color.black);
+    }
+
+    public void replaceOperator(){
+        Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
+        anchorManager.removeOperator();
+        Bullet b = new Bullet(0,0,"+", panel_related,anchorManager,true);
+        resizeElement(b, 0.5f,0.1f , 0.05f, 0.05f);
+        panel_related.addElementToPanel(b);
+        panel_related.add(b);
+        b.relocateToNextAnchorPoint(AnchorPurpose.Operator_jar);
     }
 
     public void setSize(int w, int h){
@@ -229,9 +253,8 @@ public class Interface  {
     public void resizeElement(JComponent element, Panel_State pstate, float posx, float posy, float sizex, float sizey){
         WarnFitScreen(posx, posy, sizex, sizey);
         element.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
-        JPanel parent = panel_manager.getPanelFromState(pstate);
-        parent.revalidate();
-        parent.repaint();
+        Frame_Panel parent = panel_manager.getPanelFromState(pstate);
+        actualizeFrame(parent);
     }
 
     public void resizeElement(Button element, float posx, float posy, float sizex, float sizey){
@@ -239,6 +262,13 @@ public class Interface  {
         element.posx = ratiow(posx);
         element.posy = ratioh(posy);
         element.refreshImage();
+    }
+
+
+
+    public void actualizeFrame(Frame_Panel fpanel){
+        fpanel.revalidate();
+        fpanel.repaint();
     }
 
 
@@ -285,13 +315,17 @@ public class Interface  {
     public JPanel create_panel(float posx, float posy, float sizex, float sizey,Panel_State pstate, Color c){
         JPanel p = new JPanel();
         p.setLayout(null);
+        p.setBackground(c);
        // p.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
         resizeElement(p, pstate, posx, posy, sizex, sizey);
-        System.out.println("panel created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+ratiow(sizex) +" "+ ratioh(sizey));
+        System.out.println("panel created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+ratiow(sizex) +" "+ ratioh(sizey)+ " in "+pstate.toString());
      //   WarnFitScreen(posx,posy,sizex,sizey);
-        panel_manager.getPanelFromState(pstate).addElementToPanel(p);
-        p.setBackground(c);
-        p.setOpaque(true);
+        Frame_Panel panel_related =panel_manager.getPanelFromState(pstate);
+        panel_related.addElementToPanel(p);
+        panel_related.add(p);
+
+        //p.setOpaque(true);
+     //   fenetre.add(p);
         return p;
     }
 

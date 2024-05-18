@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2bed6dd3-8798-4262-8846-753d7466feb4" name="Changes" comment="add Ancho">
-      <change afterPath="$PROJECT_DIR$/src/graphics/AnchorManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/graphics/AnchorPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/graphics/anchoredElement.java" afterDir="false" />
+    <list default="true" id="2bed6dd3-8798-4262-8846-753d7466feb4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/graphics/AnchorPurpose.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/Operator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/Operator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/AnchorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/AnchorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/AnchorPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/AnchorPoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Bullet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/Frame_Panel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Frame_Panel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Interface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/InterfaceDebugger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/InterfaceDebugger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -99,6 +100,14 @@
       <option name="presentableId" value="Default" />
       <updated>1703798833378</updated>
     </task>
+    <task id="LOCAL-00001" summary="add AnchorPoint and AnchorManager, un nouveau Panel_Frame game_attack_1 avec des balls et des points d'ancrage &#10;Les balls peuvent se déplacer et quand on les relache elles se fixent au AnchorPoint libre le plus proche">
+      <created>1715707096265</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715707096265</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -111,6 +120,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add AnchorPoint and AnchorManager, un nouveau Panel_Frame game_attack_1 avec des balls et des points d'ancrage &#10;Les balls peuvent se déplacer et quand on les relache elles se fixent au AnchorPoint libre le plus proche" />
+    <option name="LAST_COMMIT_MESSAGE" value="add AnchorPoint and AnchorManager, un nouveau Panel_Frame game_attack_1 avec des balls et des points d'ancrage &#10;Les balls peuvent se déplacer et quand on les relache elles se fixent au AnchorPoint libre le plus proche" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

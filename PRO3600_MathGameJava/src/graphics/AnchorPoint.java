@@ -6,22 +6,23 @@ import java.awt.*;
 public class AnchorPoint {
     Dimension pos;
     private Bullet ElementContained = null;
-    public String purpose;
+    public AnchorPurpose purpose;
     public AnchorManager anchorManager;
     int posx, posy;
 
 
-    public AnchorPoint(float ratioPosX, float ratioPosY, String purpose, AnchorManager anchorManager){
-        this(Interface.ratiow(ratioPosX),Interface.ratioh(ratioPosY), purpose, anchorManager);
+    public AnchorPoint(float ratioPosX , float ratioPosY , AnchorPurpose purpose , AnchorManager anchorManager) {
+        this(Interface.ratiow(ratioPosX) , Interface.ratioh(ratioPosY) , purpose , anchorManager);
     }
 
-    public AnchorPoint(int posx, int posy, String purpose, AnchorManager anchorManager){
-        this.posx =posx;
-        this.posy =posy;
+    public AnchorPoint(int posx , int posy , AnchorPurpose purpose , AnchorManager anchorManager) {
+        this.posx = posx;
+        this.posy = posy;
         this.anchorManager = anchorManager;
-        System.out.println("AnchorPoint set in x "+ posx+" y :" + posy);
-        System.out.println(anchorManager.allAnchorPoint);
-        System.out.println(this);
+        this.purpose = purpose;
+        //System.out.println("AnchorPoint set in x "+ posx+" y :" + posy);
+        //System.out.println(anchorManager.allAnchorPoint);
+       // System.out.println(this);
 
         anchorManager.allAnchorPoint.add(this);
     }
@@ -30,11 +31,22 @@ public class AnchorPoint {
         return ElementContained;
     }
 
-    public void setElementContained(Bullet elementContained) {
-        ElementContained = elementContained;
+    public void setElementContained(Bullet a){
+        ElementContained = a;
     }
 
-    public boolean HasElement(){
-        return !(ElementContained == null);
+    public void breakLinkWithElemeent(){
+        if(HasNoElement()){
+            return;
+        }
+        ElementContained.anchoredPoint = null;
+        setElementContained(null);
     }
+
+    public boolean HasNoElement(){
+        return ElementContained == null;
+    }
+
+
 }
+
