@@ -20,10 +20,6 @@ public class AnchorPoint {
         this.posy = posy;
         this.anchorManager = anchorManager;
         this.purpose = purpose;
-        //System.out.println("AnchorPoint set in x "+ posx+" y :" + posy);
-        //System.out.println(anchorManager.allAnchorPoint);
-       // System.out.println(this);
-
         anchorManager.allAnchorPoint.add(this);
     }
 

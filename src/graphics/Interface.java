@@ -173,13 +173,12 @@ public class Interface  {
     public void createGamePanel(){
 
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
-        AnchorPoint anch = new AnchorPoint(0.1f,0.5f , AnchorPurpose.Number_Reserve, anchorManager);
 
         for (int i = 0; i < 12; i++) {
             // Button b = create_button(0.5f + 0.05f * i,0.5f , 0.05f, 0.05f,Panel_State.game_settings ,""+((i+1)*10),Graphic_type.Ball_Number);
             //panel_ball.add(b);
 
-            AnchorPoint anch_i = new AnchorPoint(0.16f+0.05f*i,0.86f , AnchorPurpose.Number_Reserve, anchorManager);
+            AnchorPoint anch_i = new AnchorPoint(0.16f+0.055f*i,0.87f , AnchorPurpose.Number_Reserve, anchorManager);
            /* Bullet b = new Bullet(0,0,String.valueOf(i),panel_related, anchorManager);
             resizeElement(b, 0.5f + 0.05f * i,0.5f , b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
             panel_related.addElementToPanel(b);*/
@@ -193,7 +192,7 @@ public class Interface  {
 
 
 
-        Button op1 = create_button(0.1f, 0.86f, 0.05f,0.05f,Panel_State.game_attack_1, "+",Graphic_type.Ball_Number, 0,new ActionListener() {
+        Button op1 = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.game_attack_1, "+",Graphic_type.Ball_Number, 0,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                replaceOperator();
             }
@@ -214,6 +213,8 @@ public class Interface  {
         panel_related.addElementToPanel(b);
         panel_related.add(b);
         b.relocateToNextAnchorPoint(AnchorPurpose.Operator_jar);
+        panel_related.setComponentZOrder(b, 0);
+
     }
 
     public void setSize(int w, int h){
@@ -236,10 +237,15 @@ public class Interface  {
             Bullet b = new Bullet(0,0,String.valueOf(i), panel_related, anchorManager);
             resizeElement(b, 0.5f, 0f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
             panel_related.addElementToPanel(b);
-        }
+            panel_related.setComponentZOrder(b, 0);
 
-        anchorManager.relocateAllBulletsInNumberReserve();
-        //fenetre.pack();
+
+
+        }
+       anchorManager.relocateAllBulletsInNumberReserve();
+        fenetre.pack();
+        fenetre.setVisible(true);
+
 
     }
 

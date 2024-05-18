@@ -90,6 +90,8 @@ public class Bullet extends Button {
         this.addMouseListener(mouseListener);
        // relocateToNextAnchorPoint(AnchorPurpose.Number_Reserve);
         anchorManager.allBullets.add(this);
+
+
     }
 
     public void relocateToNearestAnchorPoint(){
@@ -108,6 +110,11 @@ public class Bullet extends Button {
     }
 
     public void relocateToChangePile(){
+        if(isOperator && anchoredPoint !=null){
+            if (anchoredPoint.purpose == AnchorPurpose.Operator_jar){
+                anchorManager.removeOperator();
+            }
+        }
         relocateToNextAnchorPoint(anchoredPoint.purpose.mirror());
     }
 

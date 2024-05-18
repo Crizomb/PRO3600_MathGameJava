@@ -20,6 +20,7 @@ public class Frame_Panel extends JPanel{
         element_panel.add(e);
         add(e);
         this.add(e);
+
     }
 
 

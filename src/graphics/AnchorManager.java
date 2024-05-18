@@ -79,8 +79,12 @@ public class AnchorManager {
             testdistance = distance(a.posx, a.posy, target.posx, target.posy);
           //  System.out.println("distance "+ distance+ "testdistance "+testdistance);
             if (testdistance <= distance && (a.HasNoElement())){
-                selectedAnchor = a;
-                distance = testdistance;
+                if((target.isOperator && (a.purpose == AnchorPurpose.Operator_jar || a.purpose == AnchorPurpose.Operator_reserve)
+                     || (!(target.isOperator) && (a.purpose == AnchorPurpose.Number_Reserve || a.purpose == AnchorPurpose.Number_jar)))){
+
+                    selectedAnchor = a;
+                    distance = testdistance;
+                }
             }
         }
         return selectedAnchor;
