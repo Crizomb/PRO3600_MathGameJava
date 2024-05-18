@@ -17,6 +17,9 @@ public class Bullet extends Button {
     private Thread moveButtonAction;
     private final int DELAY_MOVE_BUTTON=50;
     private final int DELAY_SHORT_CLICK = 50;
+
+    public final float RATIO_SIZE_BULLET = 0.05f;
+
     public AnchorManager anchorManager;
     public AnchorPoint anchoredPoint;
 
@@ -46,9 +49,7 @@ public class Bullet extends Button {
                         catchtime = Instant.now();
                     }
                      isSelected = true;
-                     /*if (anchoredPoint != null){
-                         anchoredPoint.setElementContained(null);
-                     }*/
+
                      refreshThread();
                     if (isOperator){
                         // createNewOperator();
@@ -67,7 +68,6 @@ public class Bullet extends Button {
 
             public void mouseReleased(MouseEvent mouseEvent) {
                 if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
-                  //  System.out.println("Left button released.");
                     isSelected = false;
                     if( (int) Duration.between(catchtime, Instant.now()).getSeconds()<DELAY_SHORT_CLICK){
                         relocateToChangePile();
@@ -115,8 +115,14 @@ public class Bullet extends Button {
         breakLinkWithAnchor();
         anchoredPoint = anchorManager.getFirstAnchorPointWithPurpose(this, purpose);
         if (anchoredPoint == null) {
+            System.out.println("echec trouvé anchor");
             return;
         }
+        getAnchoredToNewAnchor();
+    }
+
+    public void getAnchoredToNewAnchor(){
+        breakLinkWithAnchor();
         anchoredPoint.setElementContained(this);
         setPos(anchoredPoint.posx, anchoredPoint.posy);
     }

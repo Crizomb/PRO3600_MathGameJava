@@ -1,7 +1,5 @@
 package graphics;
 
-import base.Operator;
-
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -37,7 +35,7 @@ public class AnchorManager {
         }
     }
 
-    public void relocateallBullets(){
+    public void relocateAllBulletsInNumberReserve(){
         for (Bullet b:
              allBullets) {
             b.relocateToNextAnchorPoint(AnchorPurpose.Number_Reserve);
@@ -93,7 +91,7 @@ public class AnchorManager {
         for (AnchorPoint a:
                 L ) {
             //  System.out.println("distance "+ distance+ "testdistance "+testdistance);
-            if (a.posx <= selectedAnchor.posx || (a.posy <= selectedAnchor.posy && a.posx == selectedAnchor.posx)){
+            if (a.posx <= selectedAnchor.posx){
                 selectedAnchor = a;
             }
         }
@@ -105,6 +103,7 @@ public class AnchorManager {
         AnchorPoint selected_anchors[] = sorted_anchorPoint.get(purpose);
         for (int i = 0; i < selected_anchors.length; i++) {
             if(selected_anchors[i].HasNoElement()){
+                System.out.println("found an anchor for bullet "+target.value +" at "+ target.posx + " in "+selected_anchors[i].posx);
                 return selected_anchors[i];
             }
         }
@@ -123,12 +122,7 @@ public class AnchorManager {
                 allAnchorsSelectedPurpose[i] =a ;
                 L.remove(a);
             }
-            if(allAnchorsSelectedPurpose.length>=1){
 
-                //System.out.println("aa" + purpose+ allAnchorsSelectedPurpose[0].posx + " "+ allAnchorsSelectedPurpose[0].posy);
-            }else{
-                //System.out.println("non "+ purpose);
-            }
             sorted_anchorPoint.put(purpose,allAnchorsSelectedPurpose);
 
         }
@@ -142,17 +136,13 @@ public class AnchorManager {
                 allAnchorPoint) {
             if (a.purpose == purpose) {
                 L.add(a);
-            }else{
-               // System.out.println("non piur a qui a "+a.purpose);
             }
         }
-      //  System.out.println("L="+L.size());
         return L;
 
     }
 
         public double distance(int posX, int posY, int targetX, int targetY){
-      //  System.out.println(posX+" posy : "+ posY+" targetX :"+targetX+" target y :"+targetY);
         return Math.sqrt(carré(posX-targetX) + carré(posY-targetY));
     }
 

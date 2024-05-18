@@ -35,12 +35,6 @@ public enum Graphic_type {
     public static final int tresholdSize = 70;
 
 
-    //private static List<Graphic_type,Graph_data> panel_list;
-
-    /*Graphic_type(Dimension size, Color font_color) {
-
-        return Graphic_type(size, font_color, "");
-    }*/
 
     Graphic_type(int width, Color font_color, String URL, Font fontName) {
 

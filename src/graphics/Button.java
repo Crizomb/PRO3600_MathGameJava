@@ -19,7 +19,7 @@ public class Button extends JButton  {
         heigth=getBounds().height;
         this.panelParent = panelParent;
         this.type = type;
-        System.out.println(width * heigth);
+        //System.out.println(width * heigth);
         //graph_button = new JButton();
         this.text=text;
         setText(text);
@@ -37,6 +37,8 @@ public class Button extends JButton  {
             setFont(new Font(f.getFontName(), f.getStyle(), Graphic_type.tresholdSize + sizeModifier));
             revalidate();
         }
+
+
           /*  System.out.println("test" + text.length());
             Font f = type.getFont();
             FontMetrics font_metrics = getFontMetrics(getFont());
@@ -53,7 +55,9 @@ public class Button extends JButton  {
 
 
 
-
+        Interface.actualizeFrame(panelParent);
+        panelParent.addElementToPanel(this);
+        Interface.fenetre.revalidate();
 
     }
 
@@ -74,9 +78,7 @@ public class Button extends JButton  {
 
         Image image = imgic.getImage(); // transform it
         float ratioImage = image.getWidth(null) / image.getHeight(null);
-        //System.out.println("ratio : "+ ratioImage+ "w : "+image.getWidth(null)+" h : "+ image.getHeight(null));
-        //System.out.println("bounds w : "+getBounds().width+" h : "+ getBounds().height);
-        //System.out.println("Scale image "+getBounds().width + " and "+Math.round(getBounds().width*ratioImage));
+
         Image newimg = image.getScaledInstance(getBounds().width,  Math.round(getBounds().width*ratioImage),  Image.SCALE_REPLICATE); // scale it the smooth way
         setBounds(getBounds().x, getBounds().y, getBounds().width,  Math.round(getBounds().width*ratioImage));
         imgic = new ImageIcon(newimg);  // transform it back
@@ -85,12 +87,13 @@ public class Button extends JButton  {
     }
 
     public void setPos(int x, int y){
-       /* posx = x-getBounds().width/2;
-        posy = y-getBounds().height;
-        setBounds(x-getBounds().width/2, y-getBounds().height, getBounds().width, getBounds().height);*/
+
         posx = x;
         posy = y;
         setBounds(x, y, getBounds().width, getBounds().height);
+        System.out.println("new pos "+x+" "+y);
+        Interface.actualizeFrame(panelParent);
+
     }
 
     public static int getTextWidth(Font font, String text) {
@@ -103,13 +106,11 @@ public class Button extends JButton  {
 
     private boolean is_truncated_swing(String text){
         FontMetrics font_metrics = getFontMetrics(getFont());
-      //  System.out.println(getMaximumSize().width+" "+font_metrics.stringWidth(text));
-    //    System.out.println(getMaximumSize().width - font_metrics.stringWidth(text));
+
             return this.getWidth() <= font_metrics.stringWidth(text);
     }
     private double adjustSizeFont(String text){
-      //  System.out.println(Graphic_type.tresholdSize+" "+Math.pow(text.length(), 1.5));
-        //return Graphic_type.tresholdSize - Math.pow(text.length(), 1.27);
+
         return Graphic_type.tresholdSize/(Math.max(8, 0.5*text.length()) - 7);
 
     }
@@ -122,10 +123,6 @@ public class Button extends JButton  {
         addActionListener(action);
     }
 
-   /* public Button(double x, double y, String text){
-        super(x,y);
-         new Button(x,y,text, DEFAULT_SIZE);
-    }*/
     public JButton getGraph_button(){
         return null;
     }
@@ -133,11 +130,6 @@ public class Button extends JButton  {
     public Frame_Panel getPanelParent() {
         return panelParent;
     }
-
-    /*  @Override
-    public String toString() {
-        return "Button "+text+" "+ position.toString();
-    }*/
 
 
     /*

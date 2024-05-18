@@ -1,8 +1,16 @@
 package base;
+import graphics.Interface;
+
 import java.util.Scanner;
 
-public class Gameplay {
+public class GameplayVisual {
     int etat = 0; //représente la phase de jeu en cours. 0 phase de défense, 1 phase d'attaque
+    public Interface interf;
+    Player j1,j2;
+    public Player[] listJoueur= new Player[2];
+    public GameplayVisual(Interface interf){
+        this.interf = interf;
+    }
     public int degats(Player attaquant, Player defenseur) {
         int old_pv = defenseur.getPv();
         int degat_max = 200;
@@ -11,10 +19,14 @@ public class Gameplay {
         return (old_pv-new_pv);
     }
 
-    public int jeu_terminal_de_commande() throws Exception {
-        Player j1 = new Player();
-        Player j2 = new Player();
+    public int commencer_jeu()  {
+         j1 = new Player();
+         j2 = new Player();
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
+        listJoueur[0]=j1;
+        listJoueur[1]=j2;
+        commencer_tour_joueur_numero(1);
+        /*
         System.out.print("\n\n***Début du jeu***\n\n");
         while ((j1.getPv()>0)&&(j2.getPv()>0)) {
             //Initialisation
@@ -261,7 +273,22 @@ public class Gameplay {
             System.out.print("Le j1 a gagné. Bravo j1 !\n\n");
         } else if (j2.getPv()==0) {
             System.out.print("Le j2 a gagné. Bravo j2 !\n\n");
-        }
+        }*/
         return 0;
+    }
+
+    public void commencer_tour_joueur_numero(int nJoueur){
+        if (nJoueur>1){
+            System.out.println("error call numero joueur");
+            return ;
+        }
+        j1.init();
+        j2.init();
+        int[] allNumbers = new int[j1.inventory.size()];
+        for (int j = 0; j < j1.inventory.size(); j++) {
+            allNumbers[j]=j1.inventory.get(j).getValue().getIntValue();
+            System.out.println(" aaaaa "+ allNumbers[j]);
+        }
+        interf.setPlayerInterface(nJoueur, allNumbers);
     }
 }

@@ -1,5 +1,7 @@
 package graphics;
 
+import base.GameplayVisual;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,8 @@ public class Interface  {
     Panel_Manager panel_manager;
     AnchorManager anchorManager;
     InterfaceDebugger debug;
+    GameplayVisual game_visual;
+
 
     private static Dimension SCREEN_SIZE;
     private static final float SIZE_ADJUSTMENT_X = 1f, SIZE_ADJUSTEMENT_Y = 0.9f;
@@ -23,6 +27,7 @@ public class Interface  {
 
     public Interface(int width, int height) throws AWTException {
          debug = new InterfaceDebugger();
+         game_visual = new GameplayVisual(this);
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run(){
                 //createAndShowGUI(width, height);
@@ -77,7 +82,7 @@ public class Interface  {
         createGamePanel();
         changePanel(Panel_State.MENU_1);
         anchorManager.setSorted_anchorPoint();
-        anchorManager.relocateallBullets();
+        anchorManager.relocateAllBulletsInNumberReserve();
         fenetre.pack();
         fenetre.setVisible(true);
         new Thread(new Runnable() {
@@ -153,18 +158,12 @@ public class Interface  {
         });
         Button launch = create_button(0.3f,0.8f,0.3f,0.3f, Panel_State.game_settings, "launch", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
+                game_visual.commencer_jeu();
                 changePanel(Panel_State.game_attack_1);
                 // menu_group_panel._setVisible(false);
             }
         });
         JPanel settingsPanel = create_panel(0.05f, 0.05f, 0.1f,0.3f, Panel_State.game_settings, Color.black);
-        /*settingsPanel.setOpaque(false);
-        settingsPanel.setLayout(new GridLayout(3,1));
-        settingsPanel.setBounds(0,100, 50, 100);*/
-        //settingsPanel.add(home_button);
-        //settingsPanel.add(return_button);
-
-        //ball_group_panel.addElementToPanel(settingsPanel);
 
 
         fenetre.add(ball_group_panel);
@@ -174,17 +173,18 @@ public class Interface  {
     public void createGamePanel(){
 
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
+        AnchorPoint anch = new AnchorPoint(0.1f,0.5f , AnchorPurpose.Number_Reserve, anchorManager);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 12; i++) {
             // Button b = create_button(0.5f + 0.05f * i,0.5f , 0.05f, 0.05f,Panel_State.game_settings ,""+((i+1)*10),Graphic_type.Ball_Number);
             //panel_ball.add(b);
 
             AnchorPoint anch_i = new AnchorPoint(0.16f+0.05f*i,0.86f , AnchorPurpose.Number_Reserve, anchorManager);
-            Bullet b = new Bullet(0,0,String.valueOf(i),panel_related, anchorManager);
-            resizeElement(b, 0.5f + 0.05f * i,0.5f , 0.05f, 0.05f);
-            panel_related.addElementToPanel(b);
+           /* Bullet b = new Bullet(0,0,String.valueOf(i),panel_related, anchorManager);
+            resizeElement(b, 0.5f + 0.05f * i,0.5f , b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
+            panel_related.addElementToPanel(b);*/
            // panel_related.add(b);
-            b.setBorderPainted(false);
+          //  b.setBorderPainted(false);
         }
        // AnchorPoint a = new AnchorPoint(0.1f,0.4f , "point", anchorManager);
         AnchorPoint c = new AnchorPoint(0.5f,0.5f , AnchorPurpose.Number_jar, anchorManager);
@@ -228,6 +228,21 @@ public class Interface  {
         return new Dimension(width, height);
     }
 
+    public void setPlayerInterface(int numberPlayer, int[] allValues){
+        System.out.println("liste des valeur du joueur "+numberPlayer+ " : "+allValues.length);
+        Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
+        for (int i :
+             allValues) {
+            Bullet b = new Bullet(0,0,String.valueOf(i), panel_related, anchorManager);
+            resizeElement(b, 0.5f, 0f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
+            panel_related.addElementToPanel(b);
+        }
+
+        anchorManager.relocateAllBulletsInNumberReserve();
+        //fenetre.pack();
+
+    }
+
     public static Dimension getScreenSize(){
         return SCREEN_SIZE;
     }
@@ -266,9 +281,10 @@ public class Interface  {
 
 
 
-    public void actualizeFrame(Frame_Panel fpanel){
+    public static void actualizeFrame(Frame_Panel fpanel){
         fpanel.revalidate();
         fpanel.repaint();
+        fenetre.pack();
     }
 
 
@@ -324,7 +340,7 @@ public class Interface  {
         panel_related.addElementToPanel(p);
         panel_related.add(p);
 
-        //p.setOpaque(true);
+
      //   fenetre.add(p);
         return p;
     }

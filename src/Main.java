@@ -66,7 +66,7 @@ class Test {
     }
 
     public static void testGameplay() throws Exception {
-        Gameplay game = new Gameplay();
+        GameplayTerminal game = new GameplayTerminal();
         game.jeu_terminal_de_commande();
     }
 }
@@ -81,7 +81,7 @@ public class Main {
         System.out.println("----------");
         Test.testGameplay();
         System.out.println("-----------");
-        Gameplay game = new Gameplay();
+        GameplayTerminal game = new GameplayTerminal();
         game.jeu_terminal_de_commande();
     }
 
