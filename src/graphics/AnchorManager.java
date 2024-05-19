@@ -9,6 +9,8 @@ public class AnchorManager {
     public List<Bullet> allBullets = new ArrayList<>();
     private Map<AnchorPurpose, AnchorPoint[]> sorted_anchorPoint;
 
+    private boolean mustTestForumla = false;
+
     public AnchorManager(){
         allAnchorPoint = new ArrayList<>();
     }
@@ -101,6 +103,36 @@ public class AnchorManager {
             }
         }
         return selectedAnchor;
+    }
+
+    public void testFormulaInPile(){
+        if(!mustTestForumla) {
+            return;
+        }
+        Boolean isComplete = Boolean.TRUE;
+        String text = "";
+        for (AnchorPoint a:
+                getListAnchorsWithPurpose(AnchorPurpose.Number_jar)) {
+            isComplete = isComplete && a.HasElement();
+            if(a.HasElement()) {
+                text += String.valueOf(a.getElementContained().value)+" ";
+            }
+        }
+        for (AnchorPoint a:
+                getListAnchorsWithPurpose(AnchorPurpose.Operator_jar)) {
+            isComplete = isComplete && a.HasElement();
+            if(a.HasElement()) {
+            text += String.valueOf(a.getElementContained().value);
+            }
+
+        }
+        mustTestForumla = false;
+
+        if(isComplete){
+            System.out.println("envoyé avec "+text);
+            Interface.game_visual.sendNewOperation(text);
+        }
+
     }
 
 

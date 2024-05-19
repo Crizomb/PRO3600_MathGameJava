@@ -39,6 +39,9 @@ public class AnchorPoint {
         setElementContained(null);
     }
 
+    public boolean HasElement(){
+        return !HasNoElement();
+    }
     public boolean HasNoElement(){
         return ElementContained == null;
     }

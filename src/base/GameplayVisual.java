@@ -287,8 +287,11 @@ public class GameplayVisual {
         int[] allNumbers = new int[j1.inventory.size()];
         for (int j = 0; j < j1.inventory.size(); j++) {
             allNumbers[j]=j1.inventory.get(j).getValue().getIntValue();
-            System.out.println(" aaaaa "+ allNumbers[j]);
         }
         interf.setPlayerInterface(nJoueur, allNumbers);
+    }
+
+    public void sendNewOperation(String Text){
+
     }
 }

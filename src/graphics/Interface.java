@@ -17,7 +17,7 @@ public class Interface  {
     Panel_Manager panel_manager;
     AnchorManager anchorManager;
     InterfaceDebugger debug;
-    GameplayVisual game_visual;
+    static GameplayVisual game_visual;
 
 
     private static Dimension SCREEN_SIZE;
@@ -211,10 +211,17 @@ public class Interface  {
         });
 
         JPanel bullet_number_panel = create_panel(0.155f,0.85f,0.85f,0.15f, Panel_State.game_attack_1, Color.gray);
-        JPanel bullet_operator_panel = create_panel(0f,0.85f,0.15f,0.15f, Panel_State.game_attack_1, Color.red);
+        JPanel bullet_operator_panel = create_panel(0f,0.85f,0.35f,0.15f, Panel_State.game_attack_1, Color.red);
         JPanel jar_panel = create_panel(0.001f,0.01f,0.3f,0.83f, Panel_State.game_attack_1, Color.blue);
         JPanel operation_panel = create_panel(0.81f,0.01f,0.19f,0.83f, Panel_State.game_attack_1, Color.blue);
         JPanel test_panel = create_panel(0.5f, 0.5f, .1f,0.1f, Panel_State.game_attack_1, Color.black);
+        Button test = create_button(0.1f,0.1f,0.1f,0.1f, Panel_State.game_attack_1, "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                game_visual.commencer_jeu();
+                changePanel(Panel_State.game_settings);
+                // menu_group_panel._setVisible(false);
+            }
+        });
     }
 
     public void replaceOperator(String op){
@@ -250,9 +257,6 @@ public class Interface  {
             resizeElement(b, 0.5f, 0f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
             panel_related.addElementToPanel(b);
             panel_related.setComponentZOrder(b, 0);
-
-
-
         }
        anchorManager.relocateAllBulletsInNumberReserve();
         fenetre.pack();
