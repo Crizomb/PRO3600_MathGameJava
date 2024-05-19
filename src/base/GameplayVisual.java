@@ -8,13 +8,6 @@ public class GameplayVisual {
     public Interface interf;
     Player j1,j2;
     public Player[] listJoueur= new Player[2];
-
-
-    public Player joueurEnCours = j1;
-
-    public Stack<Items> lstNumberRollback;
-    public String phase = "Defense";
-
     public GameplayVisual(Interface interf){
         this.interf = interf;
     }
@@ -29,11 +22,6 @@ public class GameplayVisual {
     public int commencer_jeu()  {
          j1 = new Player();
          j2 = new Player();
-
-         joueurEnCours = j1;
-         phase = "Defense";
-         lstNumberRollback = new Stack<>();
-
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         listJoueur[0]=j1;
         listJoueur[1]=j2;
@@ -320,46 +308,6 @@ public class GameplayVisual {
 
         System.out.println(j1.stack.get(0).getValue().getIntValue());
 
-
-
-        System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
-        interf.UpdateStack(joueurEnCours.stack.get(0).getValue().getIntValue());
-        joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
-        lstNumberRollback.push(joueurEnCours.stack.get(0));
-
-    }
-
-
-    public void setPhase(String p){
-        phase=p;
-    }
-    public void defense() {
-        joueurEnCours.setDefence();
-        for(int i=0; i<2; i+=1) {
-            if (!(listJoueur[i].equals(joueurEnCours))) {
-                joueurEnCours = listJoueur[i];
-                break;
-            }
-        }
-        setPhase("Attack");
-    }
-
-    public void attack() {
-        joueurEnCours.setAttack();
-        for(int i=0; i<2; i+=1) {
-            if (!(listJoueur[i].equals(joueurEnCours))) {
-                joueurEnCours = listJoueur[i];
-                break;
-            }
-        }
-        setPhase("Defense");
-    }
-
-    public void rollback() throws NoSuchFieldException {
-        if (!(lstNumberRollback.isEmpty())) {
-            Items elem = lstNumberRollback.pop();
-            joueurEnCours.separateNumbers(elem);
-        }
 
     }
 }
