@@ -192,9 +192,21 @@ public class Interface  {
 
 
 
-        Button op1 = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.game_attack_1, "+",Graphic_type.Ball_Number, 0,new ActionListener() {
+        Button plus = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.game_attack_1, "+",Graphic_type.Ball_Number, 0,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-               replaceOperator();
+               replaceOperator("+");
+            }
+        });
+
+        Button minus = create_button(0.05f, 0.87f, 0.05f,0.05f,Panel_State.game_attack_1, "-",Graphic_type.Ball_Number, 0,new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                replaceOperator("-");
+            }
+        });
+
+        Button mult = create_button(0.01f, 0.87f, 0.05f,0.05f,Panel_State.game_attack_1, "x",Graphic_type.Ball_Number, 0,new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                replaceOperator("x");
             }
         });
 
@@ -205,10 +217,10 @@ public class Interface  {
         JPanel test_panel = create_panel(0.5f, 0.5f, .1f,0.1f, Panel_State.game_attack_1, Color.black);
     }
 
-    public void replaceOperator(){
+    public void replaceOperator(String op){
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
         anchorManager.removeOperator();
-        Bullet b = new Bullet(0,0,"+", panel_related,anchorManager,true);
+        Bullet b = new Bullet(0,0,op, panel_related,anchorManager,true);
         resizeElement(b, 0.5f,0.1f , 0.05f, 0.05f);
         panel_related.addElementToPanel(b);
         panel_related.add(b);

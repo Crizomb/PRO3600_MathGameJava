@@ -58,6 +58,7 @@ public class AnchorManager {
              allBullets) {
             if(b.isOperator){
                 b.getPanelParent().remove(b);
+                b.breakLinkWithAnchor();
             }else{
                 L.add(b);
             }
