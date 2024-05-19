@@ -180,7 +180,7 @@ public class GameplayVisual {
                     } else if (reponse.equals("*")) {
                         j2.pushOperatorInStack(new Items(Operator.MUL));
                     } else {
-                        System.out.print("Opérateur invalide.\n");
+                        System.out.print("Opérateur invalide.\n");createNewNumberStack
                     }
                 } else if (reponse.equals("enlever")) {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
@@ -291,7 +291,23 @@ public class GameplayVisual {
         interf.setPlayerInterface(nJoueur, allNumbers);
     }
 
-    public void sendNewOperation(String Text){
+    public void sendNewOperation(String T){
+        String chars[] = T.split(" ");
+        System.out.println(chars[1]);
+        System.out.println(j1.toString());
+        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[0])));
+        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[1])));
+        try{
+            j1.pushOperatorInStack(new Items(Operator.getOperator(chars[2])));
+
+        } catch (Exception e){
+            System.out.println("il y a une erreur de lecture de caractère");
+        }
+
+        j1.createNewNumberStack();
+
+        System.out.println(j1.stack.get(0).getValue().getIntValue());
+
 
     }
 }

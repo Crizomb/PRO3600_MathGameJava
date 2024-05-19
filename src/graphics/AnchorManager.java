@@ -104,10 +104,20 @@ public class AnchorManager {
         return selectedAnchor;
     }
 
-    public void testFormulaInPile(){
+    public void requestTestFormulaInPile(){
+        if(mustTestForumla){
+            return;
+        }
+        mustTestForumla = Boolean.TRUE;
+        testFormulaInPile();
+    }
+
+    private void testFormulaInPile(){
         if(!mustTestForumla) {
             return;
         }
+        mustTestForumla = false;
+
         Boolean isComplete = Boolean.TRUE;
         String text = "";
         for (AnchorPoint a:
@@ -125,12 +135,12 @@ public class AnchorManager {
             }
 
         }
-        mustTestForumla = false;
 
         if(isComplete){
             System.out.println("envoyé avec "+text);
             Interface.game_visual.sendNewOperation(text);
         }
+
 
     }
 

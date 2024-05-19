@@ -132,8 +132,10 @@ public class Bullet extends Button {
         breakLinkWithAnchor();
         anchoredPoint.setElementContained(this);
         setPos(anchoredPoint.posx, anchoredPoint.posy);
-        if(anchoredPoint.purpose == AnchorPurpose.Number_Reserve || anchoredPoint.purpose == AnchorPurpose.Number_jar){
-            anchorManager.testFormulaInPile();
+       // if(anchoredPoint.purpose == AnchorPurpose.Number_Reserve || anchoredPoint.purpose == AnchorPurpose.Number_jar){
+        if(isOperator){
+
+            anchorManager.requestTestFormulaInPile();
         }
     }
 
