@@ -1,7 +1,6 @@
 package base;
 import graphics.Interface;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -27,15 +26,17 @@ public class GameplayVisual {
     }
 
     public int commencer_jeu()  {
-        j1 = new Player();
-        j2 = new Player();
+        j1 = new Player(1);
+        j2 = new Player(2);
         joueurEnCours = j1;
-        phase = "Defense";
+        setPhase("Defense");
         lstNumberRollback = new Stack<>();
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         listJoueur[0]=j1;
         listJoueur[1]=j2;
-        commencer_tour_joueur_numero(1);
+        j1.init();
+        j2.init();
+        tourJoueur(joueurEnCours);
         /*
         System.out.print("\n\n***Début du jeu***\n\n");
         while ((j1.getPv()>0)&&(j2.getPv()>0)) {
@@ -287,18 +288,13 @@ public class GameplayVisual {
         return 0;
     }
 
-    public void commencer_tour_joueur_numero(int nJoueur){
-        if (nJoueur>1){
+    public void tourJoueur(Player p){
+       /* if (nJoueur>1){
             System.out.println("error call numero joueur");
             return ;
-        }
-        j1.init();
-        j2.init();
-        int[] allNumbers = new int[j1.inventory.size()];
-        for (int j = 0; j < j1.inventory.size(); j++) {
-            allNumbers[j]=j1.inventory.get(j).getValue().getIntValue();
-        }
-        interf.setPlayerInterface(nJoueur, allNumbers);
+        }*/
+
+        interf.setPlayerInventoryPanel(p.getValuesItemPlayer());
     }
 
     public void sendNewOperation(String T){
@@ -325,12 +321,29 @@ public class GameplayVisual {
         lstNumberRollback.push(joueurEnCours.stack.get(0));
 
     }
+    public void etapeSuivante(){
+        if(phase == "Attack" ){
+            setPhase("Defense");
+            return;
+        }
+        if (joueurEnCours == j1){
+            setJoueurEnCours(j2);
+        }else if (joueurEnCours == j2) {
+            setJoueurEnCours(j1);
+        }
+        setPhase("Attack");
 
-
-    public void setPhase(String p){
-        phase=p;
     }
-    public void defense() {
+    public void setJoueurEnCours(Player p){
+        //pas besoin de mettre d'Update ici, car automatiquement on appelera setPhase
+        joueurEnCours = p;
+    }
+    public void setPhase(String p){
+        assert p == "Attack" || p == "Defense";
+        phase=p;
+        interf.UpdateGameState();
+    }
+    public void defense() throws IllegalStateException{
         joueurEnCours.setDefence();
         for(int i=0; i<2; i+=1) {
             if (!(listJoueur[i].equals(joueurEnCours))) {
@@ -338,7 +351,7 @@ public class GameplayVisual {
                 break;
             }
         }
-        setPhase("Attack");
+        etapeSuivante();
     }
 
     public void attack() {
@@ -349,7 +362,7 @@ public class GameplayVisual {
                 break;
             }
         }
-        setPhase("Defense");
+        etapeSuivante();
     }
 
     public void rollback() throws NoSuchFieldException {
@@ -358,4 +371,6 @@ public class GameplayVisual {
             joueurEnCours.separateNumbers(elem);
         }
     }
+
+
 }

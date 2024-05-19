@@ -16,8 +16,8 @@ public class GameplayTerminal {
 
 
     public int jeu_terminal_de_commande() throws Exception {
-        Player j1 = new Player();
-        Player j2 = new Player();
+        Player j1 = new Player(1);
+        Player j2 = new Player(2);
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         System.out.print("\n\n***Début du jeu***\n\n");
         while ((j1.getPv()>0)&&(j2.getPv()>0)) {

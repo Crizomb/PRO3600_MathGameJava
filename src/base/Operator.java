@@ -56,7 +56,8 @@ public enum Operator  {
                 return num1+num2;
             }
             case SUB:{
-                return num1-num2;
+                //num1 et num2 sont inversés pour pas qu'il y ait de nombres négatifs
+                return num2-num1;
             }
             case MUL:{
                 return num1*num2;

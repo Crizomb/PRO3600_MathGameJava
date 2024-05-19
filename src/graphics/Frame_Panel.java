@@ -23,6 +23,14 @@ public class Frame_Panel extends JPanel{
 
     }
 
+    public void removeElementFromPanel(JComponent e){
+        element_panel.remove(e);
+        remove(e);
+        this.remove(e);
+
+    }
+
+
 
     public void addElementToPanel(Graphic_Element[] liste_e){
         for (Graphic_Element e:

@@ -101,6 +101,7 @@ public class Panel_Manager {
         try {
             actual_Groupe_panel = getPanelFromState(side_state);
             actual_Groupe_panel._setVisible();
+            System.out.println("pannel trouvé");
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");

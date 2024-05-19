@@ -36,14 +36,20 @@ public class Player {
     private int defence_value;
     private int attack_value;
 
+    private int id;
+
     /**
      * Create a new Player
      */
     public Player(){
+        this(0);
+    }
+    public Player(int id){
         this.stack = new ItemsStack();
         this.inventory = Tools.getRandomInventory(1, 10, INVENTORY_MAX_SIZE);
         this.attack_value = 0;
         this.defence_value = 0;
+        this.id = id;
     }
 
     /**
@@ -366,6 +372,18 @@ public class Player {
 
     public String toString(){
         return String.format("Player \n inventory %s \n Stack %s \n PV %s", inventory, stack, pv);
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public int[] getValuesItemPlayer(){
+        int[] allNumbers = new int[inventory.size()];
+        for (int j = 0; j < inventory.size(); j++) {
+            allNumbers[j]=inventory.get(j).getValue().getIntValue();
+        }
+        return allNumbers;
     }
 
 
