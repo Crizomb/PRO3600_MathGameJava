@@ -86,6 +86,7 @@ public class Player {
             int new_val = op.Evaluate(num1, num2);
             // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
             this.stack.push(new Items(new_val, element1, element2));
+
         }
         else {
             throw new IllegalStateException("the stack is empty or the top element is not an operator");

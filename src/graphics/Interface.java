@@ -212,7 +212,6 @@ public class Interface  {
         Button egal = create_button(0.65f, 0.5f, 0.05f,0.05f,Panel_State.game_attack_1, "=",Graphic_type.Ball_Number, 0,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 anchorManager.requestTestFormulaInPile();
-                UpdateStack(7);
             }
         });
 

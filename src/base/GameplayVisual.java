@@ -8,6 +8,10 @@ public class GameplayVisual {
     public Interface interf;
     Player j1,j2;
     public Player[] listJoueur= new Player[2];
+
+    public Player joueurEnCours = j1;
+
+    public String phase = "Defense";
     public GameplayVisual(Interface interf){
         this.interf = interf;
     }
@@ -22,6 +26,8 @@ public class GameplayVisual {
     public int commencer_jeu()  {
          j1 = new Player();
          j2 = new Player();
+         joueurEnCours = j1;
+         phase = "Defense";
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         listJoueur[0]=j1;
         listJoueur[1]=j2;
@@ -294,20 +300,47 @@ public class GameplayVisual {
     public void sendNewOperation(String T){
         String chars[] = T.split(" ");
         System.out.println(chars[1]);
-        System.out.println(j1.toString());
-        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[0])));
-        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[1])));
+        System.out.println(joueurEnCours.toString());
+        joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(chars[0])));
+        joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(chars[1])));
         try{
-            j1.pushOperatorInStack(new Items(Operator.getOperator(chars[2])));
+            joueurEnCours.pushOperatorInStack(new Items(Operator.getOperator(chars[2])));
 
         } catch (Exception e){
             System.out.println("il y a une erreur de lecture de caractère");
         }
 
-        j1.createNewNumberStack();
-
-        System.out.println(j1.stack.get(0).getValue().getIntValue());
+        joueurEnCours.createNewNumberStack();
 
 
+        System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
+        interf.UpdateStack(joueurEnCours.stack.get(0).getValue().getIntValue());
+        joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
+
+    }
+
+    public void setPhase(String p){
+        phase=p;
+    }
+    public void defense() {
+        joueurEnCours.setDefence();
+        for(int i=0; i<2; i+=1) {
+            if (!(listJoueur[i].equals(joueurEnCours))) {
+                joueurEnCours = listJoueur[i];
+                break;
+            }
+        }
+        setPhase("Attack");
+    }
+
+    public void attack() {
+        joueurEnCours.setAttack();
+        for(int i=0; i<2; i+=1) {
+            if (!(listJoueur[i].equals(joueurEnCours))) {
+                joueurEnCours = listJoueur[i];
+                break;
+            }
+        }
+        setPhase("Defense");
     }
 }
