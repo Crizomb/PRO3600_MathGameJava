@@ -302,7 +302,7 @@ public class GameplayVisual {
     }
 
     public void sendNewOperation(String T){
-        String chars[] = T.split(" ");
+        String chars[] = T.split(" ");  
         System.out.println(chars[1]);
         System.out.println(j1.toString());
         j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[0])));
