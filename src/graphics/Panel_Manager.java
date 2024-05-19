@@ -35,7 +35,9 @@ public class Panel_Manager {
     }
 
     public void initialize(){
-        HideAllPanels();
+        for (Frame_Panel p:panel_list) {
+            p._setVisible(false);
+        }
     }
 
     public Frame_Panel getPanelFromState(Panel_State state_searched)  {
@@ -52,22 +54,12 @@ public class Panel_Manager {
         return null;
     }
 
-    private void HideAllPanels(){
-        for (int i = 0; i < 2; i++) {
-            HidePanelsWithLayer(i);
-        }
-    }
-
-    private void HidePanelsWithLayer(int layer){
-        for (Frame_Panel gp :
-                panel_list) {
-            if(gp.getState().getLayer()==layer)
-            gp._setVisible(false);
-        }
-    }
 
     public void changePanel(Panel_State p_state) {
-       HideAllPanels();
+        for (Frame_Panel gp :
+                panel_list) {
+            gp._setVisible(false);
+        }
         try {
             actual_Groupe_panel = getPanelFromState(p_state);
             actual_Groupe_panel._setVisible();
@@ -76,39 +68,6 @@ public class Panel_Manager {
             System.out.println("pas de nouveau panneaux activée");
         }
     }
-
-    public void changePanelWithSide(Panel_State p_state, Panel_State side_panel) {
-        if(side_panel.getLayer()==0){
-            System.out.println("Invalide side panel");
-            return;
-        }
-         changePanel(p_state);
-        try {
-            actual_Groupe_panel = getPanelFromState(side_panel);
-            actual_Groupe_panel._setVisible();
-        }
-        catch(NullPointerException e){
-            System.out.println("pas de nouveau panneaux activée");
-        }
-    }
-
-    public void changeSide(Panel_State side_state){
-        if(side_state.getLayer()==0){
-            System.out.println("Invalide side panel");
-            return;
-        }
-        HidePanelsWithLayer(side_state.getLayer());
-        try {
-            actual_Groupe_panel = getPanelFromState(side_state);
-            actual_Groupe_panel._setVisible();
-        }
-        catch(NullPointerException e){
-            System.out.println("pas de nouveau panneaux activée");
-        }
-    }
-
-
-
 
     /*public void changePanel(Panel_State p_state) {
         System.out.println("Présent dans l'ancien panel "+actual_Groupe_panel.toString());
