@@ -310,4 +310,11 @@ public class GameplayVisual {
 
 
     }
+
+    public int getIdPlayer(Player p){
+        if(p == j1){
+            return 1;
+        }
+        return 2;
+    }
 }
