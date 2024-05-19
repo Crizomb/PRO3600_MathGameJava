@@ -91,7 +91,7 @@ public class Button extends JButton  {
         posx = x;
         posy = y;
         setBounds(x, y, getBounds().width, getBounds().height);
-        System.out.println("new pos "+x+" "+y);
+        //System.out.println("new pos "+x+" "+y);
         Interface.actualizeFrame(panelParent);
 
     }

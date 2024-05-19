@@ -38,7 +38,7 @@ public enum Operator  {
             case "-":{
                 return SUB;
             }
-            case "*":{
+            case "x":{
                 return MUL;
             }
             case "/":{

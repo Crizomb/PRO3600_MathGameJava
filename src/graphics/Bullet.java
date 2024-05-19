@@ -115,7 +115,10 @@ public class Bullet extends Button {
                 anchorManager.removeOperator();
             }
         }
-        relocateToNextAnchorPoint(anchoredPoint.purpose.mirror());
+        if(anchoredPoint != null){
+
+            relocateToNextAnchorPoint(anchoredPoint.purpose.mirror());
+        }
     }
 
     public void relocateToNextAnchorPoint(AnchorPurpose purpose){
@@ -125,17 +128,17 @@ public class Bullet extends Button {
             System.out.println("echec trouvé anchor");
             return;
         }
-        getAnchoredToNewAnchor();
+        getAnchoredToNewAnchor(anchoredPoint);
     }
 
-    public void getAnchoredToNewAnchor(){
+    public void getAnchoredToNewAnchor(AnchorPoint a){
         breakLinkWithAnchor();
-        anchoredPoint.setElementContained(this);
-        setPos(anchoredPoint.posx, anchoredPoint.posy);
+        a.setElementContained(this);
+        setPos(a.posx, a.posy);
        // if(anchoredPoint.purpose == AnchorPurpose.Number_Reserve || anchoredPoint.purpose == AnchorPurpose.Number_jar){
         if(isOperator){
 
-            anchorManager.requestTestFormulaInPile();
+           // anchorManager.requestTestFormulaInPile();
         }
     }
 

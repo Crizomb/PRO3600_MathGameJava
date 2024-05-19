@@ -68,6 +68,20 @@ public class AnchorManager {
         allBullets = L;
     }
 
+    public void removeBulletWithPurpose(AnchorPurpose purpose){
+        List<Bullet> L = new ArrayList<>();
+        for (Bullet b:
+                allBullets) {
+            if(b.anchoredPoint.purpose == purpose){
+                b.getPanelParent().remove(b);
+                b.breakLinkWithAnchor();
+            }else{
+                L.add(b);
+            }
+        }
+        allBullets = L;
+    }
+
 
     
     public void spawnNewOperator(Bullet b){
@@ -145,12 +159,18 @@ public class AnchorManager {
 
     }
 
+    public void removeStack(){
+       removeBulletWithPurpose(AnchorPurpose.Number_jar);
+       removeOperator();
+
+    }
+
 
     public AnchorPoint getFirstAnchorPointWithPurpose(Bullet target, AnchorPurpose purpose){
         AnchorPoint selected_anchors[] = sorted_anchorPoint.get(purpose);
         for (int i = 0; i < selected_anchors.length; i++) {
             if(selected_anchors[i].HasNoElement()){
-                System.out.println("found an anchor for bullet "+target.value +" at "+ target.posx + " in "+selected_anchors[i].posx);
+               // System.out.println("found an anchor for bullet "+target.value +" at "+ target.posx + " in "+selected_anchors[i].posx);
                 return selected_anchors[i];
             }
         }

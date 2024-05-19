@@ -26,7 +26,6 @@ public class Interface  {
     private Frame_Panel menu_frame;
 
     public Interface(int width, int height) throws AWTException {
-         debug = new InterfaceDebugger();
          game_visual = new GameplayVisual(this);
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run(){
@@ -210,11 +209,20 @@ public class Interface  {
             }
         });
 
+        Button egal = create_button(0.65f, 0.5f, 0.05f,0.05f,Panel_State.game_attack_1, "=",Graphic_type.Ball_Number, 0,new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                anchorManager.requestTestFormulaInPile();
+                UpdateStack(7);
+            }
+        });
+
+
+
         JPanel bullet_number_panel = create_panel(0.155f,0.85f,0.85f,0.15f, Panel_State.game_attack_1, Color.gray);
         JPanel bullet_operator_panel = create_panel(0f,0.85f,0.35f,0.15f, Panel_State.game_attack_1, Color.red);
-        JPanel jar_panel = create_panel(0.001f,0.01f,0.3f,0.83f, Panel_State.game_attack_1, Color.blue);
+        JPanel jar_panel = create_panel(0.001f,0.01f,0.35f,0.83f, Panel_State.game_attack_1, Color.blue);
         JPanel operation_panel = create_panel(0.81f,0.01f,0.19f,0.83f, Panel_State.game_attack_1, Color.blue);
-        JPanel test_panel = create_panel(0.5f, 0.5f, .1f,0.1f, Panel_State.game_attack_1, Color.black);
+        JPanel test_panel = create_panel(0.5f, 0.5f, .1f,0.15f, Panel_State.game_attack_1, Color.black);
         Button test = create_button(0.1f,0.1f,0.1f,0.1f, Panel_State.game_attack_1, "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 game_visual.commencer_jeu();
@@ -262,6 +270,17 @@ public class Interface  {
         fenetre.pack();
         fenetre.setVisible(true);
 
+
+    }
+
+    public void UpdateStack(int value){
+        anchorManager.removeStack();
+        Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.game_attack_1);
+        Bullet b = new Bullet(0,0,String.valueOf(value), panel_related, anchorManager);
+        resizeElement(b, 0.5f, 0f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
+        panel_related.addElementToPanel(b);
+        panel_related.setComponentZOrder(b, 0);
+        b.relocateToNextAnchorPoint(AnchorPurpose.Number_jar);
 
     }
 
