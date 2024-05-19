@@ -1,7 +1,9 @@
 package base;
 import graphics.Interface;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class GameplayVisual {
     int etat = 0; //représente la phase de jeu en cours. 0 phase de défense, 1 phase d'attaque
@@ -11,6 +13,7 @@ public class GameplayVisual {
 
     public Player joueurEnCours = j1;
 
+    public Stack<Items> lstNumberRollback;
     public String phase = "Defense";
     public GameplayVisual(Interface interf){
         this.interf = interf;
@@ -28,6 +31,7 @@ public class GameplayVisual {
          j2 = new Player();
          joueurEnCours = j1;
          phase = "Defense";
+         lstNumberRollback = new Stack<>();
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         listJoueur[0]=j1;
         listJoueur[1]=j2;
@@ -318,6 +322,7 @@ public class GameplayVisual {
         joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
 
     }
+
 
     public void setPhase(String p){
         phase=p;
