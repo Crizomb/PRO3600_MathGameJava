@@ -304,17 +304,19 @@ public class GameplayVisual {
     public void sendNewOperation(String T){
         String chars[] = T.split(" ");
         System.out.println(chars[1]);
-        System.out.println(joueurEnCours.toString());
-        joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(chars[0])));
-        joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(chars[1])));
+        System.out.println(j1.toString());
+        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[0])));
+        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[1])));
         try{
-            joueurEnCours.pushOperatorInStack(new Items(Operator.getOperator(chars[2])));
+            j1.pushOperatorInStack(new Items(Operator.getOperator(chars[2])));
 
         } catch (Exception e){
             System.out.println("il y a une erreur de lecture de caractère");
         }
 
-        joueurEnCours.createNewNumberStack();
+        j1.createNewNumberStack();
+
+        System.out.println(j1.stack.get(0).getValue().getIntValue());
 
 
         System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
