@@ -320,6 +320,7 @@ public class GameplayVisual {
         System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
         interf.UpdateStack(joueurEnCours.stack.get(0).getValue().getIntValue());
         joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
+        lstNumberRollback.push(joueurEnCours.stack.get(0));
 
     }
 
@@ -347,5 +348,12 @@ public class GameplayVisual {
             }
         }
         setPhase("Defense");
+    }
+
+    public void rollback() throws NoSuchFieldException {
+        if (!(lstNumberRollback.isEmpty())) {
+            Items elem = lstNumberRollback.pop();
+            joueurEnCours.separateNumbers(elem);
+        }
     }
 }
