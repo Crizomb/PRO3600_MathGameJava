@@ -151,7 +151,7 @@ public class Interface  {
         Button launch_game = create_button(0.3f,0.4f,ratioLongueurButtonsMenu,0.3f, Panel_State.game_settings, "launch", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 game_visual.commencer_jeu();
-                changePanel(Panel_State.gameplay);
+                //changePanel(Panel_State.gameplay);
                 // menu_group_panel._setVisible(false);
             }
         });
@@ -265,6 +265,7 @@ public class Interface  {
 
     public void UpdateGameState(){
         Panel_State pstate;
+        anchorManager.removeStack();
         String phase = game_visual.phase;
         Player p = game_visual.joueurEnCours;
         String combined = phase+String.valueOf(p.getId());

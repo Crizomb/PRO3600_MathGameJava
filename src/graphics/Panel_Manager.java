@@ -69,10 +69,12 @@ public class Panel_Manager {
 
     public void changePanel(Panel_State p_state) {
        HideAllPanels();
-        System.out.println("on a tout masqué");
+        //System.out.println("on a tout masqué");
         try {
             actual_Groupe_panel = getPanelFromState(p_state);
             actual_Groupe_panel._setVisible();
+            //System.out.println("testThread-----------------------------------_è_è");
+
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
@@ -85,14 +87,17 @@ public class Panel_Manager {
             return;
         }
          changePanel(p_state);
+        //System.out.println("pour être sur ((((((((((((((((((((((((((((((((((((((((((((");
         try {
             actual_Groupe_panel = getPanelFromState(side_panel);
-            System.out.println(actual_Groupe_panel.getState().toString()+ " is the pstate-------------------");
+          //  System.out.println(actual_Groupe_panel.getState().toString()+ " is the pstate-------------------");
             actual_Groupe_panel._setVisible();
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
         }
+        //System.out.println("fin de l'opération changePanelWithSide");
+
     }
 
     /*public void changeSide(Panel_State side_state){

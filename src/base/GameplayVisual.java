@@ -28,13 +28,14 @@ public class GameplayVisual {
     public int commencer_jeu()  {
         j1 = new Player(1);
         j2 = new Player(2);
-        joueurEnCours = j1;
         lstNumberRollback = new Stack<>();
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         listJoueur[0]=j1;
         listJoueur[1]=j2;
         j1.init();
         j2.init();
+        joueurEnCours = j1;
+
         tourJoueur(joueurEnCours);
         /*
         System.out.print("\n\n***Début du jeu***\n\n");
@@ -292,6 +293,7 @@ public class GameplayVisual {
             System.out.println("error call numero joueur");
             return ;
         }*/
+        //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
         interf.setPlayerInventoryPanel(p.getValuesItemPlayer());
         setPhase("Defense");
 
@@ -375,6 +377,9 @@ public class GameplayVisual {
     public void setJoueurEnCours(Player p){
         //pas besoin de mettre d'Update ici, car automatiquement on appelera setPhase
         joueurEnCours = p;
+       // interf.setPlayerInventoryPanel(p.getValuesItemPlayer()); ca on doit pouvoir le remtrre
+
+
     }
     public void setPhase(String p){
         assert p == "Attack" || p == "Defense";
