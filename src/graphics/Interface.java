@@ -196,7 +196,7 @@ public class Interface  {
 
         Button egal = create_button(0.65f, 0.5f, 0.05f,0.05f,Panel_State.gameplay , "=",Graphic_type.Ball_Number, 0,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                anchorManager.requestTestFormulaInPile();
+                game_visual.sendNewOperation(anchorManager.getFormulaFromStack());
             }
         });
 
@@ -219,40 +219,45 @@ public class Interface  {
 
     public void createPlayersPanel(){
         final float posxPlayerPanel = 0.1f, posyPlayerPanel=0.2f, sizexPlayerPanel=0.2f, sizeyPlayerPanel=0.1f;
-        Button attackJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_attack , "attack !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Frame_Panel panel_attackJ1 = panel_manager.addPanel(Panel_State.player_1_attack);
+        Frame_Panel panel_attackJ2 = panel_manager.addPanel(Panel_State.player_2_attack);
+        Frame_Panel panel_defenseJ1 = panel_manager.addPanel(Panel_State.player_1_defense);
+        Frame_Panel panel_defenseJ2 = panel_manager.addPanel(Panel_State.player_2_defense);
+
+        Button attackJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 // menu_group_panel._setVisible(false);
-                game_visual.attack();
+                game_visual.attack(anchorManager.getFormulaFromStack());
 
             }
         });
 
-        Button attackJ2 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ2 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                game_visual.attack();
+                game_visual.attack(anchorManager.getFormulaFromStack());
 
             }
         });
 
-        Button defenseJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_defense , "Set Defense", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
-                    game_visual.defense();
+                    game_visual.defense(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes con ou quoi ?",Color.red, Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes con ou ahahaha",Color.red, Duration.ofSeconds(2));
                 }
 
             }
         });
 
-        Button defenseJ2 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_defense , "Set Defense", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ2 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
-                    game_visual.defense();
+                    game_visual.defense(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes con ou quoi ?",Color.red, Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes nul",Color.red, Duration.ofSeconds(2));
                 }
             }
         });
@@ -264,12 +269,13 @@ public class Interface  {
         Player p = game_visual.joueurEnCours;
         String combined = phase+String.valueOf(p.getId());
         System.out.println("changement du stade de la partie, on est a "+combined);
-        panel_manager.changeSide(Panel_State.getPanelModePlayer(combined));
+        panel_manager.changePanelWithSide(Panel_State.gameplay,Panel_State.getPanelModePlayer(combined));
     }
 
     public void replaceOperator(String op){
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
         anchorManager.removeOperator();
+        //anchorManager.removeStack();
         Bullet b = new Bullet(0,0,op, panel_related,anchorManager,true);
         resizeElement(b, 0.5f,0.1f , 0.05f, 0.05f);
         panel_related.addElementToPanel(b);
@@ -294,7 +300,7 @@ public class Interface  {
 
     public void setPlayerInventoryPanel(int allValues[]){
 
-
+        anchorManager.removeAllBullets();
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
         for (int i :
              allValues) {
@@ -394,7 +400,7 @@ public class Interface  {
 
         resizeElement(b, x,y, sizex, sizey);
 
-        panel_related.addElementToPanel(b);
+        //panel_related.addElementToPanel(b);
         System.out.println("bouton "+ text + " crée en "+ ratiow(x)+" "+ ratioh(y)+" en "+ pstate.toString());
         panel_related.add(b);
         panel_related.setComponentZOrder(b,0);

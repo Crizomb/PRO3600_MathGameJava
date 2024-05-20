@@ -18,6 +18,7 @@ public class Frame_Panel extends JPanel{
 
     public void addElementToPanel(JComponent e){
         element_panel.add(e);
+        System.out.println("added "+ e.getUIClassID());
         add(e);
         this.add(e);
 
@@ -80,11 +81,16 @@ public class Frame_Panel extends JPanel{
     public void _setVisible(boolean visible){
 
         setVisible(visible);
-
+        System.out.println("test boucle "+ visible);
         for (JComponent jc:
             element_panel ) {
+
             jc.setVisible(visible);
             jc.setEnabled(visible);
+            if (jc.getClass() == Button.class){
+                System.out.println(((Button) jc).text+ " visible "+ visible+" "+ getState().toString());
+
+            }
         }
 
         //parcourt les elements pour les rendre visible ou non

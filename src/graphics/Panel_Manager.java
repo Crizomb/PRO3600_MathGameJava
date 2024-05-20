@@ -46,6 +46,7 @@ public class Panel_Manager {
             }
         }
         if (state_searched != Panel_State.DEFAULT){
+            System.out.println("oui cest le defaut");
             return getPanelFromState(Panel_State.DEFAULT);
         }
        // throw new PanelStateNotLinked();
@@ -68,6 +69,7 @@ public class Panel_Manager {
 
     public void changePanel(Panel_State p_state) {
        HideAllPanels();
+        System.out.println("on a tout masqué");
         try {
             actual_Groupe_panel = getPanelFromState(p_state);
             actual_Groupe_panel._setVisible();
@@ -85,6 +87,7 @@ public class Panel_Manager {
          changePanel(p_state);
         try {
             actual_Groupe_panel = getPanelFromState(side_panel);
+            System.out.println(actual_Groupe_panel.getState().toString()+ " is the pstate-------------------");
             actual_Groupe_panel._setVisible();
         }
         catch(NullPointerException e){
@@ -92,7 +95,7 @@ public class Panel_Manager {
         }
     }
 
-    public void changeSide(Panel_State side_state){
+    /*public void changeSide(Panel_State side_state){
         if(side_state.getLayer()==0){
             System.out.println("Invalide side panel");
             return;
@@ -106,7 +109,9 @@ public class Panel_Manager {
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
         }
-    }
+    }*/
+
+
 
 
 

@@ -118,6 +118,7 @@ public class Player {
      */
 
     public void setDefence() throws IllegalStateException{
+        System.out.println(stack.toString()+ " is the stack");
         if (stack.size()==1) {
             Items elem = stack.pop();
             if (elem.getValue().isInt()) {

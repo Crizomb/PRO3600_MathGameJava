@@ -119,15 +119,15 @@ public class AnchorManager {
         return selectedAnchor;
     }
 
-    public void requestTestFormulaInPile(){
+    /*public void requestTestFormulaInPile(Boolean FormulamustBeComplete){
         if(mustTestForumla){
             return;
         }
         mustTestForumla = Boolean.TRUE;
-        testFormulaInPile();
+        testFormulaInPile(FormulamustBeComplete);
     }
 
-    private void testFormulaInPile(){
+    private void testFormulaInPile(boolean mustBeComplete){
         if(!mustTestForumla) {
             return;
         }
@@ -151,11 +151,34 @@ public class AnchorManager {
 
         }
 
-        if(isComplete){
+        if(isComplete || mustBeComplete){
             System.out.println("envoyé avec "+text);
             Interface.game_visual.sendNewOperation(text);
         }
 
+
+    }*/
+
+    public String getFormulaFromStack(){
+
+
+        String text = "";
+        for (AnchorPoint a:
+                getListAnchorsWithPurpose(AnchorPurpose.Number_jar)) {
+            if(a.HasElement()) {
+                text += String.valueOf(a.getElementContained().value)+" ";
+            }
+        }
+        for (AnchorPoint a:
+                getListAnchorsWithPurpose(AnchorPurpose.Operator_jar)) {
+            if(a.HasElement()) {
+                text += String.valueOf(a.getElementContained().value);
+            }
+
+        }
+
+            System.out.println("envoyé avec "+text);
+        return text;
 
     }
 
@@ -163,6 +186,14 @@ public class AnchorManager {
        removeBulletWithPurpose(AnchorPurpose.Number_jar);
        removeOperator();
 
+    }
+
+    public void removeAllBullets(){
+        for (Bullet b:
+             allBullets) {
+            b.getPanelParent().removeElementFromPanel(b);
+        }
+        allBullets.clear();
     }
 
 

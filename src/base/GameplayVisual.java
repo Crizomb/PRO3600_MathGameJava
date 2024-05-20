@@ -29,7 +29,6 @@ public class GameplayVisual {
         j1 = new Player(1);
         j2 = new Player(2);
         joueurEnCours = j1;
-        setPhase("Defense");
         lstNumberRollback = new Stack<>();
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         listJoueur[0]=j1;
@@ -293,32 +292,71 @@ public class GameplayVisual {
             System.out.println("error call numero joueur");
             return ;
         }*/
-
         interf.setPlayerInventoryPanel(p.getValuesItemPlayer());
+        setPhase("Defense");
+
+    }
+    private void putAllObjectsOutOfStack(){
+        ItemsStack copyL = new ItemsStack();
+        for (Items i:
+                joueurEnCours.stack) {
+            copyL.add(i);
+        }
+        for (Items i:
+             copyL) {
+            joueurEnCours.putObjectOutOfStack(i);
+        }
     }
 
-    public void sendNewOperation(String T){
+    public void getStackFromString(String T){
+        putAllObjectsOutOfStack();
         String chars[] = T.split(" ");
-        System.out.println(chars[1]);
-        System.out.println(j1.toString());
-        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[0])));
-        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(chars[1])));
+        for (String c:
+             chars) {
+            Operator op = Operator.getOperator(c);
+            if(op != null){
+                try {
+                    joueurEnCours.pushOperatorInStack(new Items(Operator.getOperator(c)));
+                }catch (Exception e){
+                    System.out.println(e.toString() + " opération annulée");
+                }
+            }else{
+                joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(c)));
+
+            }
+        }
+
+       /* System.out.println(joueurEnCours.toString());
+        joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(chars[0])));
+        joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(chars[1])));
         try{
-            j1.pushOperatorInStack(new Items(Operator.getOperator(chars[2])));
+            joueurEnCours.pushOperatorInStack(new Items(Operator.getOperator(chars[2])));
 
         } catch (Exception e){
             System.out.println("il y a une erreur de lecture de caractère");
+        }*/
+
+    }
+    public void sendNewOperation(String T){
+        getStackFromString(T);
+        try{
+            j1.createNewNumberStack();
+        }catch (Exception e){
+            System.out.println("Opération invalide");
+            return;
         }
 
-        j1.createNewNumberStack();
 
         System.out.println(j1.stack.get(0).getValue().getIntValue());
 
 
         System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
         interf.UpdateStack(joueurEnCours.stack.get(0).getValue().getIntValue());
-        joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
+
+                /*joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
+        lstNumberRollback.push(joueurEnCours.stack.get(0));*/
         lstNumberRollback.push(joueurEnCours.stack.get(0));
+        joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
 
     }
     public void etapeSuivante(){
@@ -343,7 +381,8 @@ public class GameplayVisual {
         phase=p;
         interf.UpdateGameState();
     }
-    public void defense() throws IllegalStateException{
+    public void defense(String T) throws IllegalStateException{
+        getStackFromString(T);
         joueurEnCours.setDefence();
         for(int i=0; i<2; i+=1) {
             if (!(listJoueur[i].equals(joueurEnCours))) {
@@ -354,7 +393,8 @@ public class GameplayVisual {
         etapeSuivante();
     }
 
-    public void attack() {
+    public void attack(String T) {
+        getStackFromString(T);
         joueurEnCours.setAttack();
         for(int i=0; i<2; i+=1) {
             if (!(listJoueur[i].equals(joueurEnCours))) {
