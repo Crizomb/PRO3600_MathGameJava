@@ -192,7 +192,10 @@ public class AnchorManager {
         for (Bullet b:
              allBullets) {
             b.getPanelParent().removeElementFromPanel(b);
+            b.breakLinkWithAnchor();
+            System.out.println(b.getPanelParent().getComponent(0)+" is the first component of "+b.getPanelParent().getState());
         }
+
         allBullets.clear();
     }
 

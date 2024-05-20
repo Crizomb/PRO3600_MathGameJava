@@ -88,15 +88,15 @@ public class Interface  {
         anchorManager.relocateAllBulletsInNumberReserve();
         fenetre.pack();
         fenetre.setVisible(true);
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
         public void run() {
             try {
-                debug.getMousePosAtStart(4);
+                //debug.getMousePosAtStart(4);
             } catch (AWTException e) {
                 throw new RuntimeException(e);
             }
         }
-        }).start();
+        }).start();*/
 
     }
 
@@ -172,8 +172,8 @@ public class Interface  {
         AnchorPoint d = new AnchorPoint(0.55f,0.5f , AnchorPurpose.Operator_jar, anchorManager);
         AnchorPoint c2 = new AnchorPoint(0.6f,0.5f , AnchorPurpose.Number_jar, anchorManager);
 
-        JLabel textJ1 = create_label(0.05f,0.3f,50, "Joueur 1", Panel_State.gameplay, Color.white);
-        JLabel textJ2 = create_label(0.9f,0.3f,50, "Joueur 2", Panel_State.gameplay, Color.black);
+        JLabel textJ1 = create_label(0.07f,0.3f,50, "Joueur 1", Panel_State.gameplay, Color.white);
+        JLabel textJ2 = create_label(0.81f,0.3f,50, "Joueur 2", Panel_State.gameplay, Color.black);
 
 
         Button plus = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.gameplay , "+",Graphic_type.Ball_Number, 0,new ActionListener() {
@@ -218,7 +218,7 @@ public class Interface  {
     }
 
     public void createPlayersPanel(){
-        final float posxPlayerPanel = 0.1f, posyPlayerPanel=0.2f, sizexPlayerPanel=0.2f, sizeyPlayerPanel=0.1f;
+        final float posxPlayerPanel = 0.1f, posyPlayerPanel=0.2f, sizexPlayerPanel=0.3f, sizeyPlayerPanel=0.1f;
         Frame_Panel panel_attackJ1 = panel_manager.addPanel(Panel_State.player_1_attack);
         Frame_Panel panel_attackJ2 = panel_manager.addPanel(Panel_State.player_2_attack);
         Frame_Panel panel_defenseJ1 = panel_manager.addPanel(Panel_State.player_1_defense);
@@ -227,14 +227,26 @@ public class Interface  {
         Button attackJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 // menu_group_panel._setVisible(false);
-                game_visual.attack(anchorManager.getFormulaFromStack());
+                try{
+
+                    game_visual.attack(anchorManager.getFormulaFromStack());
+                }catch (Exception e){
+                    send_message_temporary(0.1f,0.25f, 30, "Tdkswlmvnkswlmcnxk,<<ncs",Color.red, Duration.ofSeconds(2));
+
+                }
 
             }
         });
 
         Button attackJ2 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                game_visual.attack(anchorManager.getFormulaFromStack());
+                try{
+
+                    game_visual.attack(anchorManager.getFormulaFromStack());
+                }catch (Exception e){
+                    send_message_temporary(0.1f,0.25f, 30, "___________---_-_-__--__-__-__-_-__------_-___-_-__-__-",Color.red, Duration.ofSeconds(2));
+
+                }
 
             }
         });
@@ -302,6 +314,7 @@ public class Interface  {
     public void setPlayerInventoryPanel(int allValues[]){
 
         anchorManager.removeAllBullets();
+
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
         for (int i :
              allValues) {
@@ -310,6 +323,7 @@ public class Interface  {
             panel_related.addElementToPanel(b);
             panel_related.setComponentZOrder(b, 0);
         }
+        System.out.println(anchorManager.allBullets.size()+ " is the size of the list of bllets");
        anchorManager.relocateAllBulletsInNumberReserve();
         fenetre.pack();
         fenetre.setVisible(true);

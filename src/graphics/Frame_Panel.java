@@ -28,6 +28,8 @@ public class Frame_Panel extends JPanel{
         element_panel.remove(e);
         remove(e);
         this.remove(e);
+        System.out.println("removed  "+ e.getUIClassID());
+
 
     }
 
@@ -81,14 +83,14 @@ public class Frame_Panel extends JPanel{
     public void _setVisible(boolean visible){
 
         setVisible(visible);
-        System.out.println("test boucle "+ visible);
+      //  System.out.println("test boucle "+ visible);
         for (JComponent jc:
             element_panel ) {
 
             jc.setVisible(visible);
             jc.setEnabled(visible);
             if (jc.getClass() == Button.class){
-                System.out.println(((Button) jc).text+ " visible "+ visible+" "+ getState().toString());
+               // System.out.println(((Button) jc).text+ " visible "+ visible+" "+ getState().toString());
 
             }
         }

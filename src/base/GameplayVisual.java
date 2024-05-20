@@ -364,20 +364,21 @@ public class GameplayVisual {
     public void etapeSuivante(){
         if(phase == "Attack" ){
             setPhase("Defense");
-            return;
+        }else{
+            setPhase("Attack");
         }
+
         if (joueurEnCours == j1){
             setJoueurEnCours(j2);
         }else if (joueurEnCours == j2) {
             setJoueurEnCours(j1);
         }
-        setPhase("Attack");
 
     }
     public void setJoueurEnCours(Player p){
         //pas besoin de mettre d'Update ici, car automatiquement on appelera setPhase
         joueurEnCours = p;
-       // interf.setPlayerInventoryPanel(p.getValuesItemPlayer()); ca on doit pouvoir le remtrre
+        interf.setPlayerInventoryPanel(p.getValuesItemPlayer());
 
 
     }
@@ -398,7 +399,7 @@ public class GameplayVisual {
         etapeSuivante();
     }
 
-    public void attack(String T) {
+    public void attack(String T) throws IllegalStateException{
         getStackFromString(T);
         joueurEnCours.setAttack();
         for(int i=0; i<2; i+=1) {
