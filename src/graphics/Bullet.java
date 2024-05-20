@@ -134,7 +134,8 @@ public class Bullet extends Button {
     public void getAnchoredToNewAnchor(AnchorPoint a){
         breakLinkWithAnchor();
         a.setElementContained(this);
-        setPos(a.posx, a.posy);
+       // setPos(a.posx, a.posy);
+        slide(a.posx, a.posy);
        // if(anchoredPoint.purpose == AnchorPurpose.Number_Reserve || anchoredPoint.purpose == AnchorPurpose.Number_jar){
         if(isOperator){
 

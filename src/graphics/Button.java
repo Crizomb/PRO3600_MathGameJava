@@ -10,6 +10,10 @@ public class Button extends JButton  {
     //JButton graph_button;
     String text;
     int width, heigth;
+     final int stepAnimation = 50;
+     final int durationMillisAnimation = 500;
+
+    private Boolean isMoving = false;
     int posx,  posy;
     Graphic_type type;
     private Frame_Panel panelParent;
@@ -88,12 +92,55 @@ public class Button extends JButton  {
 
     public void setPos(int x, int y){
 
-        posx = x;
-        posy = y;
         setBounds(x, y, getBounds().width, getBounds().height);
-        //System.out.println("new pos "+x+" "+y);
-        Interface.actualizeFrame(panelParent);
 
+        System.out.println("new pos "+x+" "+y);
+        getPanelParent().setComponentZOrder(this,0);
+        Interface.actualizeFrame(panelParent);
+    }
+
+    public void slide(int x, int y){
+        new Thread(){
+            public void run(){
+                if (isMoving){
+                    return;
+                }
+                isMoving = true;
+
+                slideRealSmooth(x,y);
+                isMoving = false;
+
+            }
+        }.start();
+
+    }
+
+    public void slideRealSmooth(int x, int y)  {
+        int decayx = -(int) Math.round(0.1 * Interface.getScreenSize().width);
+        int decayy = -(int)Math.round(0.2 * Interface.getScreenSize().height);
+
+        int destinationx = x;
+        int destinationy = y;
+        posx = getBounds().x;
+        posy = getBounds().y;
+
+        double dx = (destinationx - posx)/stepAnimation;
+        double dy = (destinationy - posy)/stepAnimation;
+        System.out.println("Button doit aller de "+ posx +" "+posy+ " à "+ destinationx+" "+destinationy+" avec un pas de "+dx+" "+dy);
+        for (int i = 0; i < stepAnimation+1; i++) {
+            setBounds(Math.toIntExact(Math.round(posx + dx * (i + 1))) , Math.toIntExact(Math.round(posy + dy * (i + 1))) , getBounds().width, getBounds().height);
+            try{
+
+                Thread.sleep(durationMillisAnimation/stepAnimation);
+            }catch (Exception e){
+
+            }
+        }
+        setBounds(x, y, getBounds().width, getBounds().height);
+
+        System.out.println("new pos "+x+" "+y);
+        getPanelParent().setComponentZOrder(this,0);
+        Interface.actualizeFrame(panelParent);
     }
 
     public static int getTextWidth(Font font, String text) {

@@ -1,6 +1,7 @@
 package graphics;
 
 import base.GameplayVisual;
+import base.Operator;
 import base.Player;
 
 import javax.swing.*;
@@ -289,6 +290,8 @@ public class Interface  {
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
         anchorManager.removeOperator();
         //anchorManager.removeStack();
+        //int x = Operator.getOperator(op);      a venir
+        //int y = Op
         Bullet b = new Bullet(0,0,op, panel_related,anchorManager,true);
         resizeElement(b, 0.5f,0.1f , 0.05f, 0.05f);
         panel_related.addElementToPanel(b);
@@ -318,8 +321,8 @@ public class Interface  {
         Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
         for (int i :
              allValues) {
-            Bullet b = new Bullet(0,0,String.valueOf(i), panel_related, anchorManager);
-            resizeElement(b, 0.5f, 0f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
+            Bullet b = new Bullet(0.16f,0.87f,String.valueOf(i), panel_related, anchorManager);
+            resizeElement(b, 0.16f, 0.87f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
             panel_related.addElementToPanel(b);
             panel_related.setComponentZOrder(b, 0);
         }
@@ -422,11 +425,11 @@ public class Interface  {
         return b;
     }
 
-    public GImage create_image(float x, float y, Panel_State pstate, Graphic_type type, JPanel panel)  {
+   /* public GImage create_image(float x, float y, Panel_State pstate, Graphic_type type, JPanel panel)  {
         GImage b = new GImage(x, y, type);
         panel_manager.getPanelFromState(pstate).addElementToPanel(b);
         return b;
-    }
+    }*/
 
     public JPanel create_panel(float posx, float posy, float sizex, float sizey,Panel_State pstate, Color c){
         JPanel p = new JPanel();
