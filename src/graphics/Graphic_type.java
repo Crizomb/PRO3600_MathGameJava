@@ -9,7 +9,7 @@ public enum Graphic_type {
 
 
     MENU_Button(new Dimension(500,250),
-            Color.yellow,
+            new Color(153, 204, 255, 100),
             new Font("Courier 10 Pitch", Font.BOLD, 80)),
 
     Ball_Number(60,

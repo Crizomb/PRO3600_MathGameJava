@@ -23,6 +23,12 @@ public class Interface  {
     InterfaceDebugger debug;
     static GameplayVisual game_visual;
 
+    static final Color transparentWhite = new Color(255, 255, 255, 100);
+    static final Color transparentGray = new Color(127, 127, 127, 100);
+    static final Color transparentBlack = new Color(0, 0, 0, 100);
+    static final Color transparentBlue = new Color(0, 0, 255, 100);
+    static final Color transparentRed = new Color(255, 0, 0, 100);
+
 
     private static Dimension SCREEN_SIZE;
     private static final float SIZE_ADJUSTMENT_X = 1f, SIZE_ADJUSTEMENT_Y = 0.9f;
@@ -74,7 +80,7 @@ public class Interface  {
     private void initializeGameInterface(int w, int h)   throws AWTException{
         fenetre = new JFrame(NOM_JEU);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.getContentPane().setBackground(Color.white);
+        fenetre.getContentPane().setBackground(transparentBlue);
 
         setSize(w, h);
         SCREEN_SIZE = getSCREEN_SIZE();
@@ -107,7 +113,7 @@ public class Interface  {
 
     private void createStartMenu()  {
         menu_frame = panel_manager.addPanel(Panel_State.MENU);
-        JPanel groupe_main_buttons = create_panel(0.3f,0.4f,0.4f,0.2f, Panel_State.MENU , Color.blue);
+        JPanel groupe_main_buttons = create_panel(0.3f,0.4f,0.4f,0.2f, Panel_State.MENU , transparentWhite);
         //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
         /*BorderLayout b_layout = new BorderLayout();
@@ -203,11 +209,11 @@ public class Interface  {
 
 
 
-        JPanel bullet_number_panel = create_panel(0.155f,0.85f,0.85f,0.15f, Panel_State.gameplay , Color.gray);
-        JPanel bullet_operator_panel = create_panel(0f,0.85f,0.35f,0.15f, Panel_State.gameplay , Color.red);
-        JPanel jar_panel = create_panel(0.001f,0.01f,0.35f,0.83f, Panel_State.gameplay , Color.blue);
-        JPanel operation_panel = create_panel(0.81f,0.01f,0.19f,0.83f, Panel_State.gameplay , Color.blue);
-        JPanel test_panel = create_panel(0.5f, 0.5f, .1f,0.15f, Panel_State.gameplay , Color.black);
+        JPanel bullet_number_panel = create_panel(0.155f,0.85f,0.85f,0.15f, Panel_State.gameplay , transparentGray);
+        JPanel bullet_operator_panel = create_panel(0f,0.85f,0.35f,0.15f, Panel_State.gameplay , transparentRed);
+        JPanel jar_panel = create_panel(0.001f,0.01f,0.35f,0.83f, Panel_State.gameplay , transparentBlue);
+        JPanel operation_panel = create_panel(0.81f,0.01f,0.19f,0.83f, Panel_State.gameplay, transparentBlue);
+        JPanel test_panel = create_panel(0.5f, 0.5f, .1f,0.15f, Panel_State.gameplay , transparentBlack);
         Button test = create_button(0.1f,0.1f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 game_visual.commencer_jeu();
@@ -232,7 +238,7 @@ public class Interface  {
 
                     game_visual.attack(anchorManager.getFormulaFromStack());
                 }catch (Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tdkswlmvnkswlmcnxk,<<ncs",Color.red, Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "Tdkswlmvnkswlmcnxk,<<ncs",transparentRed, Duration.ofSeconds(2));
 
                 }
 
@@ -245,7 +251,7 @@ public class Interface  {
 
                     game_visual.attack(anchorManager.getFormulaFromStack());
                 }catch (Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "___________---_-_-__--__-__-__-_-__------_-___-_-__-__-",Color.red, Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "___________---_-_-__--__-__-__-_-__------_-___-_-__-__-",transparentRed, Duration.ofSeconds(2));
 
                 }
 
@@ -258,7 +264,7 @@ public class Interface  {
                     game_visual.defense(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes con ou ahahaha",Color.red, Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes con ou ahahaha",transparentRed, Duration.ofSeconds(2));
                 }
 
             }
@@ -270,7 +276,7 @@ public class Interface  {
                     game_visual.defense(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes nul",Color.red, Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes nul",transparentRed , Duration.ofSeconds(2));
                 }
             }
         });
@@ -488,7 +494,7 @@ public class Interface  {
 
 
     public JPanel create_panel(float posx, float posy, float sizex, float sizey, Panel_State pstate){
-        JPanel p = create_panel(posx, posy, sizex, sizey, pstate, Color.white);
+        JPanel p = create_panel(posx, posy, sizex, sizey, pstate, transparentWhite);
         p.setOpaque(false);
         return p;
     }
