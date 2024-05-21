@@ -122,20 +122,29 @@ public class Bullet extends Button {
     }
 
     public void relocateToNextAnchorPoint(AnchorPurpose purpose){
+        relocateToNextAnchorPoint(purpose, true);
+    }
+
+    public void relocateToNextAnchorPoint(AnchorPurpose purpose, Boolean withSlide){
         breakLinkWithAnchor();
         anchoredPoint = anchorManager.getFirstAnchorPointWithPurpose(this, purpose);
         if (anchoredPoint == null) {
             System.out.println("echec trouvé anchor");
             return;
         }
-        getAnchoredToNewAnchor(anchoredPoint);
+        getAnchoredToNewAnchor(anchoredPoint, withSlide);
     }
 
-    public void getAnchoredToNewAnchor(AnchorPoint a){
+    public void getAnchoredToNewAnchor(AnchorPoint a, boolean withSlide){
         breakLinkWithAnchor();
         a.setElementContained(this);
        // setPos(a.posx, a.posy);
-        slide(a.posx, a.posy);
+        if(withSlide){
+
+            slide(a.posx, a.posy);
+        }else{
+            setPos(a.posx, a.posy);
+        }
        // if(anchoredPoint.purpose == AnchorPurpose.Number_Reserve || anchoredPoint.purpose == AnchorPurpose.Number_jar){
         if(isOperator){
 

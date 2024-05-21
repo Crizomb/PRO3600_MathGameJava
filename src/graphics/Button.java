@@ -10,8 +10,8 @@ public class Button extends JButton  {
     //JButton graph_button;
     String text;
     int width, heigth;
-     final int stepAnimation = 50;
-     final int durationMillisAnimation = 500;
+     final int stepAnimation = 30;
+     final int durationMillisAnimation = 300;
 
     private Boolean isMoving = false;
     int posx,  posy;

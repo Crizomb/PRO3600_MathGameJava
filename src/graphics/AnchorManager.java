@@ -188,6 +188,18 @@ public class AnchorManager {
 
     }
 
+    public void collapseStack(){
+        int x =getListAnchorsWithPurpose(AnchorPurpose.Operator_jar).get(0).posx;
+        int y =getListAnchorsWithPurpose(AnchorPurpose.Operator_jar).get(0).posy;
+        removeOperator();
+        for (AnchorPoint a:
+             getListAnchorsWithPurpose(AnchorPurpose.Number_jar)) {
+            a.getElementContained().slide(x,y);
+        }
+
+
+    }
+
     public void removeAllBullets(){
         for (Bullet b:
              allBullets) {

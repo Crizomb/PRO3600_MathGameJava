@@ -182,7 +182,7 @@ public class Interface  {
         JLabel textJ1 = create_label(0.07f,0.3f,50, "Joueur 1", Panel_State.gameplay, Color.white);
         JLabel textJ2 = create_label(0.81f,0.3f,50, "Joueur 2", Panel_State.gameplay, Color.black);
 
-
+    /*
         Button plus = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.gameplay , "+",Graphic_type.Ball_Number, 0,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                replaceOperator("+");
@@ -199,7 +199,19 @@ public class Interface  {
             public void actionPerformed(ActionEvent actionEvent) {
                 replaceOperator("x");
             }
+        });*/
+
+        String allOperator[] = {"+","-","x"};
+        for (int i = 0; i < allOperator.length; i++) {
+
+            String charOp = allOperator[i];
+            Operator op = Operator.getOperator(charOp);
+            Button Button_Op = create_button(op.ratioPosX, op.ratioPosY, 0.05f,0.05f,Panel_State.gameplay , charOp,Graphic_type.Ball_Number, 0,new ActionListener() {
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            replaceOperator(charOp);
+                        }
         });
+        }
 
         Button egal = create_button(0.65f, 0.5f, 0.05f,0.05f,Panel_State.gameplay , "=",Graphic_type.Ball_Number, 0,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -298,8 +310,9 @@ public class Interface  {
         //anchorManager.removeStack();
         //int x = Operator.getOperator(op);      a venir
         //int y = Op
+        Operator operator = Operator.getOperator(op);
         Bullet b = new Bullet(0,0,op, panel_related,anchorManager,true);
-        resizeElement(b, 0.5f,0.1f , 0.05f, 0.05f);
+        resizeElement(b, operator.ratioPosX, operator.ratioPosY , 0.05f, 0.05f);
         panel_related.addElementToPanel(b);
         panel_related.add(b);
         b.relocateToNextAnchorPoint(AnchorPurpose.Operator_jar);
@@ -341,13 +354,31 @@ public class Interface  {
     }
 
     public void UpdateStack(int value){
-        anchorManager.removeStack();
-        Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
-        Bullet b = new Bullet(0,0,String.valueOf(value), panel_related, anchorManager);
-        resizeElement(b, 0.5f, 0f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
-        panel_related.addElementToPanel(b);
-        panel_related.setComponentZOrder(b, 0);
-        b.relocateToNextAnchorPoint(AnchorPurpose.Number_jar);
+        anchorManager.collapseStack();
+
+        new Thread(){
+            public void run(){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                }
+                anchorManager.removeStack();
+
+                Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
+                Bullet b = new Bullet(0.5f,0.5f,String.valueOf(value), panel_related, anchorManager);
+                resizeElement(b, 0.5f, 0f, b.RATIO_SIZE_BULLET , b.RATIO_SIZE_BULLET);
+                panel_related.addElementToPanel(b);
+                panel_related.setComponentZOrder(b, 0);
+                AnchorPoint a = anchorManager.getListAnchorsWithPurpose(AnchorPurpose.Operator_jar).get(0);
+                b.setPos(a.posx, a.posy);
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                }
+                b.relocateToNextAnchorPoint(AnchorPurpose.Number_jar, true);
+            }
+        }.start();
+
 
     }
 

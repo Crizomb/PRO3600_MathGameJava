@@ -4,8 +4,17 @@ package base;
  * Represents an Operator that can be used on the game Stack
  */
 public enum Operator  {
-    ADD, SUB, MUL, DIV;
+    ADD(0.1f, 0.87f),
+    SUB(0.05f, 0.87f),
+    MUL(0.01f, 0.87f),
+    DIV(0f, 0f);
 
+    public float ratioPosX, ratioPosY;
+
+     Operator(float ratiox, float ratioy){
+        ratioPosX=ratiox;
+        ratioPosY = ratioy;
+    }
     public String toString(){
         switch (this){
             case ADD:{
