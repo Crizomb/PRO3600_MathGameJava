@@ -14,7 +14,7 @@ public enum Graphic_type {
 
     Ball_Number(60,
             Color.getHSBColor(0,0,0),
-            "ball_template.png",
+            "IconeChiffre.png",
             null),
 
     Settings_icon(50, Color.white, "accueil.png", null);
