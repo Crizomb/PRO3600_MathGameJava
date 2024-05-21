@@ -276,7 +276,7 @@ public class Interface  {
                     game_visual.defense(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes con ou ahahaha",transparentRed, Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "Veuillez apprendre les règles svp",transparentRed, Duration.ofSeconds(2));
                 }
 
             }
@@ -288,7 +288,7 @@ public class Interface  {
                     game_visual.defense(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca tes nul",transparentRed , Duration.ofSeconds(2));
+                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca ",transparentRed , Duration.ofSeconds(2));
                 }
             }
         });
