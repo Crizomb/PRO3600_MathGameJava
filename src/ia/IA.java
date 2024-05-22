@@ -1,4 +1,5 @@
 package ia;
+import java.lang.reflect.Array;
 import java.util.*;
 import base.*;
 
@@ -83,8 +84,8 @@ public class IA extends Player {
             }
         }
         if (relativeDistance(target, best) < proximity1) {
-        	data.remove(pos_best1);
         	data.remove(pos_best2);
+        	data.remove(pos_best1);
         	this.setAttackHard(best);
         }
         return best;
@@ -135,9 +136,9 @@ public class IA extends Player {
 		        }
         	}
         }
-        data.remove(pos_best1);
-        data.remove(pos_best2);
         data.remove(pos_best3);
+        data.remove(pos_best2);
+        data.remove(pos_best1);
         this.setAttackHard(best);
         return best;
     }
@@ -160,8 +161,7 @@ public class IA extends Player {
     }
     
     public void findDefence(){
-        /* On multiplie trois nombres au hasard entre eux pour obtenir la défense. */
-    	int nb_produits = 3;
+        /* On multiplie les deux plus grands nombres entre eux et on ajoute le plus petit pour obtenir la défense. */
         ArrayList<Items> data = this.inventory;
         int n = data.size();
         ArrayList<Integer> data_copy = new ArrayList<Integer>();
@@ -169,12 +169,20 @@ public class IA extends Player {
             data_copy.add(datum.getValue().getIntValue());
         }
         int res = 1;
-        Random rand = new Random();
-        while (n >= 0) {
-        	int randInt = rand.nextInt(n);
-            res *= data_copy.get(randInt);
-            data_copy.remove(randInt);
-            n--;
+        Collections.sort(data_copy);
+        int p, q, r;
+        if (n >= 1){
+            p = data_copy.get(n - 1);
+            res *= p;
+            this.inventory.remove(this.numberInInventory(p));
+        } if (n >= 2){
+            q = data_copy.get(n - 2);
+            res *= q;
+            this.inventory.remove(this.numberInInventory(q));
+        } if (n >= 3){
+            r = data_copy.get(0);
+            res += r;
+            this.inventory.remove(this.numberInInventory(r));
         }
         this.setDefenceHard(res);
     }
