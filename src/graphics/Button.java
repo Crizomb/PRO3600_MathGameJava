@@ -33,6 +33,8 @@ public class Button extends JButton  {
         //setSize(type.getSize());
       //  setPreferredSize(type.getSize());
         setBackground(type.getFont_color());
+        setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        setFocusPainted(false);
 
 
         if(type.getFont() != null){
@@ -62,6 +64,7 @@ public class Button extends JButton  {
         Interface.actualizeFrame(panelParent);
         panelParent.addElementToPanel(this);
         Interface.fenetre.revalidate();
+        setVisible(true);
 
     }
 
@@ -139,7 +142,7 @@ public class Button extends JButton  {
         setBounds(x, y, getBounds().width, getBounds().height);
 
         System.out.println("new pos "+x+" "+y);
-        getPanelParent().setComponentZOrder(this,0);
+       // getPanelParent().setComponentZOrder(this,0);
         Interface.actualizeFrame(panelParent);
     }
 

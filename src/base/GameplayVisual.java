@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class GameplayVisual {
     int etat = 0; //représente la phase de jeu en cours. 0 phase de défense, 1 phase d'attaque
-    public Interface interf;
+   // public Interface interf;
     Player j1,j2;
     public Player[] listJoueur= new Player[2];
 
@@ -14,9 +14,12 @@ public class GameplayVisual {
 
     public Stack<Items> lstNumberRollback;
     public String phase = "Defense";
-    public GameplayVisual(Interface interf){
-        this.interf = interf;
+    private GameEvents gameEvents;
+
+    public void setGameEvents(GameEvents gameEvents){
+this.gameEvents = gameEvents;
     }
+
     public int degats(Player attaquant, Player defenseur) {
         int old_pv = defenseur.getPv();
         int degat_max = 200;
@@ -294,7 +297,7 @@ public class GameplayVisual {
             return ;
         }*/
         //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
-        interf.setPlayerInventoryPanel(p.getValuesItemPlayer());
+        gameEvents.playerInventoryUpdated(p.getValuesItemPlayer());
         setPhase("Defense");
 
     }
@@ -353,7 +356,8 @@ public class GameplayVisual {
 
 
         System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
-        interf.UpdateStack(joueurEnCours.stack.get(0).getValue().getIntValue());
+        gameEvents.newValueInStack(joueurEnCours.stack.get(0).getValue().getIntValue());
+
 
                 /*joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
         lstNumberRollback.push(joueurEnCours.stack.get(0));*/
@@ -378,14 +382,12 @@ public class GameplayVisual {
     public void setJoueurEnCours(Player p){
         //pas besoin de mettre d'Update ici, car automatiquement on appelera setPhase
         joueurEnCours = p;
-        interf.setPlayerInventoryPanel(p.getValuesItemPlayer());
-
-
+        gameEvents.playerInventoryUpdated(p.getValuesItemPlayer());
     }
     public void setPhase(String p){
         assert p == "Attack" || p == "Defense";
         phase=p;
-        interf.UpdateGameState();
+        gameEvents.UpdateStepGame(p, joueurEnCours);
     }
     public void defense(String T) throws IllegalStateException{
         getStackFromString(T);

@@ -35,7 +35,11 @@ public enum Graphic_type {
     public static final int tresholdSize = 70;
 
 
-
+    static final Color transparentWhite = new Color(255, 255, 255, 100);
+    static final Color transparentGray = new Color(127, 127, 127, 100);
+    static final Color transparentBlack = new Color(0, 0, 0, 100);
+    static final Color transparentBlue = new Color(0, 0, 255, 100);
+    static final Color transparentRed = new Color(255, 0, 0, 100);
     Graphic_type(int width, Color font_color, String URL, Font fontName) {
 
         this.font_color = font_color;
