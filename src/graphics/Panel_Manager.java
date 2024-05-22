@@ -45,10 +45,12 @@ public class Panel_Manager {
                 return panel;
             }
         }
-        if (state_searched != Panel_State.DEFAULT){
+        /*if (state_searched != Panel_State.DEFAULT){
             System.out.println("oui cest le defaut");
             return getPanelFromState(Panel_State.DEFAULT);
-        }
+        }*/
+        System.out.println(state_searched+  " is the situation");
+        assert 1 == 0;
        // throw new PanelStateNotLinked();
         return null;
     }
@@ -90,7 +92,7 @@ public class Panel_Manager {
         //System.out.println("pour être sur ((((((((((((((((((((((((((((((((((((((((((((");
         try {
             actual_Groupe_panel = getPanelFromState(side_panel);
-          //  System.out.println(actual_Groupe_panel.getState().toString()+ " is the pstate-------------------");
+            System.out.println(actual_Groupe_panel.getState().toString()+ " is the pstate-------------------");
             actual_Groupe_panel._setVisible();
         }
         catch(NullPointerException e){

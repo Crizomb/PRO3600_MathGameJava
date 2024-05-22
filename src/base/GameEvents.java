@@ -12,8 +12,12 @@ public class GameEvents {
     public GameEvents(Interface interface_joueur, GameplayVisual gameplayVisual){
         this.interface_joueur = interface_joueur;
         this.gameplayVisual = gameplayVisual;
+        System.out.println("--------------------------------------set-------------------------------------- gameEvent1");
+
         interface_joueur.setGameEvents(this);
         gameplayVisual.setGameEvents(this);
+        System.out.println("--------------------------------------set-------------------------------------- gameEvent2");
+
     }
 
     public void ButtonLaunchGamePressed(){

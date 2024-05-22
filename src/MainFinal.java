@@ -13,7 +13,7 @@ public class MainFinal {
         interf = new Interface(2000 , 1000);
         game_visual = new GameplayVisual();
         gameEvents = new GameEvents(interf, game_visual);
-
+        System.out.println("--------------------------------------set-------------------------------------- main");
 
     }
 }
