@@ -37,6 +37,7 @@ public enum Panel_State {
                 return player_2_attack;
             }
         }
+        assert 1==0;
         System.out.println("aie pas de pstate trouvée");
         return null;
     }

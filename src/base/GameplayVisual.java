@@ -10,7 +10,7 @@ public class GameplayVisual {
     Player j1,j2;
     public Player[] listJoueur= new Player[2];
 
-    public Player joueurEnCours = j1;
+    private Player joueurEnCours = j1;
 
     public Stack<Items> lstNumberRollback;
     public String phase = "Defense";
@@ -18,6 +18,8 @@ public class GameplayVisual {
 
     public void setGameEvents(GameEvents gameEvents){
 this.gameEvents = gameEvents;
+        System.out.println("--------------------------------------set-------------------------------------- gameVisu");
+
     }
 
     public int degats(Player attaquant, Player defenseur) {
@@ -37,7 +39,6 @@ this.gameEvents = gameEvents;
         listJoueur[1]=j2;
         j1.init();
         j2.init();
-        joueurEnCours = j1;
 
         tourJoueur(joueurEnCours);
         /*
@@ -296,9 +297,11 @@ this.gameEvents = gameEvents;
             System.out.println("error call numero joueur");
             return ;
         }*/
-        //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
-        gameEvents.playerInventoryUpdated(p.getValuesItemPlayer());
+        setJoueurEnCours(j1);
         setPhase("Defense");
+
+        //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
+        gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
 
     }
     private void putAllObjectsOutOfStack(){
@@ -372,6 +375,8 @@ this.gameEvents = gameEvents;
             setPhase("Attack");
         }
 
+        System.out.println("------------------------------------------------------------------        changement detape "+joueurEnCours.getId());
+
         if (joueurEnCours == j1){
             setJoueurEnCours(j2);
         }else if (joueurEnCours == j2) {
@@ -382,7 +387,9 @@ this.gameEvents = gameEvents;
     public void setJoueurEnCours(Player p){
         //pas besoin de mettre d'Update ici, car automatiquement on appelera setPhase
         joueurEnCours = p;
-        gameEvents.playerInventoryUpdated(p.getValuesItemPlayer());
+        System.out.println(" ----------------------------------------------------------------  la on est au joueur "+p.getId());
+        gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
+
     }
     public void setPhase(String p){
         assert p == "Attack" || p == "Defense";
@@ -392,24 +399,24 @@ this.gameEvents = gameEvents;
     public void defense(String T) throws IllegalStateException{
         getStackFromString(T);
         joueurEnCours.setDefence();
-        for(int i=0; i<2; i+=1) {
+        /*for(int i=0; i<2; i+=1) {
             if (!(listJoueur[i].equals(joueurEnCours))) {
                 joueurEnCours = listJoueur[i];
                 break;
             }
-        }
+        }*/
         etapeSuivante();
     }
 
     public void attack(String T) throws IllegalStateException{
         getStackFromString(T);
         joueurEnCours.setAttack();
-        for(int i=0; i<2; i+=1) {
+     /*   for(int i=0; i<2; i+=1) {
             if (!(listJoueur[i].equals(joueurEnCours))) {
                 joueurEnCours = listJoueur[i];
                 break;
             }
-        }
+        }*/
         etapeSuivante();
     }
 

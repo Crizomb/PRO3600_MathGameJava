@@ -105,7 +105,7 @@ public class Frame_Panel extends JPanel{
             jc.setVisible(visible);
             jc.setEnabled(visible);
             if (jc.getClass() == Button.class){
-               // System.out.println(((Button) jc).text+ " visible "+ visible+" "+ getState().toString());
+                System.out.println(((Button) jc).text+ " visible "+ visible+" "+ getState().toString());
 
             }
         }

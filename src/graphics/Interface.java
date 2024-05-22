@@ -50,6 +50,7 @@ public class Interface  {
 
     public void setGameEvents(GameEvents gameEvents){
         this.gameEvents = gameEvents;
+        System.out.println("--------------------------------------set-------------------------------------- interf");
     }
 
     private void createAndShowGUI(int w, int h) {
@@ -172,7 +173,7 @@ public class Interface  {
 
     public void createGamePanel(){
 
-        Frame_Panel panel_related = panel_manager.getPanelFromState(Panel_State.gameplay);
+        Frame_Panel panel_related = panel_manager.addPanel(Panel_State.gameplay);
 
         for (int i = 0; i < 12; i++) {
             AnchorPoint anch_i = new AnchorPoint(0.16f+0.055f*i,0.87f , AnchorPurpose.Number_Reserve, anchorManager);
@@ -182,7 +183,7 @@ public class Interface  {
         AnchorPoint c2 = new AnchorPoint(0.6f,0.5f , AnchorPurpose.Number_jar, anchorManager);
 
         JLabel textJ1 = create_label(0.07f,0.05f,50, "Joueur 1", Panel_State.gameplay, Color.white);
-        JLabel textJ2 = create_label(0.81f,0.05f,50, "Joueur 2", Panel_State.gameplay, Color.black);
+        JLabel textJ2 = create_label(0.81f,0.05f,50, "Joueur 2", Panel_State.gameplay, Color.white);
 
     /*
         Button plus = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.gameplay , "+",Graphic_type.Ball_Number, 0,new ActionListener() {
@@ -240,11 +241,11 @@ public class Interface  {
 
     public void createPlayersPanel(){
         final float posxPlayerPanel = 0.1f, posyPlayerPanel=0.2f, sizexPlayerPanel=0.3f, sizeyPlayerPanel=0.1f;
+       
         Frame_Panel panel_attackJ1 = panel_manager.addPanel(Panel_State.player_1_attack);
         Frame_Panel panel_attackJ2 = panel_manager.addPanel(Panel_State.player_2_attack);
         Frame_Panel panel_defenseJ1 = panel_manager.addPanel(Panel_State.player_1_defense);
         Frame_Panel panel_defenseJ2 = panel_manager.addPanel(Panel_State.player_2_defense);
-
         Button attackJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 // menu_group_panel._setVisible(false);
@@ -259,7 +260,7 @@ public class Interface  {
             }
         });
 
-        Button attackJ2 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ2 = create_button(posxPlayerPanel+0.3f,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
 
@@ -272,7 +273,7 @@ public class Interface  {
             }
         });
 
-        Button defenseJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ1 = create_button(posxPlayerPanel+0.2f,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
@@ -284,7 +285,7 @@ public class Interface  {
             }
         });
 
-        Button defenseJ2 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ2 = create_button(posxPlayerPanel+0.1f,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
@@ -294,6 +295,11 @@ public class Interface  {
                 }
             }
         });
+        JLabel Text_YourTurnA1 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 1!", Panel_State.player_1_attack, Color.white);
+        JLabel Text_YourTurnA2= create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 2!", Panel_State.player_2_attack, Color.white);
+        JLabel Text_YourTurnD1 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 1!", Panel_State.player_1_defense, Color.white);
+        JLabel Text_YourTurnD2 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 2!", Panel_State.player_2_defense, Color.white);
+
     }
 
     public void UpdatePanelStepGame(String combined){
@@ -484,7 +490,7 @@ public class Interface  {
     }
 
     public void send_message_temporary(float posx, float posy, int size , String text, Color c, Duration durée){
-        JLabel message = create_label(posx, posy, size, text, Panel_State.temporary, c);
+        JLabel message = create_label(posx, posy, size, text, Panel_State.gameplay, c);
         new Thread(new Runnable() {
             public void run() {
                 Instant start = Instant.now();
@@ -508,7 +514,9 @@ public class Interface  {
         p.setFont(new Font("Serial", Font.BOLD,size));
         p.setForeground(c);
         // p.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
-        resizeElement(p, pstate, posx, posy, 0.5f, 0.5f);
+
+        //Remarque : la taille en y ne marche pas totalement
+        resizeElement(p, pstate, posx, posy, 0.5f, 0.05f);
         System.out.println("label \""+text+"\" created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+size+ " in "+pstate.toString());
         //   WarnFitScreen(posx,posy,sizex,sizey);
         Frame_Panel panel_related =panel_manager.getPanelFromState(pstate);
