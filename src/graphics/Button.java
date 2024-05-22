@@ -97,7 +97,7 @@ public class Button extends JButton  {
 
         setBounds(x, y, getBounds().width, getBounds().height);
 
-        System.out.println("new pos "+x+" "+y);
+        //System.out.println("new pos "+x+" "+y);
         getPanelParent().setComponentZOrder(this,0);
         Interface.actualizeFrame(panelParent);
     }
@@ -129,7 +129,7 @@ public class Button extends JButton  {
 
         double dx = (destinationx - posx)/stepAnimation;
         double dy = (destinationy - posy)/stepAnimation;
-        System.out.println("Button doit aller de "+ posx +" "+posy+ " à "+ destinationx+" "+destinationy+" avec un pas de "+dx+" "+dy);
+     //   System.out.println("Button doit aller de "+ posx +" "+posy+ " à "+ destinationx+" "+destinationy+" avec un pas de "+dx+" "+dy);
         for (int i = 0; i < stepAnimation+1; i++) {
             setBounds(Math.toIntExact(Math.round(posx + dx * (i + 1))) , Math.toIntExact(Math.round(posy + dy * (i + 1))) , getBounds().width, getBounds().height);
             try{
@@ -141,7 +141,7 @@ public class Button extends JButton  {
         }
         setBounds(x, y, getBounds().width, getBounds().height);
 
-        System.out.println("new pos "+x+" "+y);
+       // System.out.println("new pos "+x+" "+y);
        // getPanelParent().setComponentZOrder(this,0);
         Interface.actualizeFrame(panelParent);
     }

@@ -130,6 +130,7 @@ public class Bullet extends Button {
         anchoredPoint = anchorManager.getFirstAnchorPointWithPurpose(this, purpose);
         if (anchoredPoint == null) {
             System.out.println("echec trouvé anchor");
+            assert 1==0;
             return;
         }
         getAnchoredToNewAnchor(anchoredPoint, withSlide);
@@ -165,7 +166,7 @@ public class Bullet extends Button {
                     Dimension d = substract(AnchorManager.getMousePosition(),MOUSE_OFFSET) ;
                     setPos(d.width, d.height);
                     Dimension screen = Interface.getScreenSize();
-                    System.out.println(d+" "+ screen+ " en ratio " + (float)d.width/screen.width  + " ; "+ (float)d.height/screen.height);
+                    //System.out.println(d+" "+ screen+ " en ratio " + (float)d.width/screen.width  + " ; "+ (float)d.height/screen.height);
 
                     try {
                         Thread.sleep(DELAY_MOVE_BUTTON);

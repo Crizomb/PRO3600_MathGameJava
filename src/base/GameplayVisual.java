@@ -301,7 +301,7 @@ this.gameEvents = gameEvents;
         setPhase("Defense");
 
         //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
-        gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
+        //gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
 
     }
     private void putAllObjectsOutOfStack(){
@@ -389,6 +389,7 @@ this.gameEvents = gameEvents;
         joueurEnCours = p;
         System.out.println(" ----------------------------------------------------------------  la on est au joueur "+p.getId());
         gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
+        gameEvents.UpdateStepGame(phase, joueurEnCours);
 
     }
     public void setPhase(String p){

@@ -23,7 +23,7 @@ public class Frame_Panel extends JPanel{
 
     public void addElementToPanel(JComponent e){
         element_panel.add(e);
-        System.out.println("added "+ e.getUIClassID());
+       // System.out.println("added "+ e.getUIClassID());
         add(e);
         this.add(e);
 
@@ -33,7 +33,7 @@ public class Frame_Panel extends JPanel{
         element_panel.remove(e);
         remove(e);
         this.remove(e);
-        System.out.println("removed  "+ e.getUIClassID());
+        //System.out.println("removed  "+ e.getUIClassID());
 
 
     }
@@ -63,11 +63,11 @@ public class Frame_Panel extends JPanel{
         this.state = p_state;
         element_panel = new ArrayList<>();
         this.setLayout(null);
-        Interface.fenetre.add(this);
         this.setOpaque(true);
         System.out.println(Interface.getScreenSize());
         this.setBounds(0,0,Interface.getScreenSize().width, Interface.getScreenSize().height);
         this.setBackground(Color.green);
+        Interface.fenetre.add(this);
     }
 
     public Frame_Panel(Frame_Panel panel_parent, int panel_id){
@@ -103,12 +103,23 @@ public class Frame_Panel extends JPanel{
             element_panel ) {
 
             jc.setVisible(visible);
-            jc.setEnabled(visible);
+           // jc.setEnabled(visible
+            // );
             if (jc.getClass() == Button.class){
                 System.out.println(((Button) jc).text+ " visible "+ visible+" "+ getState().toString());
 
             }
+
+            if (jc.getClass() == JLabel.class){
+                System.out.println(((JLabel) jc).getText()+ " visible "+ visible+" "+ getState().toString());
+                JLabel jlabel = (JLabel) jc;
+            }
         }
+
+        Interface.fenetre.pack();
+        Interface.fenetre.revalidate();
+        Interface.fenetre.repaint();
+
 
         //parcourt les elements pour les rendre visible ou non
     }

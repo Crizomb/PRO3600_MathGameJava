@@ -1,5 +1,6 @@
 package graphics;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,12 @@ public class Panel_Manager {
     private List<Frame_Panel> panel_list;
     private Frame_Panel actual_Groupe_panel;
 
-    public Panel_Manager(Frame_Panel... p){
+   // private JLayeredPane layer_manager;
+
+    public Panel_Manager(){
         panel_list = new ArrayList<>();
+     //   layer_manager = new JLayeredPane();
+       // layer_manager.setOpaque(false);
         addPanel(Panel_State.DEFAULT);
         actual_Groupe_panel = null;
     }
@@ -22,6 +27,7 @@ public class Panel_Manager {
         if (actual_Groupe_panel==null){
             actual_Groupe_panel = p;
         }
+       // layer_manager.add(p,0);
         return p;
     }
 
@@ -66,6 +72,8 @@ public class Panel_Manager {
                 panel_list) {
             if(gp.getState().getLayer()==layer)
             gp._setVisible(false);
+       //     layer_manager.moveToBack(gp);
+
         }
     }
 
@@ -86,6 +94,7 @@ public class Panel_Manager {
     public void changePanelWithSide(Panel_State p_state, Panel_State side_panel) {
         if(side_panel.getLayer()==0){
             System.out.println("Invalide side panel");
+            assert 1==0;
             return;
         }
          changePanel(p_state);
@@ -93,6 +102,7 @@ public class Panel_Manager {
         try {
             actual_Groupe_panel = getPanelFromState(side_panel);
             System.out.println(actual_Groupe_panel.getState().toString()+ " is the pstate-------------------");
+           // layer_manager.moveToFront(actual_Groupe_panel);
             actual_Groupe_panel._setVisible();
         }
         catch(NullPointerException e){
@@ -102,7 +112,7 @@ public class Panel_Manager {
 
     }
 
-    /*public void changeSide(Panel_State side_state){
+    public void changeSide(Panel_State side_state){
         if(side_state.getLayer()==0){
             System.out.println("Invalide side panel");
             return;
@@ -110,13 +120,14 @@ public class Panel_Manager {
         HidePanelsWithLayer(side_state.getLayer());
         try {
             actual_Groupe_panel = getPanelFromState(side_state);
+        //    layer_manager.moveToFront(actual_Groupe_panel);
             actual_Groupe_panel._setVisible();
             System.out.println("pannel trouvé");
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
         }
-    }*/
+    }
 
 
 

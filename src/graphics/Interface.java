@@ -236,6 +236,8 @@ public class Interface  {
                 // menu_group_panel._setVisible(false);
             }
         });
+        fenetre.add(panel_related);
+
 
     }
 
@@ -295,17 +297,23 @@ public class Interface  {
                 }
             }
         });
-        JLabel Text_YourTurnA1 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 1!", Panel_State.player_1_attack, Color.white);
-        JLabel Text_YourTurnA2= create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 2!", Panel_State.player_2_attack, Color.white);
-        JLabel Text_YourTurnD1 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 1!", Panel_State.player_1_defense, Color.white);
-        JLabel Text_YourTurnD2 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 2!", Panel_State.player_2_defense, Color.white);
+        JLabel Text_YourTurnA1 = create_label(0.35f, 0.5f, 40, "C'est à vous Joueur a1!", Panel_State.gameplay, Color.black);
+        JLabel Text_YourTurnA2= create_label(0.15f, 0.5f, 40, "C'est à vous Joueur a2!", Panel_State.player_2_attack, Color.black);
+        JLabel Text_YourTurnD1 = create_label(0.25f, 0.5f, 40, "C'est à vous Joueur d1!", Panel_State.player_1_defense, Color.white);
+        JLabel Text_YourTurnD2 = create_label(0.45f, 0.5f, 5, "C'est à vous Joueur d2!", Panel_State.player_2_defense, Color.white);
+        JPanel testpanel = create_panel(0.15f,0.1f,0.1f,0.1f,Panel_State.player_1_defense,Color.black);
+        fenetre.add(panel_attackJ1);
+        fenetre.add(panel_attackJ2);
+        fenetre.add(panel_defenseJ1);
+        fenetre.add(panel_defenseJ1);
 
     }
 
     public void UpdatePanelStepGame(String combined){
         anchorManager.removeStack();
         System.out.println("changement du stade de la partie, on est a "+combined);
-        panel_manager.changePanelWithSide(Panel_State.gameplay,Panel_State.getPanelModePlayer(combined));
+        //panel_manager.changePanelWithSide(Panel_State.gameplay,Panel_State.getPanelModePlayer(combined));
+        panel_manager.changeSide(Panel_State.getPanelModePlayer(combined));
     }
 
     public void replaceOperator(String op){
@@ -516,12 +524,12 @@ public class Interface  {
         // p.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
 
         //Remarque : la taille en y ne marche pas totalement
-        resizeElement(p, pstate, posx, posy, 0.5f, 0.05f);
+        resizeElement(p, pstate, posx, posy, 0.5f, 0.10f);
         System.out.println("label \""+text+"\" created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+size+ " in "+pstate.toString());
         //   WarnFitScreen(posx,posy,sizex,sizey);
         Frame_Panel panel_related =panel_manager.getPanelFromState(pstate);
         panel_related.addElementToPanel(p);
-        panel_related.add(p);
+       // panel_related.add(p);
         panel_related.setComponentZOrder(p,0);
 
 
