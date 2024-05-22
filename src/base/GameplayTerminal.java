@@ -1,6 +1,5 @@
 package base;
 import graphics.Interface;
-
 import java.util.Scanner;
 import ia.IA;
 import java.util.Timer;
@@ -99,8 +98,8 @@ public class GameplayTerminal {
                 System.out.print("Commandes:\n\nstop: arrêter le jeu\netat: afficher l'inventaire, la pile et les pv\najout_nb: ajoute un nombre de l'inventaire à la pile\najout_op: ajouter un opérateur à la pile\nenlever: enlever un élément de la pile\npile: utiliser les 3 premiers éléments de la piles pour faire un nouveau nombre\nseparer: sépare un élément de la pile pour retrouver les nombres qui ont permis de le créer\nattaque: prendre le dernier élément de la pile pour en faire sa défense");
                 System.out.print("\n\n");
 
-                while (j2.getAttack_value()==0) {
-                    String reponse = sc.nextLine();
+                while (j2.getAttack_value() == 0) {
+                    reponse = sc.nextLine();
                     if (reponse.equals("stop")) {
                         return 0;
                     } else if (reponse.equals("etat")) {
@@ -150,7 +149,7 @@ public class GameplayTerminal {
                     }
                 }
             } else {
-                cpu.findAttack(j1.getDefence());
+                cpu.findAttack(j1.getDefence_value());
             }
 
             //Dégats j2 contre j1
@@ -169,7 +168,7 @@ public class GameplayTerminal {
                 System.out.print("Commandes:\n\nstop: arrêter le jeu\netat: afficher l'inventaire, la pile et les pv\najout_nb: ajoute un nombre de l'inventaire à la pile\najout_op: ajouter un opérateur à la pile\nenlever: enlever un élément de la pile\npile: utiliser les 3 premiers éléments de la piles pour faire un nouveau nombre\nseparer: sépare un élément de la pile pour retrouver les nombres qui ont permis de le créer\ndefense: prendre le dernier élément de la pile pour en faire sa défense");
                 System.out.print("\n\n");
 
-                while (j2.getDefence_value()==0) {
+                while (j2.getDefence_value() == 0) {
                     reponse = sc.nextLine();
                     if (reponse.equals("stop")) {
                         return 0;
