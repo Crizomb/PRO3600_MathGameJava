@@ -6,16 +6,24 @@ import base.*;
 // Think : Produire un nombre difficilement atteignable selon une heuristique à choisir.
 // Act : Appeler UpdateDefense ou UpdateAttack pour mettre à jour la défense ou l'attaque.
 
+/**
+ * @author Youssef
+ * @version 1 Implémentation de l'I.A. pour le jeu. <br>
+ */
+
 public class IA extends Player {
+
 
     public IA(){ super(); }
 
     public static double relativeDistance(int target, int x){
+        // Renvoie la distance entre x et la cible, relativement à la cible.
         return (double) Math.abs(x - target) / target;
     }
 
-    public void findClosestZeroOp(int target){
-    	double proximity1 = target / 10.0;
+    public int findClosestZeroOp(int target){
+        // Renvoie le nombre de l'inventaire le plus proche de la cible.
+    	double proximity1 = target / 20.0;
     	ArrayList<Items> data = this.inventory;
         int n = data.size();
         ArrayList<Integer> data_copy = new ArrayList<Integer>();
@@ -35,16 +43,23 @@ public class IA extends Player {
         	data.remove(pos_best);
         	this.setAttackHard(best);
         }
+        return best;
     }
 
     private static int closestPossibilityOneOp(int num1, int num2, int target) {
+        /* On se restreint ici à l'addition et la multiplication comme opérateurs.
+        * On cherche donc qui est le plus proche de target entre num1 + num2 et num1 * num2. */
     	int poss1 = num1 + num2;
     	int poss2 = num1 * num2;
     	if (relativeDistance(target, poss1) < relativeDistance(target, poss2)) return poss1;
     	else return poss2;
     }
     
-    public void findClosestOneOp(int target) {
+    public int findClosestOneOp(int target) {
+        /* Algorithme brute force qui renvoie le nombre le plus proche de la cible
+        * en utilisant un unique opérateur, ici + ou x .
+        * On fait d'abord une conversion, puis on teste toutes les possibilités avec une
+        * boucle for. Enfin, on enlève les deux nombres à l'origine du résultat. */
     	double proximity1 = target / 10.0;
     	ArrayList<Items> data = this.inventory;
         int n = data.size();
@@ -72,9 +87,12 @@ public class IA extends Player {
         	data.remove(pos_best2);
         	this.setAttackHard(best);
         }
+        return best;
     }
 
     private static int closestPossibilityTwoOp(int num1, int num2, int num3, int target) {
+        /* Même principe que OneOp, mais avec deux opérateurs. Afin de simplifier, les possibilités
+        * sont mises dans un tableau, et on prend le meilleur résultat. */
     	int poss1 = num1 + num2 + num3;
     	int poss2 = num1 + num2 * num3;
     	int poss3 = (num1 + num2) * num3;
@@ -90,7 +108,8 @@ public class IA extends Player {
     	return best;
     }
     
-    public void findClosestTwoOp(int target) {
+    public int findClosestTwoOp(int target) {
+        /* Même chose, mais avec une triple boucle et trois nombres cette fois. */
     	ArrayList<Items> data = this.inventory;
         int n = data.size();
         ArrayList<Integer> data_copy = new ArrayList<Integer>();
@@ -120,9 +139,12 @@ public class IA extends Player {
         data.remove(pos_best2);
         data.remove(pos_best3);
         this.setAttackHard(best);
+        return best;
     }
 
     public void findAttack(int target){
+        /* On utilise les fonctions précédentes, et on fait attention selon la quantité de nombres
+        * dans l'inventaire du joueur. */
     	int n = this.inventory.size();
         if (n == 0) return;
         if (n == 1) this.findClosestZeroOp(target);
@@ -135,27 +157,10 @@ public class IA extends Player {
         	this.findClosestOneOp(target);
         	this.findClosestTwoOp(target);
         }
-        // Essayer de minimiser le nombre d'opérations nécessaires pour être en dessous
-        // d'un seuil de distance "acceptable", qui rétrécit lorsqu'on augmente le nombre d'opérations
-        // TODO : Prendre le nombre le plus proche au bout de deux opérations si proche de 10%, ou
-        // trois opérations si proche de 5%.
     }
-
-//    static boolean isPrime(int n)
-//    {
-//        // Corner case
-//        if (n <= 1)
-//            return false;
-//
-//        // Check from 2 to sqrt(n)
-//        for (int i = 2; i <= Math.sqrt(n); i++)
-//            if (n % i == 0)
-//                return false;
-//
-//        return true;
-//    }
     
     public void findDefence(){
+        /* On multiplie trois nombres au hasard entre eux pour obtenir la défense. */
     	int nb_produits = 3;
         ArrayList<Items> data = this.inventory;
         int n = data.size();
@@ -163,20 +168,15 @@ public class IA extends Player {
         for (Items datum : data) {
             data_copy.add(datum.getValue().getIntValue());
         }
-        int i = 0, res = 1;
+        int res = 1;
         Random rand = new Random();
-        while (i < n && i < nb_produits) {
+        while (n >= 0) {
         	int randInt = rand.nextInt(n);
             res *= data_copy.get(randInt);
             data_copy.remove(randInt);
-            i++;
+            n--;
         }
         this.setDefenceHard(res);
-
-        }
-        // Idée 1 : Produit de trois nombres au hasard.
-        // Idée 2 : Produit de "grands" nombres premiers (sauf 2)
-        // TODO : Multiplier les deux plus grands nombres premiers.
     }
-
 }
+
