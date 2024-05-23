@@ -90,6 +90,12 @@ public class Player {
             int num1 = element1.getValue().getIntValue();
             int num2 = element2.getValue().getIntValue();
             int new_val = op.Evaluate(num1, num2);
+            if(new_val <= 0){
+                throw  new IllegalStateException("faut que tu mettes un nombre positif fdp");
+            }
+            if(new_val >= 10000){
+                throw  new IllegalStateException("dose stp");
+            }
             // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
             this.stack.push(new Items(new_val, element1, element2));
 

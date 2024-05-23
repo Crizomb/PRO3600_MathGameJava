@@ -5,13 +5,18 @@ import base.GameplayVisual;
 import base.Operator;
 import base.Player;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 
 
 public class Interface  {
@@ -23,8 +28,26 @@ public class Interface  {
     AnchorManager anchorManager;
     InterfaceDebugger debug;
     //static GameplayVisual game_visual;
-
+    private java.util.List<JLabel> all_errors=new ArrayList<JLabel>();
     private GameEvents gameEvents;
+
+    /* Stats Joueur */
+    JLabel NumberLifeJ1, NumberLifeJ2;
+     JLabel NumberShieldJ1, NumberShieldJ2;
+
+    //-----------------------------------------------//
+    /* Variables Elements Graphiques du jeu  */
+    //-----------------------------------------------//
+
+    final int SIZE_TEXT_CESTAVOUSJOUEUR = 40;
+    final float RATIO_POS_Y_CESTAVOUSJOUEUR = 0.35f;
+    final float posxPlayerPanelJ1 = 0.03f, posyPlayerPanel=0.55f,posxPlayerPanelJ2 = 0.7f, sizexPlayerPanel=0.3f, sizeyPlayerPanel=0.1f;
+
+    final float RATIO_SIZE_X_PANEL_PLAYER=0.35f, RATIO_SIZE_Y_PANEL_PLAYER=0.83f;
+
+    //-----------------------------------------------//
+    /* Fin Déclaration Variables Elements Graphiques du jeu  */
+    //-----------------------------------------------//
 
 
 
@@ -46,38 +69,12 @@ public class Interface  {
             }
         });
 
+       // all_errors = new List<JLabel>;
     }
 
     public void setGameEvents(GameEvents gameEvents){
         this.gameEvents = gameEvents;
         System.out.println("--------------------------------------set-------------------------------------- interf");
-    }
-
-    private void createAndShowGUI(int w, int h) {
-        //Create and set up the window.
-        /*fenetre = new JFrame(NOM_JEU);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(w, h);
-
-        //Add the ubiquitous "Hello World" label.
-        JLabel label = new JLabel("Helloooo World");
-        fenetre.getContentPane().add(label);
-
-        //Display the window.
-        fenetre.pack();
-        fenetre.setVisible(true);
-
-        JFrame frame1 = new JFrame("a");
-        JFrame frame2 = new JFrame("e");
-
-
-        frame1.add(new Panel());
-        frame2.add(new Panel());
-
-        frame1.setPreferredSize(new Dimension(2500,250));
-        frame2.setPreferredSize(new Dimension(250,250));
-        frame1.setVisible(true);
-        frame2.setVisible(true);*/
     }
 
     private void initializeGameInterface(int w, int h)   throws AWTException{
@@ -89,6 +86,7 @@ public class Interface  {
         SCREEN_SIZE = getSCREEN_SIZE();
         panel_manager = new Panel_Manager();
         anchorManager = new AnchorManager();
+        createBackgroundPanel();
         createStartMenu();
         createSettingsPanel();
         createGamePanel();
@@ -96,6 +94,7 @@ public class Interface  {
         changePanel(Panel_State.MENU);
         anchorManager.setSorted_anchorPoint();
         anchorManager.relocateAllBulletsInNumberReserve();
+        playSound();
         fenetre.pack();
         fenetre.setVisible(true);
         /*new Thread(new Runnable() {
@@ -113,6 +112,34 @@ public class Interface  {
     private void closeWindow(){
         fenetre.dispatchEvent(new WindowEvent(fenetre, WindowEvent.WINDOW_CLOSING));
     }
+
+    public void playSound() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music.mp3").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
+    private void createBackgroundPanel(){
+
+        JLabel background = new JLabel();
+        panel_manager.getPanelFromState(Panel_State.DEFAULT).add(background);
+        resizeElement(background, Panel_State.DEFAULT,0f, 0f, 1f,1f);
+        Image image = Graphic_type.setURLImage_icon("background.jpg").getImage(); // transform it
+        float ratioImage = image.getWidth(null) / image.getHeight(null);
+
+        Image newimg = image.getScaledInstance(background.getBounds().width,  Math.round(background.getBounds().height),  Image.SCALE_REPLICATE); // scale it the smooth way
+        background.setBounds(background.getBounds().x, background.getBounds().y, background.getBounds().width,  Math.round(background.getBounds().height));
+        ImageIcon imgic = new ImageIcon(newimg);  // transform it back
+        background.setIcon(imgic);
+    }
+
+
 
     private void createStartMenu()  {
         menu_frame = panel_manager.addPanel(Panel_State.MENU);
@@ -178,12 +205,15 @@ public class Interface  {
         for (int i = 0; i < 12; i++) {
             AnchorPoint anch_i = new AnchorPoint(0.16f+0.055f*i,0.87f , AnchorPurpose.Number_Reserve, anchorManager);
         }
-        AnchorPoint c = new AnchorPoint(0.5f,0.5f , AnchorPurpose.Number_jar, anchorManager);
-        AnchorPoint d = new AnchorPoint(0.55f,0.5f , AnchorPurpose.Operator_jar, anchorManager);
-        AnchorPoint c2 = new AnchorPoint(0.6f,0.5f , AnchorPurpose.Number_jar, anchorManager);
+        AnchorPoint c = new AnchorPoint(0.45f,0.5f , AnchorPurpose.Number_jar, anchorManager);
+        AnchorPoint d = new AnchorPoint(0.50f,0.5f , AnchorPurpose.Operator_jar, anchorManager);
+        AnchorPoint c2 = new AnchorPoint(0.55f,0.5f , AnchorPurpose.Number_jar, anchorManager);
 
         JLabel textJ1 = create_label(0.07f,0.05f,50, "Joueur 1", Panel_State.gameplay, Color.white);
         JLabel textJ2 = create_label(0.81f,0.05f,50, "Joueur 2", Panel_State.gameplay, Color.white);
+
+         NumberLifeJ1 = create_label(0.1f,0.1f,60, "999", Panel_State.gameplay, Color.red);
+         NumberLifeJ2 = create_label(0.8f,0.1f,60, "999", Panel_State.gameplay, Color.red);
 
     /*
         Button plus = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.gameplay , "+",Graphic_type.Ball_Number, 0,new ActionListener() {
@@ -226,10 +256,10 @@ public class Interface  {
 
         JPanel bullet_number_panel = create_panel(0.155f,0.85f,0.85f,0.15f, Panel_State.gameplay , Graphic_type.transparentGray);
         JPanel bullet_operator_panel = create_panel(0f,0.85f,0.35f,0.15f, Panel_State.gameplay , Graphic_type.transparentRed);
-        JPanel joueur1_panel = create_panel(0.001f,0.01f,0.35f,0.83f, Panel_State.gameplay , Graphic_type.transparentBlue);
-        JPanel joueur2_panel = create_panel(0.81f,0.01f,0.19f,0.83f, Panel_State.gameplay, Graphic_type.transparentBlue);
-        JPanel Stack_panel = create_panel(0.5f, 0.5f, .1f,0.3f, Panel_State.gameplay , Graphic_type.transparentBlack);
-        Button test = create_button(0.1f,0.1f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
+        JPanel joueur1_panel = create_panel(0.001f,0.01f,RATIO_SIZE_X_PANEL_PLAYER,RATIO_SIZE_Y_PANEL_PLAYER, Panel_State.gameplay , Graphic_type.transparentBlue);
+        JPanel joueur2_panel = create_panel(0.65f,0.01f,RATIO_SIZE_X_PANEL_PLAYER,RATIO_SIZE_Y_PANEL_PLAYER, Panel_State.gameplay, Graphic_type.transparentBlue);
+        JPanel Stack_panel = create_panel(0.4f, 0.5f, .3f,0.1f, Panel_State.gameplay , Graphic_type.transparentBlack);
+        Button test = create_button(0.9f,0.9f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 //game_visual.commencer_jeu();
                 changePanel(Panel_State.game_settings);
@@ -240,13 +270,12 @@ public class Interface  {
     }
 
     public void createPlayersPanel(){
-        final float posxPlayerPanel = 0.1f, posyPlayerPanel=0.2f, sizexPlayerPanel=0.3f, sizeyPlayerPanel=0.1f;
-       
+
         Frame_Panel panel_attackJ1 = panel_manager.addPanel(Panel_State.player_1_attack);
         Frame_Panel panel_attackJ2 = panel_manager.addPanel(Panel_State.player_2_attack);
         Frame_Panel panel_defenseJ1 = panel_manager.addPanel(Panel_State.player_1_defense);
         Frame_Panel panel_defenseJ2 = panel_manager.addPanel(Panel_State.player_2_defense);
-        Button attackJ1 = create_button(posxPlayerPanel,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ1 = create_button(posxPlayerPanelJ1,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 // menu_group_panel._setVisible(false);
                 try{
@@ -260,7 +289,7 @@ public class Interface  {
             }
         });
 
-        Button attackJ2 = create_button(posxPlayerPanel+0.3f,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ2 = create_button(posxPlayerPanelJ2,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
 
@@ -273,7 +302,7 @@ public class Interface  {
             }
         });
 
-        Button defenseJ1 = create_button(posxPlayerPanel+0.2f,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ1 = create_button(posxPlayerPanelJ1,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
@@ -285,7 +314,7 @@ public class Interface  {
             }
         });
 
-        Button defenseJ2 = create_button(posxPlayerPanel+0.1f,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ2 = create_button(posxPlayerPanelJ2,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
@@ -295,10 +324,17 @@ public class Interface  {
                 }
             }
         });
-        JLabel Text_YourTurnA1 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 1!", Panel_State.player_1_attack, Color.white);
-        JLabel Text_YourTurnA2= create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 2!", Panel_State.player_2_attack, Color.white);
-        JLabel Text_YourTurnD1 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 1!", Panel_State.player_1_defense, Color.white);
-        JLabel Text_YourTurnD2 = create_label(0.05f, 0.5f, 5, "C'est à vous Joueur 2!", Panel_State.player_2_defense, Color.white);
+
+        JLabel Text_YourTurnA1 = create_label(0.05f, RATIO_POS_Y_CESTAVOUSJOUEUR, SIZE_TEXT_CESTAVOUSJOUEUR, "C'est à vous Joueur 1 !", Panel_State.player_1_attack, Color.white);
+        JLabel Text_YourTurnA2= create_label(0.7f, RATIO_POS_Y_CESTAVOUSJOUEUR, SIZE_TEXT_CESTAVOUSJOUEUR, "C'est à vous Joueur 2 !", Panel_State.player_2_attack, Color.white);
+        JLabel Text_YourTurnD1 = create_label(0.05f, RATIO_POS_Y_CESTAVOUSJOUEUR, SIZE_TEXT_CESTAVOUSJOUEUR, "C'est à vous Joueur 1 !", Panel_State.player_1_defense, Color.white);
+        JLabel Text_YourTurnD2 = create_label(0.7f, RATIO_POS_Y_CESTAVOUSJOUEUR, SIZE_TEXT_CESTAVOUSJOUEUR, "C'est à vous Joueur 2 !", Panel_State.player_2_defense, Color.white);
+
+        JLabel shieldJ1 = create_panel(0.1f,0.45f, 0.2f, 0.3f, Panel_State.player_2_attack, Graphic_type.Shield_Player);
+        JLabel shieldJ2 = create_panel(0.8f,0.45f, 0.2f, 0.3f, Panel_State.player_1_attack, Graphic_type.Shield_Player);
+
+        NumberShieldJ1 = create_label(0.1f,0.45f,70, "9999", Panel_State.player_2_attack, Color.white);
+        NumberShieldJ2 = create_label(0.8f,0.45f,70, "9999", Panel_State.player_1_attack, Color.white);
 
     }
 
@@ -322,6 +358,14 @@ public class Interface  {
         b.relocateToNextAnchorPoint(AnchorPurpose.Operator_jar);
         panel_related.setComponentZOrder(b, 0);
 
+    }
+
+    public void updatePlayerStats(int LifeJ1, int LifeJ2, int ShieldJ1, int ShieldJ2){
+        NumberLifeJ1.setText(Integer.toString(LifeJ1) );
+        NumberLifeJ2.setText(Integer.toString(LifeJ2) );
+        NumberShieldJ1.setText(Integer.toString(ShieldJ1) );
+        NumberShieldJ2.setText(Integer.toString(ShieldJ2) );
+         fenetre.repaint();
     }
 
     public void setSize(int w, int h){
@@ -489,8 +533,53 @@ public class Interface  {
         return p;
     }
 
+    public JLabel create_panel(float posx, float posy, float sizex, float sizey, Panel_State pstate, Graphic_type type){
+        JLabel p = new JLabel();
+        p.setLayout(null);
+        if(type.getFont_color()!=null){
+
+            p.setBackground(type.getFont_color());
+        }
+
+
+        resizeElement(p, pstate, posx, posy, sizex, sizey);
+
+        if(type.getURL() != ""){
+            Image image = Graphic_type.setURLImage_icon(type.getURL()).getImage(); // transform it
+            float ratioImage = image.getWidth(null) / image.getHeight(null);
+
+            Image newimg = image.getScaledInstance(p.getBounds().width,  Math.round(p.getBounds().height),  Image.SCALE_REPLICATE); // scale it the smooth way
+            p.setBounds(p.getBounds().x, p.getBounds().y, p.getBounds().width,  Math.round(p.getBounds().height));
+            ImageIcon imgic = new ImageIcon(newimg);  // transform it back
+            p.setIcon(imgic);
+        }
+        System.out.println("panel created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+ratiow(sizex) +" "+ ratioh(sizey)+ " in "+pstate.toString());
+        //   WarnFitScreen(posx,posy,sizex,sizey);
+        Frame_Panel panel_related =panel_manager.getPanelFromState(pstate);
+        panel_related.addElementToPanel(p);
+        panel_related.add(p);
+
+
+        //   fenetre.add(p);
+        return p;
+    }
+    public void sendMessageToPlayer(String t){
+        send_message_temporary(0.35f,0.7f, 30, t, Color.red, Duration.ofSeconds(2));
+    }
+    public void clearMessages(){
+        for (JLabel message:
+             all_errors) {
+
+            panel_manager.getPanelFromState(Panel_State.gameplay).removeElementFromPanel(message);
+        }
+        all_errors.clear();
+        Interface.fenetre.repaint();
+
+    }
     public void send_message_temporary(float posx, float posy, int size , String text, Color c, Duration durée){
+        clearMessages();
         JLabel message = create_label(posx, posy, size, text, Panel_State.gameplay, c);
+        all_errors.add(message);
         new Thread(new Runnable() {
             public void run() {
                 Instant start = Instant.now();
@@ -516,15 +605,13 @@ public class Interface  {
         // p.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
 
         //Remarque : la taille en y ne marche pas totalement
-        resizeElement(p, pstate, posx, posy, 0.5f, 0.05f);
+        resizeElement(p, pstate, posx, posy, 0.5f, 0.07f);
         System.out.println("label \""+text+"\" created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+size+ " in "+pstate.toString());
         //   WarnFitScreen(posx,posy,sizex,sizey);
-        Frame_Panel panel_related =panel_manager.getPanelFromState(pstate);
+        Frame_Panel panel_related = panel_manager.getPanelFromState(pstate);
         panel_related.addElementToPanel(p);
         panel_related.add(p);
         panel_related.setComponentZOrder(p,0);
-
-
         //   fenetre.add(p);
         return p;
     }

@@ -9,8 +9,12 @@ public enum Graphic_type {
 
 
     MENU_Button(new Dimension(500,250),
-            new Color(153, 204, 255, 100),
+            new Color(153, 204, 255, 255),
             new Font("Courier 10 Pitch", Font.BOLD, 80)),
+
+    Shield_Player(80,
+            new Color(153, 204, 255, 255),
+            "Shield.png",null),
 
     Ball_Number(60,
             Color.getHSBColor(0,0,0),
@@ -93,7 +97,7 @@ public enum Graphic_type {
 
 
 
-    public ImageIcon setURLImage_icon(String URL){
+    public static ImageIcon setURLImage_icon(String URL){
         if(URL == ""){
             return null;
         }
@@ -104,7 +108,7 @@ public enum Graphic_type {
                 return i;
             } catch (Exception ex) {
                 System.out.println(ex);
-                System.out.println("---------error----------");
+                assert 1==0;
                 return null;
             }
     }

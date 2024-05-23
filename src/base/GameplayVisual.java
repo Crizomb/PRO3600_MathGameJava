@@ -346,11 +346,14 @@ this.gameEvents = gameEvents;
 
     }
     public void sendNewOperation(String T){
+        System.out.println("staaaack vide ?"+joueurEnCours.stack.isEmpty());
         getStackFromString(T);
         try{
-            j1.createNewNumberStack();
+            joueurEnCours.createNewNumberStack();
         }catch (Exception e){
             System.out.println("Opération invalide");
+            putAllObjectsOutOfStack();
+            gameEvents.errorMustBeSentToPlayer(e.getMessage());
             return;
         }
 
@@ -369,19 +372,23 @@ this.gameEvents = gameEvents;
 
     }
     public void etapeSuivante(){
+        gameEvents.statsPlayersUpdated();
         if(phase == "Attack" ){
             setPhase("Defense");
+
         }else{
             setPhase("Attack");
+            if (joueurEnCours == j1){
+                setJoueurEnCours(j2);
+            }else if (joueurEnCours == j2) {
+                setJoueurEnCours(j1);
+            }
         }
-
         System.out.println("------------------------------------------------------------------        changement detape "+joueurEnCours.getId());
 
-        if (joueurEnCours == j1){
-            setJoueurEnCours(j2);
-        }else if (joueurEnCours == j2) {
-            setJoueurEnCours(j1);
-        }
+
+
+
 
     }
     public void setJoueurEnCours(Player p){
@@ -389,6 +396,7 @@ this.gameEvents = gameEvents;
         joueurEnCours = p;
         System.out.println(" ----------------------------------------------------------------  la on est au joueur "+p.getId());
         gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
+        gameEvents.UpdateStepGame(phase, joueurEnCours);
 
     }
     public void setPhase(String p){

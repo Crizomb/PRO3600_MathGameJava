@@ -12,6 +12,7 @@ public class Panel_Manager {
     public Panel_Manager(Frame_Panel... p){
         panel_list = new ArrayList<>();
         addPanel(Panel_State.DEFAULT);
+        addPanel(Panel_State.temporary);
         actual_Groupe_panel = null;
     }
 
@@ -64,7 +65,7 @@ public class Panel_Manager {
     private void HidePanelsWithLayer(int layer){
         for (Frame_Panel gp :
                 panel_list) {
-            if(gp.getState().getLayer()==layer)
+            if(gp.getState().getLayer()==layer && gp.getState() != Panel_State.DEFAULT)
             gp._setVisible(false);
         }
     }
@@ -81,6 +82,10 @@ public class Panel_Manager {
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
         }
+        Interface.fenetre.add(actual_Groupe_panel);
+        Interface.fenetre.add(getPanelFromState(Panel_State.DEFAULT));
+        Interface.fenetre.pack();
+        Interface.fenetre.repaint();
     }
 
     public void changePanelWithSide(Panel_State p_state, Panel_State side_panel) {
@@ -88,7 +93,7 @@ public class Panel_Manager {
             System.out.println("Invalide side panel");
             return;
         }
-         changePanel(p_state);
+        HideAllPanels();
         //System.out.println("pour être sur ((((((((((((((((((((((((((((((((((((((((((((");
         try {
             actual_Groupe_panel = getPanelFromState(side_panel);
@@ -98,10 +103,31 @@ public class Panel_Manager {
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
         }
+
+        try {
+            actual_Groupe_panel = getPanelFromState(p_state);
+            actual_Groupe_panel._setVisible();
+            //System.out.println("testThread-----------------------------------_è_è");
+
+        }
+        catch(NullPointerException e){
+            System.out.println("pas de nouveau panneaux activée");
+        }
         //System.out.println("fin de l'opération changePanelWithSide");
+        Interface.fenetre.add(getPanelFromState(side_panel));
+        Interface.fenetre.add(actual_Groupe_panel);
+        Interface.fenetre.add(getPanelFromState(Panel_State.DEFAULT));
+        Interface.fenetre.pack();
 
     }
 
+
+     /*void paintBackground(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
+        }
+    }*/
     /*public void changeSide(Panel_State side_state){
         if(side_state.getLayer()==0){
             System.out.println("Invalide side panel");

@@ -35,6 +35,7 @@ public class Button extends JButton  {
         setBackground(type.getFont_color());
         setBorder(javax.swing.BorderFactory.createEmptyBorder());
         setFocusPainted(false);
+        setRolloverEnabled (false);
 
 
         if(type.getFont() != null){

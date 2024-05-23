@@ -2,6 +2,9 @@ package base;
 
 import graphics.Interface;
 
+import java.awt.*;
+import java.time.Duration;
+
 public class GameEvents {
 
     private Interface interface_joueur;
@@ -12,12 +15,8 @@ public class GameEvents {
     public GameEvents(Interface interface_joueur, GameplayVisual gameplayVisual){
         this.interface_joueur = interface_joueur;
         this.gameplayVisual = gameplayVisual;
-        System.out.println("--------------------------------------set-------------------------------------- gameEvent1");
-
         interface_joueur.setGameEvents(this);
         gameplayVisual.setGameEvents(this);
-        System.out.println("--------------------------------------set-------------------------------------- gameEvent2");
-
     }
 
     public void ButtonLaunchGamePressed(){
@@ -49,5 +48,12 @@ public class GameEvents {
         interface_joueur.UpdateStack(value);
     }
 
+    public void statsPlayersUpdated(){
+        interface_joueur.updatePlayerStats( gameplayVisual.j1.getPv(),gameplayVisual.j2.getPv(), gameplayVisual.j1.getAttack_value(), gameplayVisual.j2.getAttack_value());
+    }
+
+    public void errorMustBeSentToPlayer(String s){
+       //* temporaire TODO interface_joueur.sendMessageToPlayer(s);
+    }
 
 }
