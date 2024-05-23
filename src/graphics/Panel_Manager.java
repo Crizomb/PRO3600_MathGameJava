@@ -1,6 +1,7 @@
 package graphics;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,24 +11,44 @@ public class Panel_Manager {
     private List<Frame_Panel> panel_list;
     private Frame_Panel actual_Groupe_panel;
 
-   // private JLayeredPane layer_manager;
+    private JLayeredPane layer_manager;
 
     public Panel_Manager(){
         panel_list = new ArrayList<>();
-     //   layer_manager = new JLayeredPane();
-       // layer_manager.setOpaque(false);
+        layer_manager = new JLayeredPane();
+        layer_manager.setOpaque(false);
+        layer_manager.setLayout(null);
+        layer_manager.setBounds(0,0,2000, 1000);
+        //layer_manager.setPreferredSize(new Dimension(200,0  ));
         addPanel(Panel_State.DEFAULT);
         actual_Groupe_panel = null;
+        Interface.fenetre.add(layer_manager);
     }
 
     public Frame_Panel addPanel(Panel_State pstate){
         int id = panel_list.size();
         Frame_Panel p = new Frame_Panel(pstate, id);
+       // p.setLayout(new LayeredPaneLayout(layer_manager));
         panel_list.add(p);
         if (actual_Groupe_panel==null){
             actual_Groupe_panel = p;
         }
-       // layer_manager.add(p,0);
+
+        if(pstate == Panel_State.background){
+            layer_manager.add(p,0);
+           // Interface.fenetre.setComponentZOrder(p,0);
+
+        }else{
+
+            layer_manager.add(p,5);
+           // Interface.fenetre.getContentPane().setComponentZOrder(p,4);
+
+        }
+        //p.setBounds(0,0, Interface.getScreenSize().width, Interface.getScreenSize().height);
+
+
+        //layer_manager.moveToFront(p);
+
         return p;
     }
 
@@ -70,9 +91,10 @@ public class Panel_Manager {
     private void HidePanelsWithLayer(int layer){
         for (Frame_Panel gp :
                 panel_list) {
-            if(gp.getState().getLayer()==layer)
-            gp._setVisible(false);
-       //     layer_manager.moveToBack(gp);
+            if(gp.getState().getLayer()==layer && gp.getState()!=Panel_State.background) {
+                layer_manager.setLayer(gp, 2);
+                gp._setVisible(false);
+            }
 
         }
     }
@@ -83,11 +105,20 @@ public class Panel_Manager {
         try {
             actual_Groupe_panel = getPanelFromState(p_state);
             actual_Groupe_panel._setVisible();
+            layer_manager.setLayer(actual_Groupe_panel,3);
+
             //System.out.println("testThread-----------------------------------_è_è");
 
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
+        }
+    }
+
+    public void displayPanelsLayers(){
+        for (Frame_Panel fp :
+             panel_list) {
+            System.out.println("-------------Panel "+ fp.getState()+ " is at layer "+layer_manager.getLayer(fp));
         }
     }
 
@@ -102,14 +133,14 @@ public class Panel_Manager {
         try {
             actual_Groupe_panel = getPanelFromState(side_panel);
             System.out.println(actual_Groupe_panel.getState().toString()+ " is the pstate-------------------");
-           // layer_manager.moveToFront(actual_Groupe_panel);
             actual_Groupe_panel._setVisible();
+            layer_manager.setLayer(actual_Groupe_panel,4);
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
         }
         //System.out.println("fin de l'opération changePanelWithSide");
-
+displayPanelsLayers();
     }
 
     public void changeSide(Panel_State side_state){
@@ -120,7 +151,7 @@ public class Panel_Manager {
         HidePanelsWithLayer(side_state.getLayer());
         try {
             actual_Groupe_panel = getPanelFromState(side_state);
-        //    layer_manager.moveToFront(actual_Groupe_panel);
+            layer_manager.moveToFront(actual_Groupe_panel);
             actual_Groupe_panel._setVisible();
             System.out.println("pannel trouvé");
         }

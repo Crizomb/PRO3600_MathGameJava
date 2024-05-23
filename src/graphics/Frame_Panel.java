@@ -54,19 +54,24 @@ public class Frame_Panel extends JPanel{
     }
 
     public Frame_Panel(Panel_State p_state, int panel_id){
-        try {
-            backgroundImage = ImageIO.read(new File(Objects.requireNonNull(getClass().getResource("background.jpg")).getPath()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(p_state == Panel_State.background){
+
+            try {
+                backgroundImage = ImageIO.read(new File(Objects.requireNonNull(getClass().getResource("background.jpg")).getPath()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            this.setOpaque(false);
         }
+
+
         this.panel_id=panel_id;
         this.state = p_state;
         element_panel = new ArrayList<>();
-        this.setLayout(null);
-        this.setOpaque(true);
         System.out.println(Interface.getScreenSize());
         this.setBounds(0,0,Interface.getScreenSize().width, Interface.getScreenSize().height);
-        this.setBackground(Color.green);
+        //this.setBackground(Color.green);
         Interface.fenetre.add(this);
     }
 

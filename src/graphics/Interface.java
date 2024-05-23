@@ -82,13 +82,15 @@ public class Interface  {
 
     private void initializeGameInterface(int w, int h)   throws AWTException{
         fenetre = new JFrame(NOM_JEU);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.getContentPane().setBackground(Graphic_type.transparentBlue);
-
         setSize(w, h);
         SCREEN_SIZE = getSCREEN_SIZE();
         panel_manager = new Panel_Manager();
         anchorManager = new AnchorManager();
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.getContentPane().setBackground(Graphic_type.transparentBlue);
+
+        Frame_Panel bg = panel_manager.addPanel(Panel_State.background);
+
         createStartMenu();
         createSettingsPanel();
         createGamePanel();
@@ -96,6 +98,7 @@ public class Interface  {
         changePanel(Panel_State.MENU);
         anchorManager.setSorted_anchorPoint();
         anchorManager.relocateAllBulletsInNumberReserve();
+
         fenetre.pack();
         fenetre.setVisible(true);
         /*new Thread(new Runnable() {
@@ -312,8 +315,8 @@ public class Interface  {
     public void UpdatePanelStepGame(String combined){
         anchorManager.removeStack();
         System.out.println("changement du stade de la partie, on est a "+combined);
-        //panel_manager.changePanelWithSide(Panel_State.gameplay,Panel_State.getPanelModePlayer(combined));
-        panel_manager.changeSide(Panel_State.getPanelModePlayer(combined));
+        panel_manager.changePanelWithSide(Panel_State.gameplay,Panel_State.getPanelModePlayer(combined));
+        //panel_manager.changeSide(Panel_State.getPanelModePlayer(combined));
     }
 
     public void replaceOperator(String op){
