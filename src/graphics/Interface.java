@@ -1,9 +1,7 @@
 package graphics;
 
 import base.GameEvents;
-import base.GameplayVisual;
 import base.Operator;
-import base.Player;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -40,11 +38,13 @@ public class Interface  {
     //-----------------------------------------------//
 
     final int SIZE_TEXT_CESTAVOUSJOUEUR = 40;
-    final float RATIO_POS_Y_CESTAVOUSJOUEUR = 0.35f;
-    final float posxPlayerPanelJ1 = 0.03f, posyPlayerPanel=0.55f,posxPlayerPanelJ2 = 0.7f, sizexPlayerPanel=0.3f, sizeyPlayerPanel=0.1f;
-
+    final float RATIO_POS_Y_CESTAVOUSJOUEUR = 0.15f;
+    final float posxPlayerButtonJ1 = 0.03f, posyPlayerButton =0.7f, posxPlayerButtonJ2 = 0.7f, sizexPlayerButton =0.3f, sizeyPlayerButton =0.1f;
     final float RATIO_SIZE_X_PANEL_PLAYER=0.35f, RATIO_SIZE_Y_PANEL_PLAYER=0.83f;
 
+    final float RATIO_POSX_CHEVALIER_1 = 0.05f , RATIO_POSX_CHEVALIER_2=0.7f, RATIO_POSY_CHEVALIER = 0.25f;
+
+    final String TEXT_ERROR= "Il faut que tu places un nombre unique";
     //-----------------------------------------------//
     /* Fin Déclaration Variables Elements Graphiques du jeu  */
     //-----------------------------------------------//
@@ -80,7 +80,7 @@ public class Interface  {
     private void initializeGameInterface(int w, int h)   throws AWTException{
         fenetre = new JFrame(NOM_JEU);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.getContentPane().setBackground(Graphic_type.transparentBlue);
+       fenetre.getContentPane().setBackground(Graphic_type.transparentBlue);
 
         setSize(w, h);
         SCREEN_SIZE = getSCREEN_SIZE();
@@ -144,14 +144,7 @@ public class Interface  {
     private void createStartMenu()  {
         menu_frame = panel_manager.addPanel(Panel_State.MENU);
         JPanel groupe_main_buttons = create_panel(0.3f,0.4f,0.4f,0.2f, Panel_State.MENU , Graphic_type.transparentWhite);
-        //panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        /*BorderLayout b_layout = new BorderLayout();
-        b_layout.setHgap(400);
-        b_layout.setVgap(40);*/
-        //fenetre.setLayout(null);
-       // menu_group_panel.setBounds(450,420, 1000,500);
-        //  menu_group_panel.setBackground(Color.black);
         Button start_button = create_button(0.3f,0.3f, 0.4f, 0.2f,Panel_State.MENU ,"Start Game", Graphic_type.MENU_Button, 0, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 panel_manager.changePanel(Panel_State.game_settings);
@@ -174,7 +167,6 @@ public class Interface  {
         Button home_button = create_button(0.05f,0.05f, 0.05f, 0.1f,Panel_State.game_settings, "", Graphic_type.Settings_icon, -5, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 changePanel(Panel_State.MENU);
-                // menu_group_panel._setVisible(false);
             }
         });
 
@@ -182,7 +174,6 @@ public class Interface  {
         Button return_button = create_button(0.3f,0.8f, ratioLongueurButtonsMenu, 0.3f,Panel_State.game_settings ,"Return to Menu", Graphic_type.MENU_Button, -20,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 changePanel(Panel_State.MENU);
-                // menu_group_panel._setVisible(false);
             }
         });
         Button launch_game = create_button(0.3f,0.4f,ratioLongueurButtonsMenu,0.3f, Panel_State.game_settings, "launch", Graphic_type.MENU_Button, -20, new ActionListener() {
@@ -209,11 +200,11 @@ public class Interface  {
         AnchorPoint d = new AnchorPoint(0.50f,0.5f , AnchorPurpose.Operator_jar, anchorManager);
         AnchorPoint c2 = new AnchorPoint(0.55f,0.5f , AnchorPurpose.Number_jar, anchorManager);
 
-        JLabel textJ1 = create_label(0.07f,0.05f,50, "Joueur 1", Panel_State.gameplay, Color.white);
-        JLabel textJ2 = create_label(0.81f,0.05f,50, "Joueur 2", Panel_State.gameplay, Color.white);
+        JLabel textJ1 = create_label(0.1f,0.05f,50, "Joueur 1", Panel_State.gameplay, Color.white);
+        JLabel textJ2 = create_label(0.79f,0.05f,50, "Joueur 2", Panel_State.gameplay, Color.white);
 
-         NumberLifeJ1 = create_label(0.1f,0.1f,60, "999", Panel_State.gameplay, Color.red);
-         NumberLifeJ2 = create_label(0.8f,0.1f,60, "999", Panel_State.gameplay, Color.red);
+         NumberLifeJ1 = create_label(0.14f,0.1f,60, "999", Panel_State.gameplay, Color.red);
+         NumberLifeJ2 = create_label(0.83f,0.1f,60, "999", Panel_State.gameplay, Color.red);
 
     /*
         Button plus = create_button(0.1f, 0.87f, 0.05f,0.05f,Panel_State.gameplay , "+",Graphic_type.Ball_Number, 0,new ActionListener() {
@@ -254,16 +245,18 @@ public class Interface  {
 
 
 
+        JLabel player_chevalier_1 = create_panel(RATIO_POSX_CHEVALIER_1,RATIO_POSY_CHEVALIER, 0.25f, 0.4f, Panel_State.gameplay, Graphic_type.Chevalier_Player_1);
+        JLabel player_chevalier_2 = create_panel(RATIO_POSX_CHEVALIER_2,RATIO_POSY_CHEVALIER, 0.25f, 0.4f, Panel_State.gameplay, Graphic_type.Chevalier_Player_2);
         JPanel bullet_number_panel = create_panel(0.155f,0.85f,0.85f,0.15f, Panel_State.gameplay , Graphic_type.transparentGray);
         JPanel bullet_operator_panel = create_panel(0f,0.85f,0.35f,0.15f, Panel_State.gameplay , Graphic_type.transparentRed);
         JPanel joueur1_panel = create_panel(0.001f,0.01f,RATIO_SIZE_X_PANEL_PLAYER,RATIO_SIZE_Y_PANEL_PLAYER, Panel_State.gameplay , Graphic_type.transparentBlue);
         JPanel joueur2_panel = create_panel(0.65f,0.01f,RATIO_SIZE_X_PANEL_PLAYER,RATIO_SIZE_Y_PANEL_PLAYER, Panel_State.gameplay, Graphic_type.transparentBlue);
         JPanel Stack_panel = create_panel(0.4f, 0.5f, .3f,0.1f, Panel_State.gameplay , Graphic_type.transparentBlack);
-        Button test = create_button(0.9f,0.9f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
+
+
+        Button retour_button = create_button(0.9f,0.9f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                //game_visual.commencer_jeu();
                 changePanel(Panel_State.game_settings);
-                // menu_group_panel._setVisible(false);
             }
         });
 
@@ -275,52 +268,51 @@ public class Interface  {
         Frame_Panel panel_attackJ2 = panel_manager.addPanel(Panel_State.player_2_attack);
         Frame_Panel panel_defenseJ1 = panel_manager.addPanel(Panel_State.player_1_defense);
         Frame_Panel panel_defenseJ2 = panel_manager.addPanel(Panel_State.player_2_defense);
-        Button attackJ1 = create_button(posxPlayerPanelJ1,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 // menu_group_panel._setVisible(false);
                 try{
 
                     gameEvents.ButtonAttackPressed(anchorManager.getFormulaFromStack());
                 }catch (Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tdkswlmvnkswlmcnxk,<<ncs",Graphic_type.transparentRed, Duration.ofSeconds(2));
-
+send_error_message_temporary(TEXT_ERROR);
                 }
 
             }
         });
 
-        Button attackJ2 = create_button(posxPlayerPanelJ2,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ2 = create_button(posxPlayerButtonJ2 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
 
                    gameEvents.ButtonAttackPressed(anchorManager.getFormulaFromStack());
                 }catch (Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "___________---_-_-__--__-__-__-_-__------_-___-_-__-__-",Graphic_type.transparentRed, Duration.ofSeconds(2));
+                    send_error_message_temporary(TEXT_ERROR);
 
                 }
 
             }
         });
 
-        Button defenseJ1 = create_button(posxPlayerPanelJ1,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Veuillez apprendre les règles svp",Graphic_type.transparentRed, Duration.ofSeconds(2));
+                    send_error_message_temporary(TEXT_ERROR);
                 }
 
             }
         });
 
-        Button defenseJ2 = create_button(posxPlayerPanelJ2,posyPlayerPanel,sizexPlayerPanel,sizeyPlayerPanel, Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ2 = create_button(posxPlayerButtonJ2 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
 
                 }catch(Exception e){
-                    send_message_temporary(0.1f,0.25f, 30, "Tu peux pas faire ca ",Graphic_type.transparentRed , Duration.ofSeconds(2));
+                    send_error_message_temporary(TEXT_ERROR);
                 }
             }
         });
@@ -330,11 +322,11 @@ public class Interface  {
         JLabel Text_YourTurnD1 = create_label(0.05f, RATIO_POS_Y_CESTAVOUSJOUEUR, SIZE_TEXT_CESTAVOUSJOUEUR, "C'est à vous Joueur 1 !", Panel_State.player_1_defense, Color.white);
         JLabel Text_YourTurnD2 = create_label(0.7f, RATIO_POS_Y_CESTAVOUSJOUEUR, SIZE_TEXT_CESTAVOUSJOUEUR, "C'est à vous Joueur 2 !", Panel_State.player_2_defense, Color.white);
 
-        JLabel shieldJ1 = create_panel(0.1f,0.45f, 0.2f, 0.3f, Panel_State.player_2_attack, Graphic_type.Shield_Player);
-        JLabel shieldJ2 = create_panel(0.8f,0.45f, 0.2f, 0.3f, Panel_State.player_1_attack, Graphic_type.Shield_Player);
+       // JLabel shieldJ1 = create_panel(0.1f,0.45f, 0.2f, 0.3f, Panel_State.player_2_attack, Graphic_type.Shield_Player);
+        //JLabel shieldJ2 = create_panel(0.8f,0.45f, 0.2f, 0.3f, Panel_State.player_1_attack, Graphic_type.Shield_Player);
 
-        NumberShieldJ1 = create_label(0.1f,0.45f,70, "9999", Panel_State.player_2_attack, Color.white);
-        NumberShieldJ2 = create_label(0.8f,0.45f,70, "9999", Panel_State.player_1_attack, Color.white);
+        NumberShieldJ1 = create_label(0.25f,0.5f,70, "9999", Panel_State.player_2_attack, Color.white);
+        NumberShieldJ2 = create_label(0.75f,0.5f,70, "9999", Panel_State.player_1_attack, Color.white);
 
     }
 
@@ -403,6 +395,7 @@ public class Interface  {
 
     public void UpdateStack(int value){
         anchorManager.collapseStack();
+        clearMessages();
 
         new Thread(){
             public void run(){
@@ -570,15 +563,18 @@ public class Interface  {
         for (JLabel message:
              all_errors) {
 
-            panel_manager.getPanelFromState(Panel_State.gameplay).removeElementFromPanel(message);
+            panel_manager.getPanelFromState(Panel_State.DEFAULT).removeElementFromPanel(message);
         }
         all_errors.clear();
-        Interface.fenetre.repaint();
+        //Interface.fenetre.repaint();
 
+    }
+    public void send_error_message_temporary(String text){
+        send_message_temporary(0.35f,0.7f, 30, text, Color.red, Duration.ofSeconds(2));
     }
     public void send_message_temporary(float posx, float posy, int size , String text, Color c, Duration durée){
         clearMessages();
-        JLabel message = create_label(posx, posy, size, text, Panel_State.gameplay, c);
+        JLabel message = create_label(posx, posy, size, text, Panel_State.DEFAULT, c);
         all_errors.add(message);
         new Thread(new Runnable() {
             public void run() {

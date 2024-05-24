@@ -16,6 +16,14 @@ public enum Graphic_type {
             new Color(153, 204, 255, 255),
             "Shield.png",null),
 
+    Chevalier_Player_1(80,
+            new Color(154, 204, 255, 255),
+            "chevalier_j1_final.jpg",null),
+
+    Chevalier_Player_2(80,
+            new Color(155, 204, 255, 255),
+            "chevalier_j2_final.png",null),
+
     Ball_Number(60,
             Color.getHSBColor(0,0,0),
             "IconeChiffre.png",
@@ -51,8 +59,14 @@ public enum Graphic_type {
         this.fontName = fontName;
 
         this.image_icon = setURLImage_icon(URL);
-        this.size = new Dimension(width, image_icon.getIconHeight()/image_icon.getIconWidth()*width);
-        this.image_icon = new ImageIcon(this.image_icon.getImage().getScaledInstance(this.size.width, this.size.height, 1)) ;
+        System.out.println(image_icon);
+        if(image_icon != null){
+
+            this.size = new Dimension(width, image_icon.getIconHeight()/image_icon.getIconWidth()*width);
+            this.image_icon = new ImageIcon(this.image_icon.getImage().getScaledInstance(this.size.width, this.size.height, 1)) ;
+        }else{
+            size = null;
+        }
     }
 
     Graphic_type(Dimension size, Color font_color){

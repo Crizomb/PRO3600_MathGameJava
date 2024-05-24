@@ -40,7 +40,12 @@ this.gameEvents = gameEvents;
         j1.init();
         j2.init();
 
-        tourJoueur(joueurEnCours);
+       // tourJoueur(joueurEnCours);
+        setJoueurEnCours(j1);
+        setPhase("Defense");
+        gameEvents.statsPlayersUpdated();
+        //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
+        gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
         /*
         System.out.print("\n\n***Début du jeu***\n\n");
         while ((j1.getPv()>0)&&(j2.getPv()>0)) {
@@ -293,15 +298,11 @@ this.gameEvents = gameEvents;
     }
 
     public void tourJoueur(Player p){
+
        /* if (nJoueur>1){
             System.out.println("error call numero joueur");
             return ;
         }*/
-        setJoueurEnCours(j1);
-        setPhase("Defense");
-
-        //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
-        gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
 
     }
     private void putAllObjectsOutOfStack(){
@@ -318,6 +319,7 @@ this.gameEvents = gameEvents;
 
     public void getStackFromString(String T){
         putAllObjectsOutOfStack();
+        System.out.println(T+" fdqsfdqfdsqfdsqfdsqf"+joueurEnCours.stack);
         String chars[] = T.split(" ");
         for (String c:
              chars) {
@@ -329,10 +331,18 @@ this.gameEvents = gameEvents;
                     System.out.println(e.toString() + " opération annulée");
                 }
             }else{
+                System.out.println(c+" :khlkgkjyfjhgjrhgjhhhd");
                 joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(c)));
 
             }
         }
+/*
+        if joueurEnCours.stack.ne <= 0){
+            throw  new IllegalStateException("faut que tu mettes un nombre positif fdp");
+        }
+        if(new_val >= 10000){
+            throw  new IllegalStateException("dose stp");
+        }*/
 
        /* System.out.println(joueurEnCours.toString());
         joueurEnCours.pushNumberInStack(joueurEnCours.numberInInventory(Integer.valueOf(chars[0])));
@@ -354,11 +364,15 @@ this.gameEvents = gameEvents;
             System.out.println("Opération invalide");
             putAllObjectsOutOfStack();
             gameEvents.errorMustBeSentToPlayer(e.getMessage());
+            e= null;
+            //joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
+            // joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
+
             return;
         }
 
 
-        System.out.println(j1.stack.get(0).getValue().getIntValue());
+        System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
 
 
         System.out.println(joueurEnCours.stack.get(0).getValue().getIntValue());
@@ -371,23 +385,26 @@ this.gameEvents = gameEvents;
         joueurEnCours.putObjectOutOfStack(joueurEnCours.stack.get(0));
 
     }
+
+    public Player playerNotPlayingCurrently(){
+        if (joueurEnCours == j1){
+            return j2;
+        }
+        return j1;
+    }
     public void etapeSuivante(){
-        gameEvents.statsPlayersUpdated();
         if(phase == "Attack" ){
             setPhase("Defense");
 
         }else{
             setPhase("Attack");
-            if (joueurEnCours == j1){
-                setJoueurEnCours(j2);
-            }else if (joueurEnCours == j2) {
-                setJoueurEnCours(j1);
-            }
+           setJoueurEnCours(playerNotPlayingCurrently());
         }
         System.out.println("------------------------------------------------------------------        changement detape "+joueurEnCours.getId());
 
 
 
+        gameEvents.statsPlayersUpdated();
 
 
     }
@@ -419,6 +436,7 @@ this.gameEvents = gameEvents;
     public void attack(String T) throws IllegalStateException{
         getStackFromString(T);
         joueurEnCours.setAttack();
+        playerNotPlayingCurrently().setPv(degats(joueurEnCours, playerNotPlayingCurrently()));
      /*   for(int i=0; i<2; i+=1) {
             if (!(listJoueur[i].equals(joueurEnCours))) {
                 joueurEnCours = listJoueur[i];

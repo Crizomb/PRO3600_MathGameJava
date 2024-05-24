@@ -83,19 +83,28 @@ public class Player {
      * @throws IllegalStateException if the stack is empty or the top element is not an operator.
      */
     public void createNewNumberStack() throws IllegalStateException{
+
         if ((!stack.isEmpty())&&(stack.firstElem().getValue().isOperator())) {
             Operator op = this.stack.pop().getValue().getOperator();
+            int new_val;
+            try{
+                 new_val = op.Evaluate(stack.get(1).getValue().getIntValue(), stack.get(0).getValue().getIntValue());
+                if(new_val <= 0){
+                    throw  new IllegalStateException("faut que tu mettes un nombre positif");
+                }
+                if(new_val >= 10000){
+                    throw  new IllegalStateException("dose stp");
+                }
+
+            }catch (Exception e){
+                throw new IllegalStateException(e.getMessage());
+            }
+
             Items element1 = this.stack.pop();
             Items element2 = this.stack.pop();
             int num1 = element1.getValue().getIntValue();
             int num2 = element2.getValue().getIntValue();
-            int new_val = op.Evaluate(num1, num2);
-            if(new_val <= 0){
-                throw  new IllegalStateException("faut que tu mettes un nombre positif fdp");
-            }
-            if(new_val >= 10000){
-                throw  new IllegalStateException("dose stp");
-            }
+
             // Defence is put back on the stack, in the form of Items, with its two parents (see Items class)
             this.stack.push(new Items(new_val, element1, element2));
 
@@ -134,7 +143,8 @@ public class Player {
                 stack.push(elem);
             }
         } else {
-            throw new IllegalStateException("the stack is empty or the top element is not an operator");
+            assert 1==0;
+            throw new IllegalStateException("");
         }
     }
 
@@ -170,12 +180,14 @@ public class Player {
             Items elem = stack.pop();
             if (elem.getValue().isInt()) {
                 this.attack_value = elem.getValue().getIntValue();
+
             } else {
                 System.out.print("L'élément est un opérateur et ne peut pas être défini comme la défense.\n");
                 stack.push(elem);
             }
+
         } else {
-            throw new IllegalStateException("the stack is empty or the top element is not an operator");
+            throw new IllegalStateException("");
         }
     }
 

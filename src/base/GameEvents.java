@@ -24,6 +24,7 @@ public class GameEvents {
     }
 
     public void ButtonEqualOperationPressed(String formulaInStack){
+        System.out.println(formulaInStack);
         gameplayVisual.sendNewOperation(formulaInStack);
     }
 
@@ -49,11 +50,11 @@ public class GameEvents {
     }
 
     public void statsPlayersUpdated(){
-        interface_joueur.updatePlayerStats( gameplayVisual.j1.getPv(),gameplayVisual.j2.getPv(), gameplayVisual.j1.getAttack_value(), gameplayVisual.j2.getAttack_value());
+        interface_joueur.updatePlayerStats( gameplayVisual.j1.getPv(),gameplayVisual.j2.getPv(), gameplayVisual.j1.getDefence_value(), gameplayVisual.j2.getDefence_value());
     }
 
     public void errorMustBeSentToPlayer(String s){
-       //* temporaire TODO interface_joueur.sendMessageToPlayer(s);
+        interface_joueur.send_error_message_temporary(s);
     }
 
 }
