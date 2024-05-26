@@ -275,7 +275,7 @@ public class Interface  {
 
                     gameEvents.ButtonAttackPressed(anchorManager.getFormulaFromStack());
                 }catch (Exception e){
-send_error_message_temporary(TEXT_ERROR);
+                    send_error_message_temporary(TEXT_ERROR);
                 }
 
             }
