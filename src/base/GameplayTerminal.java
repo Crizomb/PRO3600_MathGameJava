@@ -51,8 +51,9 @@ public class GameplayTerminal {
                 } else if (reponse.equals("ajout_nb")) {
                     System.out.print("Quel nombre ?\nVoici votre inventaire: " + j1.inventory.toString() + "\n");
                     reponse = sc.nextLine();
-                    if (j1.isInInventory(Integer.valueOf(reponse))) {
-                        j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(reponse)));
+                    if (j1.isInInventory(Integer.parseInt(reponse))) {
+                        System.out.println(reponse + " est mis dans la pile");
+                        j1.pushNumberInStack(j1.numberInInventory(Integer.parseInt(reponse)));
                     } else {
                         System.out.print("le nombre n'est pas dans l'inventaire\n");
                     }
@@ -60,10 +61,13 @@ public class GameplayTerminal {
                     System.out.print("Quel opérateur ?\nVous avez les choix entre +, - et *\n");
                     reponse = sc.nextLine();
                     if (reponse.equals("+")) {
+                        System.out.print("+ ajouté dans pile");
                         j1.pushOperatorInStack(new Items(Operator.ADD));
                     } else if (reponse.equals("-")) {
+                        System.out.print("- ajouté dans pile");
                         j1.pushOperatorInStack(new Items(Operator.SUB));
                     } else if (reponse.equals("*")) {
+                        System.out.print("* ajouté dans pile");
                         j1.pushOperatorInStack(new Items(Operator.MUL));
                     } else {
                         System.out.print("Opérateur invalide.\n");
@@ -72,6 +76,7 @@ public class GameplayTerminal {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInStack(reponse)) {
+                        System.out.println(reponse + "est sorti de la pile");
                         j1.putObjectOutOfStack(j1.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
@@ -82,11 +87,13 @@ public class GameplayTerminal {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInStack(reponse)) {
+                        System.out.println(reponse + "est décomposé");
                         j1.separateNumbers(j1.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
                 } else if (reponse.equals("defense")) {
+                    System.out.println("Defense mise");
                     j1.setDefence();
                 } else {
                     System.out.print("Instruction invalide. \n");
@@ -108,6 +115,7 @@ public class GameplayTerminal {
                         System.out.print("Quel nombre ?\nVoici votre inventaire: " + j2.inventory.toString() + "\n");
                         reponse = sc.nextLine();
                         if (j2.isInInventory(Integer.valueOf(reponse))) {
+                            System.out.println(reponse + "mis dans la pile");
                             j2.pushNumberInStack(j2.numberInInventory(Integer.valueOf(reponse)));
                         } else {
                             System.out.print("le nombre n'est pas dans l'inventaire\n");
@@ -116,10 +124,13 @@ public class GameplayTerminal {
                         System.out.print("Quel opérateur ?\nVous avez les choix entre +, - et *\n");
                         reponse = sc.nextLine();
                         if (reponse.equals("+")) {
+                            System.out.println("+ est mis dans la pile");
                             j2.pushOperatorInStack(new Items(Operator.ADD));
                         } else if (reponse.equals("-")) {
+                            System.out.println("- est mis dans la pile");
                             j2.pushOperatorInStack(new Items(Operator.SUB));
                         } else if (reponse.equals("*")) {
+                            System.out.println("* est mis dans la pile");
                             j2.pushOperatorInStack(new Items(Operator.MUL));
                         } else {
                             System.out.print("Opérateur invalide.\n");
@@ -128,6 +139,7 @@ public class GameplayTerminal {
                         System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
                         reponse = sc.nextLine();
                         if (j2.isInStack(reponse)) {
+                            System.out.println(reponse + "enlevé de la pile");
                             j2.putObjectOutOfStack(j2.itemInStack(reponse));
                         } else {
                             System.out.print("l'élément' n'est pas dans la pile\n");
@@ -138,6 +150,7 @@ public class GameplayTerminal {
                         System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
                         reponse = sc.nextLine();
                         if (j2.isInStack(reponse)) {
+                            System.out.println(reponse + "décomposé");
                             j2.separateNumbers(j2.itemInStack(reponse));
                         } else {
                             System.out.print("l'élément' n'est pas dans la pile\n");
@@ -178,6 +191,7 @@ public class GameplayTerminal {
                         System.out.print("Quel nombre ?\nVoici votre inventaire: " + j2.inventory.toString() + "\n");
                         reponse = sc.nextLine();
                         if (j2.isInInventory(Integer.valueOf(reponse))) {
+                            System.out.println(reponse + "mis dans la pile");
                             j2.pushNumberInStack(j2.numberInInventory(Integer.valueOf(reponse)));
                         } else {
                             System.out.print("le nombre n'est pas dans l'inventaire\n");
@@ -186,10 +200,13 @@ public class GameplayTerminal {
                         System.out.print("Quel opérateur ?\nVous avez les choix entre +, - et *\n");
                         reponse = sc.nextLine();
                         if (reponse.equals("+")) {
+                            System.out.println("+ mis dans la pile");
                             j2.pushOperatorInStack(new Items(Operator.ADD));
                         } else if (reponse.equals("-")) {
+                            System.out.println("- mis dans la pile");
                             j2.pushOperatorInStack(new Items(Operator.SUB));
                         } else if (reponse.equals("*")) {
+                            System.out.println("* mis dans la pile");
                             j2.pushOperatorInStack(new Items(Operator.MUL));
                         } else {
                             System.out.print("Opérateur invalide.\n");
@@ -198,6 +215,7 @@ public class GameplayTerminal {
                         System.out.print("Quel élément ?\nVoici votre pile: " + j2.stack.toString() + "\n");
                         reponse = sc.nextLine();
                         if (j2.isInStack(reponse)) {
+                            System.out.println(reponse + "enlevé la pile");
                             j2.putObjectOutOfStack(j2.itemInStack(reponse));
                         } else {
                             System.out.print("l'élément' n'est pas dans la pile\n");
@@ -239,9 +257,11 @@ public class GameplayTerminal {
                 } else if (reponse.equals("etat")) {
                     System.out.print(j1.toString() + "\n");
                 } else if (reponse.equals("ajout_nb")) {
+
                     System.out.print("Quel nombre ?\nVoici votre inventaire: " + j1.inventory.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInInventory(Integer.valueOf(reponse))) {
+                        System.out.println(reponse + "mis dans la pile");
                         j1.pushNumberInStack(j1.numberInInventory(Integer.valueOf(reponse)));
                     } else {
                         System.out.print("le nombre n'est pas dans l'inventaire\n");
@@ -262,6 +282,7 @@ public class GameplayTerminal {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");
                     reponse = sc.nextLine();
                     if (j1.isInStack(reponse)) {
+                        System.out.println(reponse + "enlevé de la pile");
                         j1.putObjectOutOfStack(j1.itemInStack(reponse));
                     } else {
                         System.out.print("l'élément' n'est pas dans la pile\n");
