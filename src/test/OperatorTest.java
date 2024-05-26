@@ -16,8 +16,9 @@ class OperatorTest {
 
     @Test
     void evaluate_shouldCalculateCorrectValueForSubtraction() {
+        // D'apres timothée, Operator.SUB(10, 3) doit retourner 3-10=-7, voir avec lui si  questions.
         int result = Operator.SUB.Evaluate(10, 3);
-        assertEquals(7, result);
+        assertEquals(-7, result);
     }
 
     @Test
