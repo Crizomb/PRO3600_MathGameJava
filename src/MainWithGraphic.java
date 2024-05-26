@@ -4,7 +4,7 @@ import graphics.Interface;
 
 import java.awt.*;
 
-public class MainFinal {
+public class MainWithGraphic {
 
     private static GameEvents gameEvents;
     private static GameplayVisual game_visual;

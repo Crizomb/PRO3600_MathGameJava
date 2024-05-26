@@ -26,7 +26,7 @@ this.gameEvents = gameEvents;
         int old_pv = defenseur.getPv();
         int degat_max = 200;
         int new_pv = (int) Math.max(0, defenseur.getPv() - (degat_max*Math.exp(-Math.abs(attaquant.getAttack_value()-defenseur.getDefence_value()))) );
-        defenseur.setPv(new_pv);
+        // defenseur.setPv(new_pv);
         return (old_pv-new_pv);
     }
 
@@ -154,13 +154,14 @@ this.gameEvents = gameEvents;
     public void attack(String T) throws IllegalStateException{
         getStackFromString(T);
         joueurEnCours.setAttack();
-        if (degats(joueurEnCours, playerNotPlayingCurrently()) > joueurEnCours.getPv()){
+        int degat_done = degats(joueurEnCours, playerNotPlayingCurrently());
+        if (degat_done > joueurEnCours.getPv()){
             System.out.println("Un joueur a gagné");
             playerNotPlayingCurrently().setPv(0);
             etapeSuivante();
         }
         else{
-            playerNotPlayingCurrently().setPv(degats(joueurEnCours, playerNotPlayingCurrently()));
+            playerNotPlayingCurrently().setPv(playerNotPlayingCurrently().getPv() - degat_done);
             etapeSuivante();
         }
     }
