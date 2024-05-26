@@ -109,7 +109,7 @@ public class Interface  {
 
     }
 
-    private void closeWindow(){
+    public void closeWindow(){
         fenetre.dispatchEvent(new WindowEvent(fenetre, WindowEvent.WINDOW_CLOSING));
     }
 
@@ -271,6 +271,7 @@ public class Interface  {
         Button attackJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 // menu_group_panel._setVisible(false);
+
                 try{
 
                     gameEvents.ButtonAttackPressed(anchorManager.getFormulaFromStack());

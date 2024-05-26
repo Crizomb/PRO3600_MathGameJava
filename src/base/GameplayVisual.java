@@ -156,10 +156,13 @@ this.gameEvents = gameEvents;
         joueurEnCours.setAttack();
         if (degats(joueurEnCours, playerNotPlayingCurrently()) > joueurEnCours.getPv()){
             System.out.println("Un joueur a gagné");
-            return;
+            playerNotPlayingCurrently().setPv(0);
+            etapeSuivante();
         }
-        playerNotPlayingCurrently().setPv(degats(joueurEnCours, playerNotPlayingCurrently()));
-        etapeSuivante();
+        else{
+            playerNotPlayingCurrently().setPv(degats(joueurEnCours, playerNotPlayingCurrently()));
+            etapeSuivante();
+        }
     }
 
     public void rollback() throws NoSuchFieldException {
