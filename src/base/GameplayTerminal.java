@@ -61,13 +61,13 @@ public class GameplayTerminal {
                     System.out.print("Quel opérateur ?\nVous avez les choix entre +, - et *\n");
                     reponse = sc.nextLine();
                     if (reponse.equals("+")) {
-                        System.out.print("+ ajouté dans pile");
+                        System.out.println("+ ajouté dans pile");
                         j1.pushOperatorInStack(new Items(Operator.ADD));
                     } else if (reponse.equals("-")) {
-                        System.out.print("- ajouté dans pile");
+                        System.out.println("- ajouté dans pile");
                         j1.pushOperatorInStack(new Items(Operator.SUB));
                     } else if (reponse.equals("*")) {
-                        System.out.print("* ajouté dans pile");
+                        System.out.println("* ajouté dans pile");
                         j1.pushOperatorInStack(new Items(Operator.MUL));
                     } else {
                         System.out.print("Opérateur invalide.\n");
@@ -82,6 +82,7 @@ public class GameplayTerminal {
                         System.out.print("l'élément' n'est pas dans la pile\n");
                     }
                 } else if (reponse.equals("pile")) {
+                    System.out.println("Pile evalué");
                     j1.createNewNumberStack();
                 } else if (reponse.equals(("separer"))) {
                     System.out.print("Quel élément ?\nVoici votre pile: " + j1.stack.toString() + "\n");

@@ -30,12 +30,6 @@ public enum Operator  {
                 return "/";
             }
         }
-       /* return switch (this) {
-            case ADD -> "+";
-            case SUB -> "-";
-            case MUL -> "*";
-            case DIV -> "/";
-        };*/
         return "null";
     }
 
