@@ -52,6 +52,13 @@ public class GameEvents {
     public void statsPlayersUpdated(){
         if (gameplayVisual.j1.getPv() == 0 || gameplayVisual.j2.getPv() == 0){
             interface_joueur.closeWindow();
+            if (gameplayVisual.j1.getPv() == 0){
+                System.out.println("********Joueur 2 a gagné*******");
+            }
+            else
+            {
+                System.out.println("*********Joueur 1 a gagné******");
+            }
         }
         interface_joueur.updatePlayerStats( gameplayVisual.j1.getPv(),gameplayVisual.j2.getPv(), gameplayVisual.j1.getDefence_value(), gameplayVisual.j2.getDefence_value());
     }
