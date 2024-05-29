@@ -4,19 +4,18 @@ import base.GameEvents;
 import base.Operator;
 
 import javax.naming.Context;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.io.File;
+import java.io.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-
+//import javazoom;
+      //  .jl.player.advanced.AdvancedPlayer;
 
 public class Interface  {
     //class qui pilote toute la partie graphique du jeu
@@ -34,7 +33,7 @@ public class Interface  {
     JLabel NumberLifeJ1, NumberLifeJ2;
      JLabel NumberShieldJ1, NumberShieldJ2;
 
-     private final boolean playSoundDuringGame = false;
+     private final boolean playSoundDuringGame = true;
 
     //-----------------------------------------------//
     /* Variables Elements Graphiques du jeu  */
@@ -125,15 +124,33 @@ public class Interface  {
         if(!playSoundDuringGame){
             return;
         }
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/src/sound/Chipzel_Fighting_Chance.mp3").getAbsoluteFile());
+      /*  try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/Chipzel_Fighting_Chance.mp3").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
         } catch(Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
+        }*/
+        try {
+            //will go into file folder and get music file (getResource)
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File("src/sound/Chipzel_Fighting_Chance.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audio);
+            FloatControl gainControl =
+                    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-10.0f);
+            clip.start();
+          /*  if (loop) {
+                clip.loop(1000);
+            }*/
         }
+        catch (Exception e) {
+            System.out.println("Check:  + \n");
+            e.printStackTrace();
+        }
+
     }
 
     private void createBackgroundPanel(){
