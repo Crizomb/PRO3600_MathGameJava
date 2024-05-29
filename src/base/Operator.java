@@ -4,8 +4,8 @@ package base;
  * Represents an Operator that can be used on the game Stack
  */
 public enum Operator  {
-    ADD(0.1f, 0.87f),
-    SUB(0.05f, 0.87f),
+    ADD(0.11f, 0.87f),
+    SUB(0.06f, 0.87f),
     MUL(0.01f, 0.87f),
     DIV(0f, 0f);
 

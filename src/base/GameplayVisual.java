@@ -30,6 +30,14 @@ this.gameEvents = gameEvents;
         return (old_pv-new_pv);
     }
 
+    public void initializePlayers(){
+        j1.init();
+        j2.init();
+        gameEvents.statsPlayersUpdated();
+        //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
+        gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
+    }
+
     public int commencer_jeu()  {
         j1 = new Player(1);
         j2 = new Player(2);
@@ -37,15 +45,12 @@ this.gameEvents = gameEvents;
         Scanner sc = new Scanner(System.in); //Pour pouvoir lire les commandes du joueur
         listJoueur[0]=j1;
         listJoueur[1]=j2;
-        j1.init();
-        j2.init();
 
        // tourJoueur(joueurEnCours);
         setJoueurEnCours(j1);
         setPhase("Defense");
-        gameEvents.statsPlayersUpdated();
-        //setJoueurEnCours(j1);   normalement on est censé mettre ca a la place de la ligne d'en dessous
-        gameEvents.playerInventoryUpdated(joueurEnCours.getValuesItemPlayer());
+        initializePlayers();
+
 
         return 0;
     }
@@ -118,6 +123,9 @@ this.gameEvents = gameEvents;
     }
     public void etapeSuivante(){
         if(phase == "Attack" ){
+            if(joueurEnCours == j1){
+                initializePlayers();
+            }
             setPhase("Defense");
 
         }else{

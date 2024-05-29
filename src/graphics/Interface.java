@@ -268,7 +268,7 @@ public class Interface  {
         Frame_Panel panel_attackJ2 = panel_manager.addPanel(Panel_State.player_2_attack);
         Frame_Panel panel_defenseJ1 = panel_manager.addPanel(Panel_State.player_1_defense);
         Frame_Panel panel_defenseJ2 = panel_manager.addPanel(Panel_State.player_2_defense);
-        Button attackJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_attack , "attack1 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_attack , "attaquez !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 // menu_group_panel._setVisible(false);
 
@@ -282,7 +282,7 @@ public class Interface  {
             }
         });
 
-        Button attackJ2 = create_button(posxPlayerButtonJ2 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_2_attack , "attack2 !!", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button attackJ2 = create_button(posxPlayerButtonJ2 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_2_attack , "attaquez !!", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
 
@@ -295,7 +295,7 @@ public class Interface  {
             }
         });
 
-        Button defenseJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_defense , "Set Defense1", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_defense , "Mettre sa défense", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
@@ -307,7 +307,7 @@ public class Interface  {
             }
         });
 
-        Button defenseJ2 = create_button(posxPlayerButtonJ2 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_2_defense , "Set Defense2", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ2 = create_button(posxPlayerButtonJ2 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_2_defense , "Mettre sa défense", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
