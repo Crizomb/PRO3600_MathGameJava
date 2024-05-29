@@ -3,6 +3,7 @@ package graphics;
 import base.GameEvents;
 import base.Operator;
 
+import javax.naming.Context;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -33,9 +34,12 @@ public class Interface  {
     JLabel NumberLifeJ1, NumberLifeJ2;
      JLabel NumberShieldJ1, NumberShieldJ2;
 
+     private final boolean playSoundDuringGame = false;
+
     //-----------------------------------------------//
     /* Variables Elements Graphiques du jeu  */
     //-----------------------------------------------//
+    final float ratioLongueurButtonsMenu = 0.4f;
 
     final int SIZE_TEXT_CESTAVOUSJOUEUR = 40;
     final float RATIO_POS_Y_CESTAVOUSJOUEUR = 0.15f;
@@ -45,6 +49,9 @@ public class Interface  {
     final float RATIO_POSX_CHEVALIER_1 = 0.05f , RATIO_POSX_CHEVALIER_2=0.7f, RATIO_POSY_CHEVALIER = 0.25f;
 
     final String TEXT_ERROR= "Il faut que tu places un nombre unique";
+
+    final float ratioPosXTextWinner = 0.3f, ratioPosYTextWinner = 0.3f;
+    final int SizeTextWinner = 70;
     //-----------------------------------------------//
     /* Fin Déclaration Variables Elements Graphiques du jeu  */
     //-----------------------------------------------//
@@ -91,6 +98,7 @@ public class Interface  {
         createSettingsPanel();
         createGamePanel();
         createPlayersPanel();
+        createEndPanel();
         changePanel(Panel_State.MENU);
         anchorManager.setSorted_anchorPoint();
         anchorManager.relocateAllBulletsInNumberReserve();
@@ -114,8 +122,11 @@ public class Interface  {
     }
 
     public void playSound() {
+        if(!playSoundDuringGame){
+            return;
+        }
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music.mp3").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/src/sound/Chipzel_Fighting_Chance.mp3").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -145,13 +156,13 @@ public class Interface  {
         menu_frame = panel_manager.addPanel(Panel_State.MENU);
         JPanel groupe_main_buttons = create_panel(0.3f,0.4f,0.4f,0.2f, Panel_State.MENU , Graphic_type.transparentWhite);
 
-        Button start_button = create_button(0.3f,0.3f, 0.4f, 0.2f,Panel_State.MENU ,"Start Game", Graphic_type.MENU_Button, 0, new ActionListener() {
+        Button start_button = create_button(0.3f,0.3f, 0.4f, 0.2f,Panel_State.MENU ,"Jouer", Graphic_type.MENU_Button, 0, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 panel_manager.changePanel(Panel_State.game_settings);
                 // menu_group_panel._setVisible(false);
             }
         });
-        Button quit_button = create_button(0.3f,0.6f, 0.4f, 0.2f,Panel_State.MENU ,"Quit", Graphic_type.MENU_Button,0, new ActionListener() {
+        Button quit_button = create_button(0.3f,0.6f, 0.4f, 0.2f,Panel_State.MENU ,"Quitter", Graphic_type.MENU_Button,0, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 closeWindow();
             }
@@ -161,7 +172,6 @@ public class Interface  {
     }
 
     private void createSettingsPanel(){
-         final float ratioLongueurButtonsMenu = 0.4f;
         Frame_Panel settings = panel_manager.addPanel(Panel_State.game_settings);
 
         Button home_button = create_button(0.05f,0.05f, 0.05f, 0.1f,Panel_State.game_settings, "", Graphic_type.Settings_icon, -5, new ActionListener() {
@@ -171,22 +181,24 @@ public class Interface  {
         });
 
 
-        Button return_button = create_button(0.3f,0.8f, ratioLongueurButtonsMenu, 0.3f,Panel_State.game_settings ,"Return to Menu", Graphic_type.MENU_Button, -20,new ActionListener() {
+        Button return_button = create_button(0.3f,0.7f, ratioLongueurButtonsMenu, 0.3f,Panel_State.game_settings ,"Retourner au menu", Graphic_type.MENU_Button, -20,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 changePanel(Panel_State.MENU);
             }
         });
-        Button launch_game = create_button(0.3f,0.4f,ratioLongueurButtonsMenu,0.3f, Panel_State.game_settings, "launch", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button launch_game = create_button(0.3f,0.3f,ratioLongueurButtonsMenu,0.3f, Panel_State.game_settings, "Lancer la partie", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                gameEvents.ButtonLaunchGamePressed();
-                //changePanel(Panel_State.gameplay);
-                // menu_group_panel._setVisible(false);
             }
         });
         //JPanel settingsPanel = create_panel(0.05f, 0.05f, 0.1f,0.3f, Panel_State.game_settings, Color.black);
 
         fenetre.add(settings);
 
+    }
+
+    public void EndGame(Panel_State p_state_winner){
+        panel_manager.changePanelWithSide(Panel_State.DEFAULT,p_state_winner);
     }
 
     public void createGamePanel(){
@@ -196,9 +208,9 @@ public class Interface  {
         for (int i = 0; i < 12; i++) {
             AnchorPoint anch_i = new AnchorPoint(0.16f+0.055f*i,0.87f , AnchorPurpose.Number_Reserve, anchorManager);
         }
-        AnchorPoint c = new AnchorPoint(0.45f,0.5f , AnchorPurpose.Number_jar, anchorManager);
-        AnchorPoint d = new AnchorPoint(0.50f,0.5f , AnchorPurpose.Operator_jar, anchorManager);
-        AnchorPoint c2 = new AnchorPoint(0.55f,0.5f , AnchorPurpose.Number_jar, anchorManager);
+        AnchorPoint c = new AnchorPoint(0.425f,0.5f , AnchorPurpose.Number_jar, anchorManager);
+        AnchorPoint d = new AnchorPoint(0.475f,0.5f , AnchorPurpose.Operator_jar, anchorManager);
+        AnchorPoint c2 = new AnchorPoint(0.525f,0.5f , AnchorPurpose.Number_jar, anchorManager);
 
         JLabel textJ1 = create_label(0.1f,0.05f,50, "Joueur 1", Panel_State.gameplay, Color.white);
         JLabel textJ2 = create_label(0.79f,0.05f,50, "Joueur 2", Panel_State.gameplay, Color.white);
@@ -237,7 +249,7 @@ public class Interface  {
         });
         }
 
-        Button egal = create_button(0.65f, 0.5f, 0.05f,0.05f,Panel_State.gameplay , "=",Graphic_type.Ball_Number, 0,new ActionListener() {
+        Button egal = create_button(0.575f, 0.5f, 0.05f,0.05f,Panel_State.gameplay , "=",Graphic_type.Ball_Number, 0,new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 gameEvents.ButtonEqualOperationPressed(anchorManager.getFormulaFromStack());
             }
@@ -251,10 +263,10 @@ public class Interface  {
         JPanel bullet_operator_panel = create_panel(0f,0.85f,0.35f,0.15f, Panel_State.gameplay , Graphic_type.transparentRed);
         JPanel joueur1_panel = create_panel(0.001f,0.01f,RATIO_SIZE_X_PANEL_PLAYER,RATIO_SIZE_Y_PANEL_PLAYER, Panel_State.gameplay , Graphic_type.transparentBlue);
         JPanel joueur2_panel = create_panel(0.65f,0.01f,RATIO_SIZE_X_PANEL_PLAYER,RATIO_SIZE_Y_PANEL_PLAYER, Panel_State.gameplay, Graphic_type.transparentBlue);
-        JPanel Stack_panel = create_panel(0.4f, 0.5f, .3f,0.1f, Panel_State.gameplay , Graphic_type.transparentBlack);
+        JPanel Stack_panel = create_panel(0.407f, 0.5f, .223f,0.1f, Panel_State.gameplay , Graphic_type.transparentBlack);
 
 
-        Button retour_button = create_button(0.9f,0.9f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button retour_button = create_button(0.9f,0.87f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 changePanel(Panel_State.game_settings);
             }
@@ -326,9 +338,43 @@ public class Interface  {
        // JLabel shieldJ1 = create_panel(0.1f,0.45f, 0.2f, 0.3f, Panel_State.player_2_attack, Graphic_type.Shield_Player);
         //JLabel shieldJ2 = create_panel(0.8f,0.45f, 0.2f, 0.3f, Panel_State.player_1_attack, Graphic_type.Shield_Player);
 
-        NumberShieldJ1 = create_label(0.25f,0.5f,70, "9999", Panel_State.player_2_attack, Color.white);
-        NumberShieldJ2 = create_label(0.75f,0.5f,70, "9999", Panel_State.player_1_attack, Color.white);
+        NumberShieldJ1 = create_label(0.21f,0.5f,60, "9999", Panel_State.player_2_attack, Color.white);
+        NumberShieldJ2 = create_label(0.71f,0.5f,60, "9999", Panel_State.player_1_attack, Color.white);
 
+        JPanel backgroundPanel_NumberShieldJ1 = create_panel(0.21f,0.5f,0.084f,0.07f,Panel_State.player_2_attack, Color.gray);
+        JPanel backgroundPanel_NumberShieldJ2 = create_panel(0.71f,0.5f,0.084f,0.07f,Panel_State.player_1_attack, Color.gray);
+
+    }
+
+    private void createEndPanel(){
+        Frame_Panel panel_player1_winner = panel_manager.addPanel(Panel_State.player_1_winner);
+        Frame_Panel panel_player2_winner = panel_manager.addPanel(Panel_State.player_2_winner);
+
+        JLabel TextWinnerP1 = create_label(ratioPosXTextWinner,ratioPosYTextWinner,SizeTextWinner, "Le Joueur 1 a gagné !", Panel_State.player_1_winner, Color.white);
+        JLabel TextWinnerP2 = create_label(ratioPosXTextWinner,ratioPosYTextWinner,SizeTextWinner, "Le Joueur 2 a gagné !", Panel_State.player_2_winner, Color.white);
+
+        Button replay_J1 = create_button(0.3f,0.4f,ratioLongueurButtonsMenu,0.2f, Panel_State.player_1_winner, "Rejouer", Graphic_type.MENU_Button, -20, new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                gameEvents.ButtonLaunchGamePressed();
+            }
+        });
+
+        Button replay_J2 = create_button(0.3f,0.4f,ratioLongueurButtonsMenu,0.2f, Panel_State.player_2_winner, "Rejouer", Graphic_type.MENU_Button, -20, new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                gameEvents.ButtonLaunchGamePressed();
+            }
+        });
+
+        Button quit_button_J1 = create_button(0.3f,0.7f, 0.4f, 0.2f,Panel_State.player_1_winner ,"Quitter", Graphic_type.MENU_Button,0, new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                closeWindow();
+            }
+        });
+        Button quit_button_2 = create_button(0.3f,0.7f, 0.4f, 0.2f,Panel_State.player_2_winner ,"Quitter", Graphic_type.MENU_Button,0, new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                closeWindow();
+            }
+        });
     }
 
     public void UpdatePanelStepGame(String combined){
@@ -602,7 +648,7 @@ public class Interface  {
         // p.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
 
         //Remarque : la taille en y ne marche pas totalement
-        resizeElement(p, pstate, posx, posy, 0.5f, 0.07f);
+        resizeElement(p, pstate, posx, posy, 0.5f, 0.075f);
         System.out.println("label \""+text+"\" created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+size+ " in "+pstate.toString());
         //   WarnFitScreen(posx,posy,sizex,sizey);
         Frame_Panel panel_related = panel_manager.getPanelFromState(pstate);
@@ -619,6 +665,8 @@ public class Interface  {
         p.setOpaque(false);
         return p;
     }
+
+
     /* ces méthodes sont les actions des boutons du jeu */
 
     /*public void start_button_pressed(ActiveEvent e){

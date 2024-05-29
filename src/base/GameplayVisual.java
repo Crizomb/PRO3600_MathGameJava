@@ -8,6 +8,8 @@ public class GameplayVisual {
     int etat = 0; //représente la phase de jeu en cours. 0 phase de défense, 1 phase d'attaque
    // public Interface interf;
     Player j1,j2;
+    final int degat_max = 200;
+
     public Player[] listJoueur= new Player[2];
 
     private Player joueurEnCours = j1;
@@ -24,7 +26,6 @@ this.gameEvents = gameEvents;
 
     public int degats(Player attaquant, Player defenseur) {
         int old_pv = defenseur.getPv();
-        int degat_max = 200;
         int new_pv = (int) Math.max(0, defenseur.getPv() - (degat_max*Math.exp(-Math.abs(attaquant.getAttack_value()-defenseur.getDefence_value()))) );
         // defenseur.setPv(new_pv);
         return (old_pv-new_pv);

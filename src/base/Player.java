@@ -26,11 +26,9 @@ class Tools{
  * Represents a Player
  */
 public class Player {
-    private static final int INVENTORY_MAX_SIZE = 9;
 
-    private static int pv_max = 500;
 
-    private int pv = pv_max;
+    private int pv = GameEvents.pv_max;
     public ItemsStack stack;
     public ArrayList<Items> inventory; // 9 number by player, those number will be used to attack or defend
     private int defence_value;
@@ -46,7 +44,7 @@ public class Player {
     }
     public Player(int id){
         this.stack = new ItemsStack();
-        this.inventory = Tools.getRandomInventory(1, 10, INVENTORY_MAX_SIZE);
+        this.inventory = Tools.getRandomInventory(1, 10, GameEvents.INVENTORY_MAX_SIZE);
         this.attack_value = 0;
         this.defence_value = 0;
         this.id = id;
@@ -58,7 +56,7 @@ public class Player {
      * Reinitialize a Player
      */
     public void init() {
-        this.inventory = Tools.getRandomInventory(1, 10, INVENTORY_MAX_SIZE);
+        this.inventory = Tools.getRandomInventory(1, 10, GameEvents.INVENTORY_MAX_SIZE);
         this.stack.clear();
         this.attack_value = 0;
         this.defence_value = 0;
@@ -95,7 +93,7 @@ public class Player {
                     throw  new IllegalStateException("faut que tu mettes un nombre positif");
                 }
                 if(new_val >= 10000){
-                    throw  new IllegalStateException("dose stp");
+                    throw  new IllegalStateException("le nombre est trop grand ! ");
                 }
 
             }catch (Exception e){

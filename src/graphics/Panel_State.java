@@ -5,6 +5,8 @@ public enum Panel_State {
     //les différents panneaux
     temporary,background,
     MENU, DEFAULT, game_settings, gameplay,
+
+    player_1_winner(1), player_2_winner(1),
     player_1_attack(1), player_2_attack(1), player_1_defense(1), player_2_defense(1);
 
 
