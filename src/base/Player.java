@@ -110,7 +110,7 @@ public class Player {
 
         }
         else {
-            throw new IllegalStateException("the stack is empty or the top element is not an operator");
+            throw new IllegalStateException("il faut une opération complète !");
         }
     }
     /**

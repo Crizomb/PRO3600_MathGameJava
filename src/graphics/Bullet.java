@@ -103,6 +103,7 @@ public class Bullet extends Button {
         anchoredPoint.setElementContained(this);
         setPos(anchoredPoint.posx, anchoredPoint.posy);
         anchorManager.relocateAllBulletsInPile();
+
     }
 
     public void createNewOperator(){

@@ -45,6 +45,7 @@ public class AnchorManager {
     }
 
     public void relocateAllBulletsInPile(){
+
         for(Bullet b :  allBullets){
             if (b.anchoredPoint != null){
                 b.relocateToNextAnchorPoint(b.anchoredPoint.purpose);

@@ -33,7 +33,7 @@ public class Interface  {
     JLabel NumberLifeJ1, NumberLifeJ2;
      JLabel NumberShieldJ1, NumberShieldJ2;
 
-     private final boolean playSoundDuringGame = true;
+     private static final boolean playSoundDuringGame = true;
 
     //-----------------------------------------------//
     /* Variables Elements Graphiques du jeu  */
@@ -62,6 +62,8 @@ public class Interface  {
     private static final float SIZE_ADJUSTMENT_X = 1f, SIZE_ADJUSTEMENT_Y = 0.9f;
 
     private Frame_Panel menu_frame;
+
+    private static Clip clip;
 
     public Interface(int width, int height) throws AWTException {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -101,9 +103,11 @@ public class Interface  {
         changePanel(Panel_State.MENU);
         anchorManager.setSorted_anchorPoint();
         anchorManager.relocateAllBulletsInNumberReserve();
-        playSound();
         fenetre.pack();
         fenetre.setVisible(true);
+      //  playSound("Chipzel_Fighting_Chance.wav", -10f);
+        playSound("dedicace_clement.wav", -10f);
+
         /*new Thread(new Runnable() {
         public void run() {
             try {
@@ -120,7 +124,7 @@ public class Interface  {
         fenetre.dispatchEvent(new WindowEvent(fenetre, WindowEvent.WINDOW_CLOSING));
     }
 
-    public void playSound() {
+    public static void playSound(String urlSound, float reducing_volume) {
         if(!playSoundDuringGame){
             return;
         }
@@ -135,12 +139,13 @@ public class Interface  {
         }*/
         try {
             //will go into file folder and get music file (getResource)
-            AudioInputStream audio = AudioSystem.getAudioInputStream(new File("src/sound/Chipzel_Fighting_Chance.wav"));
-            Clip clip = AudioSystem.getClip();
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File("src/sound/"+urlSound));
+
+            clip = AudioSystem.getClip();
             clip.open(audio);
             FloatControl gainControl =
                     (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-10.0f);
+            gainControl.setValue(reducing_volume);
             clip.start();
           /*  if (loop) {
                 clip.loop(1000);
@@ -216,6 +221,10 @@ public class Interface  {
 
     public void EndGame(Panel_State p_state_winner){
         panel_manager.changePanelWithSide(Panel_State.DEFAULT,p_state_winner);
+        clip.stop();
+
+        playSound("dedicace_clement_pourlecrandevictoire.wav", -10f);
+
     }
 
     public void createGamePanel(){
@@ -285,6 +294,7 @@ public class Interface  {
 
         Button retour_button = create_button(0.9f,0.87f,0.1f,0.1f, Panel_State.gameplay , "retour", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
+                clearMessages();
                 changePanel(Panel_State.game_settings);
             }
         });

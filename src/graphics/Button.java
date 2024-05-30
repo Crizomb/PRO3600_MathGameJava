@@ -104,6 +104,8 @@ public class Button extends JButton  {
     }
 
     public void slide(int x, int y){
+       // Interface.playSound("whoosh_bullet.wav", 0f);
+
         new Thread(){
             public void run(){
                 if (isMoving){
