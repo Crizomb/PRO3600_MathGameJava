@@ -9,8 +9,8 @@ import java.time.Duration;
 public class GameEvents {
 
     /* Paramètres du jeu */
-    public static final int pv_max = 100;
-    public  static final int INVENTORY_MAX_SIZE = 12;
+    public static final int pv_max = 500;
+    public  static final int INVENTORY_MAX_SIZE = 11;
 
 
     private Interface interface_joueur;

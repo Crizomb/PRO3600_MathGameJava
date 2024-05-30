@@ -72,18 +72,19 @@ public class Panel_Manager {
 
     public void changePanel(Panel_State p_state) {
        HideAllPanels();
-        //System.out.println("on a tout masqué");
         try {
             actual_Groupe_panel = getPanelFromState(p_state);
             actual_Groupe_panel._setVisible();
-            //System.out.println("testThread-----------------------------------_è_è");
-
         }
         catch(NullPointerException e){
             System.out.println("pas de nouveau panneaux activée");
         }
         Interface.fenetre.add(actual_Groupe_panel);
         Interface.fenetre.add(getPanelFromState(Panel_State.DEFAULT));
+
+
+
+        
         Interface.fenetre.pack();
         Interface.fenetre.repaint();
     }

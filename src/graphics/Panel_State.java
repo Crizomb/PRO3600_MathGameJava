@@ -3,7 +3,7 @@ package graphics;
 public enum Panel_State {
 
     //les différents panneaux
-    temporary,background,
+    temporary,
     MENU, DEFAULT, game_settings, gameplay,
 
     player_1_winner(1), player_2_winner(1),

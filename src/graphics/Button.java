@@ -145,7 +145,6 @@ public class Button extends JButton  {
         setBounds(x, y, getBounds().width, getBounds().height);
 
         System.out.println("new pos "+x+" "+y);
-       // getPanelParent().setComponentZOrder(this,0);
         Interface.actualizeFrame(panelParent);
     }
 

@@ -5,9 +5,6 @@ import graphics.Interface;
 import java.awt.*;
 
 public class MainWithGraphic {
-
-
-
     private static GameEvents gameEvents;
     private static GameplayVisual game_visual;
     private static Interface interf;

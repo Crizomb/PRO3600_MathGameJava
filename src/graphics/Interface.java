@@ -68,7 +68,6 @@ public class Interface  {
     public Interface(int width, int height) throws AWTException {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                //createAndShowGUI(width, height);
                 try {
                     initializeGameInterface(width, height);
                 } catch (AWTException e) {
@@ -76,20 +75,11 @@ public class Interface  {
                 }
             }
         });
-
-       // all_errors = new List<JLabel>;
     }
-
-    public void setGameEvents(GameEvents gameEvents){
-        this.gameEvents = gameEvents;
-        System.out.println("--------------------------------------set-------------------------------------- interf");
-    }
-
     private void initializeGameInterface(int w, int h)   throws AWTException{
         fenetre = new JFrame(NOM_JEU);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        fenetre.getContentPane().setBackground(Graphic_type.transparentBlue);
-
         setSize(w, h);
         SCREEN_SIZE = getSCREEN_SIZE();
         panel_manager = new Panel_Manager();
@@ -105,19 +95,16 @@ public class Interface  {
         anchorManager.relocateAllBulletsInNumberReserve();
         fenetre.pack();
         fenetre.setVisible(true);
+
+
       //  playSound("Chipzel_Fighting_Chance.wav", -10f);
         playSound("dedicace_clement.wav", -10f);
 
-        /*new Thread(new Runnable() {
-        public void run() {
-            try {
-                //debug.getMousePosAtStart(4);
-            } catch (AWTException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        }).start();*/
 
+    }
+
+    public void setGameEvents(GameEvents gameEvents){
+        this.gameEvents = gameEvents;
     }
 
     public void closeWindow(){
@@ -138,7 +125,6 @@ public class Interface  {
             ex.printStackTrace();
         }*/
         try {
-            //will go into file folder and get music file (getResource)
             AudioInputStream audio = AudioSystem.getAudioInputStream(new File("src/sound/"+urlSound));
 
             clip = AudioSystem.getClip();
@@ -147,12 +133,10 @@ public class Interface  {
                     (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(reducing_volume);
             clip.start();
-          /*  if (loop) {
-                clip.loop(1000);
-            }*/
+
         }
         catch (Exception e) {
-            System.out.println("Check:  + \n");
+            System.out.println("impossible de jouer la musique");
             e.printStackTrace();
         }
 
@@ -334,7 +318,8 @@ public class Interface  {
             }
         });
 
-        Button defenseJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton , Panel_State.player_1_defense , "Mettre sa défense", Graphic_type.MENU_Button, -20, new ActionListener() {
+        Button defenseJ1 = create_button(posxPlayerButtonJ1 , posyPlayerButton , sizexPlayerButton , sizeyPlayerButton ,
+                Panel_State.player_1_defense , "Mettre sa défense", Graphic_type.MENU_Button, -20, new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try{
                     gameEvents.ButtonDefensePressed(anchorManager.getFormulaFromStack());
@@ -563,16 +548,10 @@ public class Interface  {
     }
 
     public Button create_button(float x, float y, float sizex, float sizey, Panel_State pstate, String text, Graphic_type type, int sizeModifier)  {
-        //WarnFitScreen(x,y,sizex,sizey);
-       // b.setBounds(ratiow(x), ratioh(y), ratiow(sizex), ratioh(sizey));
         Frame_Panel panel_related = panel_manager.getPanelFromState(pstate);
         Button b = new Button(text, type, sizeModifier, panel_related);
-
         resizeElement(b, x,y, sizex, sizey);
-
-        //panel_related.addElementToPanel(b);
         System.out.println("bouton "+ text + " crée en "+ ratiow(x)+" "+ ratioh(y)+" en "+ pstate.toString());
-        panel_related.add(b);
         panel_related.setComponentZOrder(b,0);
         return b;
     }
@@ -664,17 +643,14 @@ public class Interface  {
 
             }
         }).start();
-
     }
-
     public JLabel create_label(float posx, float posy, int size , String text, Panel_State pstate, Color c){
         JLabel p = new JLabel(text);
         p.setLayout(null);
         p.setFont(new Font("Serial", Font.BOLD,size));
         p.setForeground(c);
-        // p.setBounds(ratiow(posx), ratioh(posy), ratiow(sizex), ratioh(sizey));
 
-        //Remarque : la taille en y ne marche pas totalement
+        //Remarque : la position en y depend de sa taille
         resizeElement(p, pstate, posx, posy, 0.5f, 0.075f);
         System.out.println("label \""+text+"\" created in "+ ratiow(posx)+" "+ ratioh(posy) +" "+size+ " in "+pstate.toString());
         //   WarnFitScreen(posx,posy,sizex,sizey);
@@ -682,7 +658,6 @@ public class Interface  {
         panel_related.addElementToPanel(p);
         panel_related.add(p);
         panel_related.setComponentZOrder(p,0);
-        //   fenetre.add(p);
         return p;
     }
 
